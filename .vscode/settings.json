@@ -1,0 +1,13 @@
+{
+    "launch": {
+
+        "configurations": [],
+        "compounds": []
+    },
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.suggest.selectionMode": "always",
+    "editor.quickSuggestions": {
+        "other": "off"
+    },
+    "workbench.settings.useSplitJSON": true
+}
