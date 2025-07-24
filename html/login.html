@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/register.css">
-    <title> Register Form </title>
+    <link rel="stylesheet" href="../css/login.css">
+    <title>Document</title>
 </head>
 <body>
     <div class="header">
@@ -14,21 +14,16 @@
               <li> <a href="/html/index.html#about" target="_blank"> About </a> </li>
               <li> <a href="/html/index.html#skills" target="_blank"> Skills </a> </li>
               <li> <a href="/html/index.html#projects" target="_blank"> Projects </a> </li>
-              <li> <a href="/html/login.html" target="_blank"> Log In </a> </li>
+              <li> <a href="/html/register.html" target="_blank"> Register </a> </li>
             </ul>
         </nav>
     </div>
 
-    <div class="register_section">
-        <div class="register_form"> Register Here </div>
-            <div class="register_container">
-                <div class="full_name">
-                    <label for="full_name"> Full Name: </label>
-                    <input type="text" id="full_name" name="full_name" placeholder="Your Full Name" required>
-                </div>
-
+    <div class="login_section">
+        <div class="login_form"> Log In Here </div>
+            <div class="login_container">
                 <div class="email">
-                    <label for="email"> Email Address: </label>
+                    <label for type="email"> Email Address: </label>
                     <input type="email" id="email" name="email" placeholder="Your Email" required>
                 </div>
 
@@ -37,16 +32,10 @@
                     <input type="password" id="password" name="password" placeholder="Your Password" required>
                 </div>
 
-                <div class="confirm_password">
-                    <label for="confirm_password"> Confirm Password: </label>
-                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Your Password" required>
+                <div class="login_button">
+                    <button type="submit"> Log In </button>
                 </div>
             </div>
-
-            <div class="register_button">
-                <button type="submit"> Register </button>
-            </div>
-        </div>
     </div>
 </body>
 </html>

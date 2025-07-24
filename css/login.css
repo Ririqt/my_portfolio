@@ -56,74 +56,57 @@ h1 a{
     color: white;
 }
 
-.register_container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.full_name {
-    margin-top: 40px;
-    font-size: 40px;
-    justify-content: center;
-    display: flex;
-    gap: 180px;
-}
-
-.email {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    font-size: 40px;
-    gap: 115px;
-}
-
-.password {
-    margin-top: 40px;
-    justify-content: center;
-    font-size: 40px;
-    gap: 195px;
-    display: flex;
-}
-
-.confirm_password {
-    margin-top: 40px;
-    justify-content: center;
-    font-size: 40px;
-    gap: 50px;
-    display: flex;
-}
-
-.full_name input[type="text"], .email input[type="email"], .password input[type="password"], .confirm_password input[type="password"] {
-    font-size: 40px;
-}
-
-.register_section {
-    height: 600px;
+.login_section {
+    height: 400px;
+    margin: 30px 500px;
     background-color: lightgray;
-    margin: 30px 400px;
     border-radius: 20px;
     border: 2px solid black;
 }
 
-.register_form {
+.login_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login_form {
     display: flex;
     justify-content: center;
     font-size: 40px;
     color: blue;
     font-weight: 700;
-    padding-top: 30px;
+    padding: 40px 0 0;
 }
 
-.register_button {
+.email {
+    font-size: 40px;
+    margin-top: 50px;
+    gap: 30px;
+    display: flex;
+}
+
+.password {
+    display: flex;
+    margin-top: 40px;
+    gap: 110px;
+    font-size: 40px;
+}
+
+.email input[type="email"], .password input[type="password"] {
+    font-size: 40px;
+}
+
+.login_button {
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 50px;
+    margin-top: 30px;
 }
 
 button {
-    width: 200px;
+    width: 120px;
     height: 50px;
     font-size: 30px;
     border-radius: 20px;
