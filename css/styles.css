@@ -20,6 +20,8 @@ h1 a{
     align-items: center;
     margin: 0 auto;
     border-radius: 0px 0px 20px 20px;
+    gap: 120px;
+    box-shadow:  5px 10px 8px #888888;
 }
 
 .header_text {
@@ -30,7 +32,7 @@ h1 a{
 .header_text li {
     list-style: none;
     display: inline-flex;
-    padding: 0 100px;
+    padding: 0 90px;
 }
 
 .header_text li a {
@@ -40,6 +42,7 @@ h1 a{
 
 .header_text li a:hover {
     color: beige;
+    transition: 0.5s;
 }
 
 .header_title {
@@ -51,6 +54,7 @@ h1 a{
 
 .header_title:hover a {
     color: white;
+    transition: 0.5s;
 }
 
 .profile {
@@ -315,6 +319,7 @@ h1 a{
     flex-direction: row;
     display: flex;
     margin-bottom: 60px;
+    justify-content:center;
 }
 .skills_row_1 {
     display: flex;
@@ -384,7 +389,7 @@ h1 a{
 }
 
 .php_progress_bar {
-    width: 0px;
+    width: 40px;
     height: 100%;
     background-color: purple;
     border-radius: 20px;

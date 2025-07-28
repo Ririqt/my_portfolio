@@ -13,7 +13,6 @@
     echo "I am {$age} years old! <br>";
     echo "My GPA is {$gpa} <br>";
     echo "I have \${$money} in my bank! <br>";
-
     echo "I have \${$money} and I have \${$allowance} <br>";
     $total_money = $money + $allowance;
 
