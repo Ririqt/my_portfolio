@@ -44,9 +44,8 @@
             $confirm_password = test_input($_POST["confirm_password"]);
             if (strlen($_POST["password"]) < 8 ) {
                 $passwordErr = "Your Password Must Contain At Least 8 Characters! <br> ";
-                echo '<div class="password_error">', $passwordErr, '</div>';
-                echo "Inputted Characters: " ; 
-                echo strlen($password);
+                echo '<div class="password_error">', $passwordErr ;
+                echo "Inputted Characters: " , strlen($password),'</div>'; 
             }
             elseif(!preg_match("#[0-9]+#",$password)) {
                 $passwordErr = "Your Password Must Contain At Least 1 Number! <br> ";

@@ -169,6 +169,10 @@ h1 a{
     height: 400px;
 }
 
+.about_picture img {
+    border: 2px black solid;
+}
+
 .about_text {
     display: flex;
     flex-direction: column;
