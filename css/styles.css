@@ -12,6 +12,7 @@ h1 a{
     color: black;
 }
 
+/* Make this small */
 .header {
     height: 150px;
     background-color: cyan;
@@ -151,7 +152,7 @@ h1 a{
     position: absolute; 
     bottom: 0; 
     background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    background: rgba(0, 0, 0, 0.5); 
     width: 100%;
     transition: .5s ease;
     opacity:0;
@@ -165,6 +166,7 @@ h1 a{
     opacity: 1;
 }
 
+/* Add an Alternating Color between each sections to identify which section it is */
 .about, .skills, .projects, .contact {
     align-items: center;
     justify-content: center;
@@ -176,6 +178,7 @@ h1 a{
 
 }
 
+/* Make the "About Me" center to the div of "Future Software Engineer" */
 .about_section {
     width: 100%;
     height: 540px;
@@ -539,20 +542,29 @@ h1 a{
     align-items: center;
 }
 
+/* Improve this */
 .projects_images {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
     
-.project_1 img {
-    width: 500px;
-    height: 450px;
+.gallery {
+    width: 30%;
+    height: 450px; 
     object-fit: fill;
     border: 2px lightgray solid;
 }
 
-.project_2 img, .project_3 img {
+.project_1 {
+    background-image: url("../images/proj_1.png");
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: left;
+}
+
+/* Your assignment is to put this into single container and then make it percentage */
+.project_2 img, .project_3 img { 
     width: 600px;
     height: 450px;
     object-fit: fill;
@@ -564,6 +576,7 @@ h1 a{
     flex-direction: row;
     gap: 40px;
     margin: 30px 0;
+    width: 100%;
 }
 
 .project_4 img {
@@ -664,7 +677,7 @@ h1 a{
     background-color: blue;
     color: white;
 }
-
+/* Make this small */
 .footer {
     width: 100%;
     height: 500px;
