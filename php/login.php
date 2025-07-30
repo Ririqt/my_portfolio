@@ -27,6 +27,11 @@
             $email = trim($_POST["email"]);
         }
         
+        if(empty(trim($_POST["password"]))) {
+            $passwordErr = "Please enter your password.";
+        } else {
+            $password = trim($_POST["password"]);
+        }
 
         if(empty($emailErr) && empty($passwordErr)) {
             $sql = "SELECT id, email, password FROM users WHERE email = ?";
