@@ -64,6 +64,6 @@ ul {
     transition: 0.5s;
 }
 
-.header_text li a #projects {
+li#projects a {
     color: white;
 }
