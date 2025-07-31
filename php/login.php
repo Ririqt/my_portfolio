@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> Log In </title>
 </head>
 <body>
     
     <?php
-    session_start();
-
-    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-        header("location: index.php");
-        exit;
-    }
+    session_start(); 
+    // session_destroy();
+    // if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    //     echo "Goods";
+    //     exit;
+    // }
 
     require_once "config.php";
 
     $email = $password = "";
     $emailErr = $passwordErr = $loginErr = "";
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
         if(empty(trim($_POST["email"]))) {
             $emailErr = "Please enter Email.";
         } else {
@@ -34,46 +34,40 @@
         }
 
         if(empty($emailErr) && empty($passwordErr)) {
-            $sql = "SELECT id, email, password FROM users WHERE email = ?";
+            $sql = "SELECT id, name, email, password FROM users WHERE email='$email'";
 
-            if($stmt = mysqli_prepare($conn, $sql)) {
-                mysqli_stmt_bind_param($stmt, "s", $param_email);
-                $param_email = $email;
-                
-                if(mysqli_stmt_execute($stmt)) {
-                    mysqli_stmt_store_result($stmt);
-                    if(mysqli_stmt_num_rows($stmt) == 1) {
-                        mysqli_stmt_bind_result($stmt, $id, $email, $hashed_password);
-                        if(mysqli_stmt_fetch($stmt)) {
-                            if(password_verify($password, $hashed_password)) {
-                                session_start();
-
-                                $_SESSION["loggedin"] = true;
-                                $_SESSION["id"] = $id;
-                                $_SESSION["email"] = $email;
-                                echo $password;
-                                echo "7890";
-                                header("location: index.html");
-                            } else {
-                                $loginErr = "Invalid username or password.";
-                                echo $loginErr;
-                            }
-                        }
+            if ($result=mysqli_query($conn,$sql)) {
+                if(mysqli_num_rows($result)>0) {
+                    $selected_data = mysqli_fetch_assoc($result);
+                    // echo $selected_data["email"];
+                    // exit;
+                    if(password_verify($password, $selected_data["password"])) {
+                        $_SESSION["loggedin"] = true;
+                        $_SESSION["id"] = $selected_data["id"];
+                        $_SESSION["email"] = $selected_data["email"];
+                        $_SESSION["name"] = $selected_data["name"];
+                        echo "Login Success";
+                        header("location: ../php/dashboard.php");
+                        exit;
                     } else {
-                        $loginErr = "Invalid username or password.";
+                        echo "Invalid username or password.";
+                        exit;
                     }
+                  
                 } else {
-                    echo "Something went wrong.";
+                    echo "You are not registered";
                 }
-                echo $password;
-            }
-            mysqli_stmt_close($stmt);
-            // header("location: ../html/index.html");
-            echo "Goods";
-            echo $password;
-        }
         mysqli_close($conn);
+        }
     }
+    }
+    
     ?>
+
+    <form action="../html/register.html" method="POST" class="login_form">
+        <div class="button_continue"> 
+            <button type="submit"> Register </button>
+        </div>
+    </form>
 </body>
 </html>

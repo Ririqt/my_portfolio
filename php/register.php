@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/register_valid.css">
+    <link rel="stylesheet" href="../css/valid_register.css">
     <title> Register Succeed</title>
 </head>
 <body>
 
-    <div class="header">
-    <h1 class="header_title"> <a href="/html/index.html" target="_blank"> My Portfolio </a> </h1>
-        <nav class="header_text">
-            <ul>
-              <li> <a href="/html/index.html#about" target="_blank"> About </a> </li>
-              <li> <a href="/html/index.html#skills" target="_blank"> Skills </a> </li>
-              <li> <a href="/html/index.html#projects" target="_blank"> Projects </a> </li>
-              <li> <a href="/html/login.html" target="_blank"> Log In </a> </li>
-            </ul>
-        </nav>
+   <div class="header">
+        <div class="header_container"> 
+            <h1 class="header_title"> <a href="#index"> My Portfolio </a> </h1>
+                <nav class="header_text">
+                    <ul>
+                    <li> <a href="#about"> About </a> </li>
+                    <li> <a href="#skills"> Skills </a> </li>
+                    <li> <a href="#projects"> Projects </a> </li>
+                    <li> <a href="../html/register.html"> Register </a> <li>
+                    </ul>
+                </nav>
+        </div>
     </div>
-
     <?php
     require_once "config.php";
 
@@ -48,7 +49,8 @@
             if ($result=mysqli_query($conn,$query)) {
                 
                 if(mysqli_num_rows($result)>0){
-                    echo "this email exist, try again!";
+                    echo "this email exist, try again! <br>";
+                    echo "Please click the Register.";
                     exit;
                 } else {
                 }
@@ -92,7 +94,7 @@
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT) ;
         
-        $sql = "INSERT INTO users (name, email, password) VALUES ('$full_name', '$email', '$hashed')";
+        $sql = "INSERT INTO users (name, email, password) VALUES ('$full_name', '$email', '$hashed_password')";
         
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
