@@ -26,8 +26,8 @@
         $sql = "SELECT * FROM projects WHERE id = $edit_id"; //Note: select all // 
         $result = mysqli_query($conn,$sql);
         
-        if ($result && mysqli_num_rows($result) == 1) {
-            $get = mysqli_fetch_assoc($result);
+        if (mysqli_num_rows($result) == 1) {
+            $get = mysqli_fetch_assoc($result); // Note: getting the result into an array //
             $name = $get['name'];
             $description = $get['description'];
             $status = $get['status'];

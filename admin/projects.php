@@ -50,6 +50,8 @@
         $data = htmlspecialchars($data);
         return $data;
     } 
+
+    $conn->close();
     ?>
 
     <div class="header">
@@ -58,6 +60,7 @@
                 <nav class="header_text">
                     <ul>
                     <li> <a href="#about"> About </a> </li>
+                    <li> <a href="../admin/skills/skills.php"> Skills </a> </li>
                     <li id="projects"> <a href="../admin/projects.php"> Projects </a> </li>
                     <li> <a href="../php/logout.php"> Log Out </a> </li>
                     </ul>
@@ -112,7 +115,7 @@
                                 <td> <?php echo $row['description']; ?> </td>
                                 <td> <?php echo $row["status"]; ?> </td>
                                 <td> <a href="projects.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Delete?')"> Delete </a> </td>
-                                <td> <a href="projects/edit.php?edit=<?php echo $row["id"];?>" onclick="return confirm('Proceed to Edit?')"> Edit </a> </td>
+                                <td> <a href="projects/edit.php?edit=<?php echo $row["id"];?>"> Edit </a> </td>
                             </tr>
                         
                         <?php
@@ -132,11 +135,10 @@
     </form>
     
     <?php
-        if (session_status() == PHP_SESSION_ACTIVE) {
-            session_destroy();
-            $conn->close();
-            // exit;
-        }
+        // if (session_status() == PHP_SESSION_ACTIVE) {
+        //     $conn->close();
+        //     exit;
+        // }
     ?>
 </body>
 </html>
