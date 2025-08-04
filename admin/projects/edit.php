@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="../projects/edit.css">
+    <title> Edit </title>
 </head>
 <body>
 <?php
@@ -22,19 +23,30 @@
 
     if (isset($_GET['edit'])) {
         $edit_id = $_GET['edit'];
-        $update = true;
-        $sql = "SELECT id,name,description,status FROM projects WHERE id = $edit_id";
+        $sql = "SELECT * FROM projects WHERE id = $edit_id"; //Note: select all // 
         $result = mysqli_query($conn,$sql);
-        echo $_GET['edit'];
-        echo $edit_id;
         
-        if (count($result)==1) {
-            $get = mysqli_fetch_array($result);
+        if ($result && mysqli_num_rows($result) == 1) {
+            $get = mysqli_fetch_assoc($result);
             $name = $get['name'];
-            $description = $get['address'];
+            $description = $get['description'];
+            $status = $get['status'];
         }
+    }
 
-        $conn->query($sql);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['edit'])) {
+        $edit_id = intval($_GET['edit']);
+        $name = trim($_POST['project_name']);
+        $description = trim($_POST['description']);
+        $status = trim($_POST['status']);
+
+        $sql = "UPDATE projects SET name='$name', description='$description', status='$status' WHERE id=$edit_id"; //Note: important for update // 
+         if ($conn->query($sql) === TRUE) {
+            header("Location: ../projects.php");
+            exit;
+        } else {
+            echo "Update failed: " . $conn->error;
+        }
     }
 ?>
 
@@ -53,32 +65,37 @@
 
     <form method="POST" class="project_form"> 
         <div class="project_section">
-            <div class="project_form"> Edit a Project Here </div>
+            <div class="project_form"> Edit The Project Here </div>
                 <div class="project_container">
                     <div class="project_name">
                         <label for="name"> Name: </label>
-                        <input type="text" id="project_name" name="project_name" value="<?php echo $row['name']; ?>">
+                        <input type="text" id="project_name" name="project_name" value="<?php echo htmlspecialchars($name); ?>">
                     </div>
 
                     <div class="description">
                         <label for="description"> Description: </label>
-                        <textarea type="text" id="description" name="description" rows="4" cols="38" placeholder="description" required> </textarea>
+                        <textarea type="text" id="description" name="description" rows="4" cols="38" placeholder="description" required> <?php echo htmlspecialchars($description); ?> </textarea>
                     </div>
 
                     <div class="status"> <br>
                         <label for="status"> Status: </label>
                         <select id="status" name="status" required>
                             <option value=""> Select Status </option>
-                            <option value="Start"> Start </option>
-                            <option value="In Progress"> In Progress </option>
-                            <option value="Done"> Done </option>
+                            <option value="Start" <?php if ($status == 'Start') echo 'selected'; ?>> Start </option>
+                            <option value="In Progress" <?php if ($status == 'In Progress') echo 'selected'; ?>> In Progress </option>
+                            <option value="Done" <?php if ($status == 'Done') echo 'selected'; ?>> Done </option>
                         </select>
                     </div>
                 </div>
 
                 <div class="edit_button">
-                    <button type="submit"> Edit </button>
+                    <button type="submit"> Confirm Changes </button>
                 </div>
+
     </form>
+
+        <div class="back_button">
+            <button onclick="location.href='../projects.php'" type="button"> Go back </button>
+        </div>
 </body>
 </html>

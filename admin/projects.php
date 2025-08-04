@@ -21,11 +21,12 @@
 
         if (isset($_GET['delete'])) {
             $delete_id = intval($_GET['delete']);
-            $sql = "DELETE FROM projects WHERE id = $delete_id";
+            $sql = "DELETE FROM projects WHERE id = $delete_id"; // important for delete // 
             $conn->query($sql);
             header("Location: projects.php");
             exit;
         }
+
         $project_name = $description = $status = "";
         $projectNameErr = $descriptionErr = "";
 
@@ -34,7 +35,7 @@
             $description = test_input($_POST['description']);
             $status = test_input($_POST["status"]);
 
-            $sql = "INSERT INTO projects (name, description, status) VALUES ('$project_name', '$description', '$status')";
+            $sql = "INSERT INTO projects (name, description, status) VALUES ('$project_name', '$description', '$status')"; // important for create // 
             if ($conn->query($sql) === TRUE) {
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;

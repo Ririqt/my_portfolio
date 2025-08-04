@@ -88,8 +88,8 @@ textarea {
 }
 
 .project_section {
-    width: 70rem;
-    height: 60%;
+    width: 60rem;
+    height: 400px;
     background-color: lightgray;
     margin: 30px 0;
     border-radius: 20px;
@@ -115,16 +115,6 @@ button {
     border-radius: 9px;
 }
 
-button:hover {
-    background-color: blue;
-    color: white;
-    transition: 0.5s;
-}
-
-td a{
-    display: flex;
-    justify-content: center;
-}
 .table {
     width: 70%;
     padding-bottom: 3rem;
@@ -156,4 +146,14 @@ th {
 .status select {
     height: 30px;
     width: 70%; 
+}
+
+button:hover {
+    background-color: blue;
+    color: white;
+    transition: 0.5s;
+}
+
+.back_button {
+    margin: 1rem;
 }
