@@ -7,13 +7,26 @@
     <title> Dashboard </title>
 </head>
 <body>
+    <?php
+    session_start(); 
+
+    $name = $email = "";
+    require_once "config.php";
+    
+    if (session_status() != PHP_SESSION_ACTIVE) {
+        header("location: ../html/login.html");
+        exit;
+    } 
+    
+    ?>
+
     <div class="header">
         <div class="header_container"> 
-            <h1 class="header_title"> <a href="#index"> My Portfolio </a> </h1>
+            <h1 class="header_title"> <a href="../html/index.html"> My Portfolio </a> </h1>
                 <nav class="header_text">
                     <ul>
                     <li> <a href="#about"> About </a> </li>
-                    <li> <a href="#skills"> Skills </a> </li>
+                    <li> <a href="../admin/skills/skills.php"> Skills </a> </li>
                     <li> <a href="../admin/projects.php"> Projects </a> </li>
                     <li> <a href="../php/logout.php"> Log Out </a> </li>
                     </ul>
@@ -22,17 +35,14 @@
     </div>
 
     <div class="welcome">
-        Dashboard 
+        Dashboard <br>
+        <?php
+        echo "Welcome ", $_SESSION["name"], "<br>";
+        echo "Your details ", $_SESSION["email"];
+
+        ?>
     </div>
-    <?php
-    session_start(); 
-
-    $name = $email = "";
-    require_once "config.php";
-
-    echo "Welcome ", $_SESSION["name"], "<br>";
-    echo "Your details ", $_SESSION["email"];
     
-    ?>
+
 </body>
 </html>

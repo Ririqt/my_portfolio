@@ -80,6 +80,16 @@ li#skills a {
     background: lightgray;
 }
 
+.skill_container {
+  margin: 1rem 0;
+}
+
+.skill_form {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+
 .skill_name {
   display:flex;
   justify-content: center;
@@ -87,15 +97,8 @@ li#skills a {
   gap: 20px;
 }
 
-label[for="rate"] {
-  float: left;
-  padding: 0 1em;
-  text-align: center;
-  font-size: 20px;
-}
-
-label[for="submit"] {
-  justify-content: center;
+.skill_name input[type="text"] {
+  font-size: 1.2rem;
 }
 
 label[for="name"] {
@@ -107,59 +110,24 @@ label[for="type"] {
   padding-right: 12px;
 }
 
-input[type="submit"] {
-  border-radius: 9rem;
-  font-size: 1.8rem;
+label[for="rate"] {
+  float: left;
+  padding: 0 1em;
+  text-align: center;
+  font-size: 20px;
 }
-input[type="submit"]:hover {
-  background-color:blue;
-  color: white;
-  transition: 0.5s;
+.type select {
+  height: 30px;
+  width: 75%;
 }
+
+
 .table {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
+    margin-top: 2rem
 }
 
 .rate_table {
   display:flex;
   justify-content:center;
   margin-bottom: 10px;
-}
-
-.rate_table_section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.rate_table_container {
-  margin-bottom: 1rem;
-}
-.skill_container {
-  margin: 1rem 0;
-}
-
-.skill_form {
-  margin-top: 1rem;
-  font-size: 1.5rem;
-}
-
-th {
-  height: 50px;
-}
-
-table {
-  font-size: 1.5rem;
-}
-
-.type select {
-  height: 30px;
-  width: 77%;
-}
-
-.skill_name input[type="text"] {
-  font-size: 1.2rem;
 }
