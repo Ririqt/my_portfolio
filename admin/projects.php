@@ -35,7 +35,7 @@
             $description = test_input($_POST['description']);
             $status = test_input($_POST["status"]);
 
-            $sql = "INSERT INTO projects (name, description, status) VALUES ('$project_name', '$description', '$status')"; // important for create // 
+            $sql = "INSERT INTO about (name, description, status) VALUES ('$project_name', '$description', '$status')"; // important for create // 
             if ($conn->query($sql) === TRUE) {
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
@@ -59,7 +59,7 @@
             <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
                 <nav class="header_text">
                     <ul>
-                    <li> <a href="#about"> About </a> </li>
+                    <li> <a href="../admin/about/about.php"> About </a> </li>
                     <li> <a href="../admin/skills/skills.php"> Skills </a> </li>
                     <li id="projects"> <a href="../admin/projects.php"> Projects </a> </li>
                     <li> <a href="../php/logout.php"> Log Out </a> </li>
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <form method="POST" class="project_form"> 
+    <form method="POST"  class="project_form" onSubmit="setSubmit();"> 
         <div class="project_section">
             <div class="project_form"> Create a Project Here </div>
                 <div class="project_container">
@@ -114,7 +114,7 @@
                                 <td> <?php echo $row['name']; ?> </td>
                                 <td> <?php echo $row['description']; ?> </td>
                                 <td> <?php echo $row["status"]; ?> </td>
-                                <td> <a href="projects.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Delete?')"> Delete </a> </td>
+                                <td> <a href="projects.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Are you sure you want to Delete?')"> Delete </a> </td>
                                 <td> <a href="projects/edit.php?edit=<?php echo $row["id"];?>"> Edit </a> </td>
                             </tr>
                         

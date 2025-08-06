@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../skills/skills.css">
+    <link rel="stylesheet" href="/my_portfolio/css/skills.css">
     <title> Skills </title>
 
     <script>
@@ -43,7 +43,6 @@
             $type = test_input($_POST["type"]);
             $rate = test_input($_POST["rate"]);
 
-
             $sql = "INSERT INTO skills (name, type, rate) VALUES ('$skill_name', '$type', '$rate')"; 
             if ($conn->query($sql) === TRUE) {
             } else {
@@ -65,10 +64,10 @@
             <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
                 <nav class="header_text">
                     <ul>
-                    <li> <a href="#about"> About </a> </li>
-                    <li id="skills"> <a href="../admin/skills/skills.php"> Skills </a> </li>
+                    <li> <a href="../about/about.php"> About </a> </li>
+                    <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
                     <li id="projects"> <a href="../projects.php"> Projects </a> </li>
-                    <li> <a href="../php/logout.php"> Log Out </a> </li>
+                    <li> <a href="/my_portfolio/php/logout.php"> Log Out </a> </li>
                     </ul>
                 </nav>
         </div>
