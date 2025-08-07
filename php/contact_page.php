@@ -9,14 +9,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nameErr = "Only letters and white space allowed";
         echo "Name Error: $nameErr <br>";
         echo "Inputted Name: $name <br> <br>";
+        exit;
     } 
     $email = test_input($_POST['email']);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $emailErr = "Invalid email format"; 
       echo "Email Error: $emailErr <br>";
       echo "Inputted Email: $email <br>";
+      exit;
     }
     $subject = test_input($_POST['subject']);
+    if (preg_match("/^[0-9]/",$subject)) {
+        $subjectErr = "The subject cannot start of number";
+        echo "Subject Error: $subjectErr ";
+        exit;
+    }
     $message = test_input($_POST['message']);
 } 
 

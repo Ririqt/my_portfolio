@@ -34,6 +34,10 @@
         }
     }
 
+    if(mysqli_num_rows($result)>0) {
+        $selected_data = mysqli_fetch_assoc($result);  
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['edit'])) {
         $edit_id = intval($_GET['edit']);
         $name = trim($_POST['skill_name']);
@@ -56,8 +60,8 @@
                     <ul>
                     <li> <a href="../about/about.php"> About </a> </li>
                     <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
-                    <li id="projects"> <a href="../projects.php"> Projects </a> </li>
-                    <li> <a href="/my_portfolio/php/logout.php"> Log Out </a> </li>
+                    <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
+                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
                     </ul>
                 </nav>
         </div>

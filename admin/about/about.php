@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> About Me</title>
+    <title> About Me </title>
 
     <script>
     if (window.history.replaceState ) {
@@ -15,7 +15,7 @@
 <body>
     <?php
         session_start();
-
+        
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -27,7 +27,13 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
-        echo $_SESSION['id'];
+        if(empty($_SESSION['name']) && (empty($_SESSION['email'])) && empty($_SESSION['id'])) {
+            header('location: /my_portfolio/html/login.html');
+            exit;
+        }
+
+        $id = $degree = $birthday = $experience = $address = $company = $phone = "";
+        $degreeErr = $birthdayErr = $experienceErr = $addressErr = $companyErr = $phoneErr = "";
 
         $user_id = $_SESSION['id'];
         $name = $_SESSION['name'];
@@ -42,78 +48,23 @@
             "address"=>"",
             "company"=>"",
         ];
-
+        
         if(mysqli_num_rows($result)>0) {
             $selected_data = mysqli_fetch_assoc($result);  
         }
-
-        $id = $degree = $birthday = $experience = $address = $company = $phone = "";
-        $degreeErr = $birthdayErr = $experienceErr = $addressErr = $companyErr = $phoneErr = "";
-
-        // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        //     $name = $_SESSION['name'];
-        //     $email = $_SESSION['email'];
-        //     $user_id = $_SESSION['id'];
-        //     $birthday = test_input($_POST["birthday"]);
-        //     $degree = test_input($_POST["degree"]);
-        //     $experience = test_input($_POST["experience"]);
-        //     $address = test_input($_POST["address"]);
-        //     $company = test_input($_POST["company"]);
-        //     $phone = test_input($_POST["phone"]);
-
-        //     // check if same with the user_id
-        //     $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone')"; 
-        //     if ($conn->query($sql) === TRUE) {
-        //     } else {
-        //         echo "Error: " . $sql . "<br>" . $conn->error;
-        //     }
-        // }
-
-        // $sql = "SELECT * FROM about";
-        // $result = mysqli_query($conn,$sql);
-
-        
-
-        // function test_input($data) {
-        //     $data = trim($data);
-        //     $data = stripslashes($data);
-        //     $data = htmlspecialchars($data);
-        //     return $data;
-        // }
-        
-        // if(empty($selected_data)) {
-        //     header("location: ../about/create_about.php");
-
-        // } elseif (isset($_GET['edit'])) {
-        //     $action = "";
-        //     $edit_id = $_GET['edit'];
-        //     $sql = "SELECT * FROM about WHERE id = $edit_id"; //Note: select all // 
-        //     $result = mysqli_query($conn,$sql);
-            
-        //     if (mysqli_num_rows($result) == 1) {
-        //         $get = mysqli_fetch_assoc($result); // Note: getting the result into an array //
-        //         $degree = $get['degree'];
-        //         $birthday = $get['birthday'];
-        //         $experience = $get['experience'];
-        //         $address = $get['address'];
-        //         $company = $get['company'];
-        //         $phone = $get['phone'];
-        //     }
-        
-        // }
     ?>
 
     <div class="header">
         <div class="header_container"> 
-            <h1 class="header_title"> <a href="/my_portfolio/html/index.html"> My Portfolio </a> </h1>
-                <nav class="header_text">
-                    <ul>
+            <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
+            <nav class="header_text">
+                <ul>
                     <li> <a href="#about"> About </a> </li>
-                    <li> <a href="../admin/skills/skills.php"> Skills </a> </li>
-                    <li> <a href="../admin/projects.php"> Projects </a> </li>
-                    <li> <a href="/my_portfolio/php/logout.php"> Log Out </a> </li>
-                    </ul>
-                </nav>
+                    <li> <a href="../skills/skills.php"> Skills </a> </li>
+                    <li> <a href="../projects/projects.php"> Projects </a> </li>
+                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
+                </ul>
+            </nav>
         </div>
     </div>
 
@@ -158,6 +109,10 @@
             </div>
         </div>
     </div>
-        <?php mysqli_close($conn); ?>
+
+    <?php 
+    mysqli_close($conn); 
+    ?>
+
 </body>
 </html>

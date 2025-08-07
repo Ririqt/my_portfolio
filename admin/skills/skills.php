@@ -16,6 +16,8 @@
     <?php
         session_start();
         
+        // require_once(" ../php/config.php");
+
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -27,6 +29,13 @@
             die("Connection failed: " . $conn->connect_error);
         }
 
+        $id = $skill_name = $type = $rate = "";
+        $skill_nameErr = $typeErr = $rateErr = "";
+
+        $user_id = $_SESSION['id'];
+        $name = $_SESSION['name'];
+        $email = $_SESSION['email'];
+
         if (isset($_GET['delete'])) {
             $delete_id = intval($_GET['delete']);
             $sql = "DELETE FROM skills WHERE id = $delete_id"; // important for delete // 
@@ -35,22 +44,21 @@
             exit;
         }
 
-        $skill_name = $type = $rate = "";
-        $skill_nameErr = $typeErr = $rateErr = "";
-
         if($_SERVER["REQUEST_METHOD"] == "POST") {
+            $user_id = $_SESSION['id'];
             $skill_name = test_input($_POST["skill_name"]);
             $type = test_input($_POST["type"]);
             $rate = test_input($_POST["rate"]);
 
-            $sql = "INSERT INTO skills (name, type, rate) VALUES ('$skill_name', '$type', '$rate')"; 
+            $sql = "INSERT INTO skills (name, type, rate, user_id) VALUES ('$skill_name', '$type', '$rate', '$user_id')"; 
             if ($conn->query($sql) === TRUE) {
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
         }
-        $sql = "SELECT id, name, type, rate FROM skills";
-        $result = mysqli_query($conn,$sql);
+
+        $query = "SELECT * FROM skills WHERE user_id=$user_id";
+        $result = mysqli_query($conn,$query);
 
     function test_input($data) {
         $data = trim($data);
@@ -66,14 +74,21 @@
                     <ul>
                     <li> <a href="../about/about.php"> About </a> </li>
                     <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
-                    <li id="projects"> <a href="../projects.php"> Projects </a> </li>
-                    <li> <a href="/my_portfolio/php/logout.php"> Log Out </a> </li>
+                    <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
+                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
                     </ul>
                 </nav>
         </div>
     </div>
 
-    <form method="POST" class="skill_form"> 
+    <div class="details"> Your current account: <br>
+        <?php
+            echo $_SESSION['name'], "<br>";
+            echo $_SESSION['email'];
+        ?>
+    </div>
+
+    <form action="skills.php" method="POST" class="skill_form"> 
         <div class="skill_section">
             <div class="skill_form"> Input Your Skill Here </div>
                 <div class="skill_container">
@@ -137,11 +152,14 @@
                         </tr>
 
                         <?php
-                            if($result->num_rows>0){
-                                while($row = $result->fetch_assoc()) {
+                             if(mysqli_num_rows($result)>0) {
+                                while($row = mysqli_fetch_assoc($result)) {  
                         ?>
                             <tr> 
-                                <td> <?php echo $row['name']; ?> </td>
+                                <td> <?php // echo $selected_data['name']; 
+                                            
+                                            echo $row['name'];
+                                        ?> </td>
                                 <td> <?php echo $row['type']; ?> </td>
                                 <td> 
                                 <?php 
@@ -162,9 +180,9 @@
                             </tr>
                         <?php
                                 }
-                            } else {
+                                } else {
                         ?>
-                            <tr> <td colspan="4"> Add something here. </td> </tr>
+                            <tr> <td colspan="5"> Add something here. </td> </tr>
                         <?php
                         }
                         ?>

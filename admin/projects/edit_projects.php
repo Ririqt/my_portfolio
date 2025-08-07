@@ -58,7 +58,7 @@
                     <li> <a href="../about/about.php"> About </a> </li>
                     <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
                     <li id="projects"> <a href="../projects.php"> Projects </a> </li>
-                    <li> <a href="/my_portfolio/php/logout.php"> Log Out </a> </li>
+                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
                     </ul>
                 </nav>
         </div>

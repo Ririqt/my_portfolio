@@ -8,8 +8,8 @@
 <body>
     <?php
         session_start();
-        session_destroy();
-        header("location: /my_portfolio/html/login.html");
+        session_destroy(); //important for log out
+        header("location: /my_portfolio/html/login.html"); // proceed to log in
         exit;
     ?>
 </body>

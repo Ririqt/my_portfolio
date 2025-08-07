@@ -8,60 +8,38 @@
 <body>
     
     <?php
-    session_start(); 
-    // session_destroy();
-    // if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    //     echo "Goods";
-    //     exit;
-    // }
+    session_start(); // indicates for a session to start
 
-    require_once "config.php";
+    require_once "config.php"; //access the connection to the database
 
     $email = $password = "";
     $emailErr = $passwordErr = $loginErr = "";
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
-        if(empty(trim($_POST["email"]))) {
-            $emailErr = "Please enter Email.";
-        } else {
-            $email = trim($_POST["email"]);
-        }
-        
-        if(empty(trim($_POST["password"]))) {
-            $passwordErr = "Please enter your password.";
-        } else {
-            $password = trim($_POST["password"]);
-        }
+        $email = trim($_POST["email"]);
+        $password = trim($_POST["password"]);
+        $sql = "SELECT id, name, email, password FROM users WHERE email='$email'";
 
-        if(empty($emailErr) && empty($passwordErr)) {
-            $sql = "SELECT id, name, email, password FROM users WHERE email='$email'";
-
-            if ($result=mysqli_query($conn,$sql)) {
-                if(mysqli_num_rows($result)>0) {
-                    $selected_data = mysqli_fetch_assoc($result);
-                    // echo $selected_data["email"];
-                    // exit;
-                    if(password_verify($password, $selected_data["password"])) {
-                        $_SESSION["loggedin"] = true;
-                        $_SESSION["id"] = $selected_data["id"];
-                        $_SESSION["email"] = $selected_data["email"];
-                        $_SESSION["name"] = $selected_data["name"];
-                        echo "Login Success";
-                        header("location: ../php/dashboard.php");
-                        exit;
-                    } else {
-                        echo "Invalid username or password.";
-                        exit;
-                    }
-                  
+        if ($result=mysqli_query($conn,$sql)) {
+            if(mysqli_num_rows($result)>0) {
+                $selected_data = mysqli_fetch_assoc($result); //fetches the result row into an assoc array, assoc array -> kung ano ang array mismo doon sa tinawag mo
+                if(password_verify($password, $selected_data["password"])) { // if the variable password and the database password are the same if true run the below code
+                    $_SESSION["loggedin"] = true;
+                    $_SESSION["id"] = $selected_data["id"];
+                    $_SESSION["email"] = $selected_data["email"];
+                    $_SESSION["name"] = $selected_data["name"];
+                    echo "Login Success";
+                    header("location: ../php/dashboard.php");
+                    exit;
                 } else {
-                    echo "You are not registered";
+                    echo "Invalid username or password.";
+                    exit;
                 }
-        mysqli_close($conn);
+            } else {
+                echo "You are not registered";
+            }
         }
     }
-    }
-    
     ?>
 
     <form action="../html/register.html" method="POST" class="login_form">
@@ -69,5 +47,7 @@
             <button type="submit"> Register </button>
         </div>
     </form>
+
+    <?php mysqli_close($conn);?>
 </body>
 </html>
