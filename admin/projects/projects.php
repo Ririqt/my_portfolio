@@ -17,51 +17,9 @@
 <body>
     <?php
         session_start();
-        
-        // require_once(" ../php/config.php");
-
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "my_portfolio";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        $user_id = $_SESSION['id'];
-            
-        if (isset($_GET['delete'])) {
-            $delete_id = intval($_GET['delete']);
-            $sql = "DELETE FROM projects WHERE id = $delete_id"; // important for delete // 
-            $conn->query($sql);
-            header("Location: projects.php");
-            exit;
-        }
-
-        $project_name = $description = $status = "";
-        $projectNameErr = $descriptionErr = "";
-
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            $user_id = $_SESSION['id'];
-            $project_name = test_input($_POST["project_name"]);
-            $description = test_input($_POST['description']);
-            $status = test_input($_POST["status"]);
-
-            $sql = "INSERT INTO projects (name, description, status, user_id) VALUES ('$project_name', '$description', '$status', '$user_id')"; // important for create // 
-            if ($conn->query($sql) === TRUE) {
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-        }
-
-        $query = "SELECT * FROM projects WHERE user_id=$user_id";
-        $result = mysqli_query($conn,$query);
-
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    } 
+        require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
+        include('backend_projects.php');
+    
     ?>
 
     <div class="header">
@@ -138,9 +96,8 @@
                         <?php
                                 }
                             } else {
-                                
                         ?>
-                            <tr> <td colspan="5"> Add something here. </td> </tr>
+                            <tr> <td colspan="5" id="add"> Add something here. </td> </tr>
                         <?php
                         }
                         ?>
@@ -150,9 +107,5 @@
         </div>
 
     </form>
-    
-    <?php
-        $conn->close();
-    ?>
 </body>
 </html>

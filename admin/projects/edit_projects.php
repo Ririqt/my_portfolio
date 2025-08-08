@@ -10,57 +10,22 @@
 <?php
     session_start();
     
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "my_portfolio";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    if (isset($_GET['edit'])) {
-        $edit_id = $_GET['edit'];
-        $sql = "SELECT * FROM projects WHERE id = $edit_id"; //Note: select all // 
-        $result = mysqli_query($conn,$sql);
-        
-        if (mysqli_num_rows($result) == 1) {
-            $get = mysqli_fetch_assoc($result); // Note: getting the result into an array //
-            $name = $get['name'];
-            $description = $get['description'];
-            $status = $get['status'];
-        }
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['edit'])) {
-        $edit_id = intval($_GET['edit']);
-        $name = trim($_POST['project_name']);
-        $description = trim($_POST['description']);
-        $status = trim($_POST['status']);
-
-        $sql = "UPDATE projects SET name='$name', description='$description', status='$status' WHERE id=$edit_id"; //Note: important for update // 
-         if ($conn->query($sql) === TRUE) {
-            header("Location: ../projects.php");
-            exit;
-        } else {
-            echo "Update failed: " . $conn->error;
-        }
-    }
+    require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
+    include('backend_edit_projects.php');
+    
 ?>
 
     <div class="header">
         <div class="header_container"> 
             <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
-                <nav class="header_text">
-                    <ul>
+            <nav class="header_text">
+                <ul>
                     <li> <a href="../about/about.php"> About </a> </li>
                     <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
                     <li id="projects"> <a href="../projects.php"> Projects </a> </li>
                     <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
-                    </ul>
-                </nav>
+                </ul>
+            </nav>
         </div>
     </div>
 
@@ -92,11 +57,10 @@
                 <div class="edit_button">
                     <button type="submit"> Confirm Changes </button>
                 </div>
-
     </form>
 
-        <div class="back_button">
-            <button onclick="location.href='../projects.php'" type="button"> Go back </button>
-        </div>
+    <div class="back_button">
+        <button onclick="location.href='../projects/projects.php'" type="button"> Go back </button>
+    </div>
 </body>
 </html>

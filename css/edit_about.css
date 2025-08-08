@@ -1,0 +1,123 @@
+body {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+h1 a{
+    display: inline-flex;
+    text-decoration: none;
+    color: black;
+}
+
+.header {
+    background-color: #34cceb;
+    border-radius: 0px 0px 20px 20px;
+    box-shadow:  5px 10px 8px #888888;
+}
+
+.header_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.header_text {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.header_text li {
+    list-style: none;
+    display: flex;
+}
+
+ul {
+    gap: 3rem;
+    display: flex;
+    gap: 2rem;
+    padding: 0;
+    margin: 0;
+}
+
+.header_text li a {
+    text-decoration: none;
+    color: black;
+}
+
+.header_text li a:hover {
+    color: beige;
+    transition: 0.5s;
+}
+
+.header_title {
+    font-size: 30px;
+    color: black;
+}
+
+.header_title:hover a {
+    color: white;
+    transition: 0.5s;
+}
+
+li#about a {
+    color: white;
+}
+
+.about_section {
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    width: 100%;
+    height: 60%;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.2rem;
+}
+
+.about_container {
+    display:grid;
+    gap: 0.8rem;
+    width: 15%;
+    background-color: lightgray;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+label[for=details] {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+label[for=submit] {
+    display: flex;
+    justify-content: center;
+}
+
+input[type="submit"] {
+    font-size: 1.2rem;
+}
+
+.about_form {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.about_name, .about_email, .about_degree, .about_birthday, .about_experience, .about_phone, .about_address, .about_company {
+    display:flex;
+    justify-content: space-between;
+}
+
+.back_button {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-size: 1rem;
+}

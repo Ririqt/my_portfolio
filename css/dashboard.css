@@ -10,7 +10,7 @@ body {
 h1 a{
     display: inline-flex;
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .header {
@@ -67,8 +67,57 @@ ul {
 .welcome {
     display: flex;
     justify-content: center;
+    text-align: center;
     align-items: center;
     margin: 1.5rem;
     font-weight: 700;
     font-size: 32px;
+}
+
+.full_name {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.about_section {
+    height: 60%;
+    margin: 1rem 0;
+}
+.details {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.about_name, .about_email, .about_degree, .about_birthday, .about_experience, .about_phone, .about_address, .about_company {
+    display:flex;
+    justify-content: space-between;
+}
+
+.about {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.about_container {
+    margin-top: 0.6rem;
+}
+
+.about_circle {
+    background: lightgray;
+    margin: 2rem 30%;
+    border: 2px solid black;
+    border-radius: 1rem;
+}
+
+.column_1, .column_2 {
+    display: grid;
+    width: 27%;
+    gap: 0.5rem;
 }

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/my_portfolio/css/about.css">
     <title> About Me </title>
 
     <script>
@@ -16,42 +17,8 @@
     <?php
         session_start();
         
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "my_portfolio";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        if(empty($_SESSION['name']) && (empty($_SESSION['email'])) && empty($_SESSION['id'])) {
-            header('location: /my_portfolio/html/login.html');
-            exit;
-        }
-
-        $id = $degree = $birthday = $experience = $address = $company = $phone = "";
-        $degreeErr = $birthdayErr = $experienceErr = $addressErr = $companyErr = $phoneErr = "";
-
-        $user_id = $_SESSION['id'];
-        $name = $_SESSION['name'];
-        $email = $_SESSION['email'];
-        $query = "SELECT * FROM about WHERE user_id=$user_id";
-        $result = mysqli_query($conn,$query);
-        $selected_data = [
-            "degree"=>"",
-            "birthday"=>"",
-            "experience"=>"",
-            "phone"=>"",
-            "address"=>"",
-            "company"=>"",
-        ];
-        
-        if(mysqli_num_rows($result)>0) {
-            $selected_data = mysqli_fetch_assoc($result);  
-        }
+        require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
+        include 'backend_about.php';
     ?>
 
     <div class="header">
@@ -59,7 +26,7 @@
             <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
             <nav class="header_text">
                 <ul>
-                    <li> <a href="#about"> About </a> </li>
+                    <li id="about"> <a href="#about"> About </a> </li>
                     <li> <a href="../skills/skills.php"> Skills </a> </li>
                     <li> <a href="../projects/projects.php"> Projects </a> </li>
                     <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
@@ -69,38 +36,38 @@
     </div>
 
     <div class="about_section">
-        <div class="about_form"> Your Details 
+        <div class="about_form"> Your Details  </div>
             <div class="about_container">
                 <div class="about_name">
-                    Name: <?php echo $name ?>
+                    <label for="details"> Name: </label> <?php echo $name ?> 
                 </div>
 
                 <div class="about_email">
-                    Email: <?php echo $email ?>
+                   <label for="details">  Email: </label> <?php echo $email ?> 
                 </div>
 
                 <div class="about_degree">
-                    Degree: <?php echo $selected_data['degree'] ?>
+                    <label for="details"> Degree: </label><?php echo $selected_data['degree'] ?> 
                 </div>
 
                 <div class="about_birthday">
-                    Birthday: <?php echo $selected_data['birthday'] ?>
+                   <label for="details"> Birthday: </label><?php echo $selected_data['birthday'] ?> 
                 </div>
 
                 <div class="about_experience">
-                    Experience: <?php echo $selected_data['experience'] ?>
+                   <label for="details"> Experience: </label><?php echo $selected_data['experience'] ?> 
                 </div>
 
                 <div class="about_phone">
-                    Phone: <?php echo $selected_data['phone'] ?>
+                    <label for="details"> Phone: </label><?php echo $selected_data['phone'] ?> 
                 </div>
 
                 <div class="about_address">
-                    Address: <?php echo $selected_data['address'] ?>
+                    <label for="details"> Address: </label><?php echo $selected_data['address'] ?> 
                 </div>
 
                 <div class="about_company">
-                    Company: <?php echo $selected_data['company'] ?>
+                    <label for="details"> Company: </label><?php echo $selected_data['company'] ?> 
                 </div>
 
                 <form action="../about/edit_about.php">
@@ -108,11 +75,6 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    <?php 
-    mysqli_close($conn); 
-    ?>
 
 </body>
 </html>

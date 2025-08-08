@@ -163,3 +163,7 @@ table {
 .skill_name input[type="text"] {
   font-size: 1.2rem;
 }
+
+td#add {
+  text-align: center;
+}

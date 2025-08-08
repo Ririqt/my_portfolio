@@ -12,7 +12,8 @@
 
     $name = $email = "";
     require_once "config.php";
-    
+    include($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/admin/about/backend_about.php");
+
     if(empty($_SESSION['name']) && (empty($_SESSION['email']))) {
         header('location: ../html/login.html');
         exit;
@@ -33,12 +34,97 @@
         </div>
     </div>
 
-    <div class="welcome"> Dashboard <br>
-        <?php
-            echo "Welcome ", $_SESSION["name"], "<br>";
-            echo "Your details ", $_SESSION["email"];
-        ?>
+    <div class="welcome"> Dashboard <br> </div>
+        <?php echo '<div class="full_name">',"Welcome ", $_SESSION["name"], "!", '</div>'; ?>
+
+
+    <div class="about_section">
+        <div class="about_circle">
+            <div class="about"> About </div>
+            <div class="about_container">
+                <div class="details">
+                    <div class="column_1"> 
+                        <div class="about_name">
+                            <label for="details"> Name: </label> <?php echo $name ?> 
+                        </div>
+
+                        <div class="about_email">
+                        <label for="details">  Email: </label> <?php echo $email ?> 
+                        </div>
+
+                        <div class="about_degree">
+                            <label for="details"> Degree: </label><?php echo $selected_data['degree'] ?> 
+                        </div>
+
+                        <div class="about_birthday">
+                        <label for="details"> Birthday: </label><?php echo $selected_data['birthday'] ?> 
+                        </div>
+                    </div>
+
+                    <div class="column_2">
+                        <div class="about_experience">
+                        <label for="details"> Experience: </label><?php echo $selected_data['experience'] ?> 
+                        </div>
+
+                        <div class="about_phone">
+                            <label for="details"> Phone: </label><?php echo $selected_data['phone'] ?> 
+                        </div>
+
+                        <div class="about_address">
+                            <label for="details"> Address: </label><?php echo $selected_data['address'] ?> 
+                        </div>
+
+                        <div class="about_company">
+                            <label for="details"> Company: </label><?php echo $selected_data['company'] ?> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div class="skills_section">
+        <div class="skills_circle">
+            <div class="skill"> Skills </div>
+            <div class="skills_container"> 
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="button">
+        <button onclick="location.href='../html/index.html'" type="button"> Go to your Portfolio </button>
+    </div>
 </body>
 </html>

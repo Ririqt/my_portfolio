@@ -15,58 +15,10 @@
 <body>
     <?php
         session_start();
-        
-        // require_once(" ../php/config.php");
-
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "my_portfolio";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $id = $skill_name = $type = $rate = "";
-        $skill_nameErr = $typeErr = $rateErr = "";
-
-        $user_id = $_SESSION['id'];
-        $name = $_SESSION['name'];
-        $email = $_SESSION['email'];
-
-        if (isset($_GET['delete'])) {
-            $delete_id = intval($_GET['delete']);
-            $sql = "DELETE FROM skills WHERE id = $delete_id"; // important for delete // 
-            $conn->query($sql);
-            header("location: skills.php");
-            exit;
-        }
-
-        if($_SERVER["REQUEST_METHOD"] == "POST") {
-            $user_id = $_SESSION['id'];
-            $skill_name = test_input($_POST["skill_name"]);
-            $type = test_input($_POST["type"]);
-            $rate = test_input($_POST["rate"]);
-
-            $sql = "INSERT INTO skills (name, type, rate, user_id) VALUES ('$skill_name', '$type', '$rate', '$user_id')"; 
-            if ($conn->query($sql) === TRUE) {
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-        }
-
-        $query = "SELECT * FROM skills WHERE user_id=$user_id";
-        $result = mysqli_query($conn,$query);
-
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    } 
+        require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
+        include('backend_skills.php');
     ?> 
+
     <div class="header">
         <div class="header_container"> 
             <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
@@ -156,10 +108,7 @@
                                 while($row = mysqli_fetch_assoc($result)) {  
                         ?>
                             <tr> 
-                                <td> <?php // echo $selected_data['name']; 
-                                            
-                                            echo $row['name'];
-                                        ?> </td>
+                                <td> <?php echo $row['name']; ?> </td>
                                 <td> <?php echo $row['type']; ?> </td>
                                 <td> 
                                 <?php 
@@ -182,15 +131,12 @@
                                 }
                                 } else {
                         ?>
-                            <tr> <td colspan="5"> Add something here. </td> </tr>
+                            <tr> <td colspan="5" id="add"> Add something here. </td> </tr>
                         <?php
                         }
                         ?>
                     </table>
-        </div>
-    <?php
-    $conn->close();
-    ?>                
+        </div>             
 </form>
 </body>
 </html>

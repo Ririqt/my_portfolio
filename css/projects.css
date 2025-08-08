@@ -157,3 +157,7 @@ th {
     height: 30px;
     width: 70%; 
 }
+
+td#add {
+  text-align: center;
+}
