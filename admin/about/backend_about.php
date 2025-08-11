@@ -20,5 +20,5 @@
         $selected_data = mysqli_fetch_assoc($result);  
     }
 
-    mysqli_close($conn); 
+    // mysqli_close($conn); 
 ?>

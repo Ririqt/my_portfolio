@@ -69,7 +69,7 @@ ul {
     justify-content: center;
     text-align: center;
     align-items: center;
-    margin: 1.5rem;
+    margin: 2.5rem 0 1.5rem 0;
     font-weight: 700;
     font-size: 32px;
 }
@@ -84,40 +84,170 @@ ul {
     height: 60%;
     margin: 1rem 0;
 }
+
+.about_circle {
+    /* background: lightgray; */
+    margin: 10rem 8rem;
+    border: 2px solid black;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+}
+
 .details {
     display: flex;
-    gap: 2.5rem;
-    justify-content: center;
-    margin-bottom: 1rem;
+    gap: 12.5rem;
+    margin-bottom: 18rem;
+    font-size: 1.2rem;
 }
 
 .about_name, .about_email, .about_degree, .about_birthday, .about_experience, .about_phone, .about_address, .about_company {
     display:flex;
     justify-content: space-between;
+    gap: 2rem;
 }
 
 .about {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     text-align: center;
-    margin-top: 0.8rem;
-    font-size: 1.2rem;
+    margin: 0.8rem 0;
+    font-size: 1.8rem;
     font-weight: 700;
+    color: #4034eb;
 }
 
-.about_container {
+.about_details {
     margin-top: 0.6rem;
 }
 
-.about_circle {
-    background: lightgray;
-    margin: 2rem 30%;
-    border: 2px solid black;
-    border-radius: 1rem;
-}
 
 .column_1, .column_2 {
     display: grid;
-    width: 27%;
-    gap: 0.5rem;
+    /* width: 27%; */
+    gap: 1.3rem;
+}
+
+.table {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* table {
+    width: 600px;
+    table-layout: fixed;
+    border-collapse: collapse;
+} */
+
+.skill, .projects {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.8rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4034eb;
+}
+
+.skills_section {
+    height: 60%;
+}
+
+th {
+    font-size: 1.3rem;
+}
+
+td {
+    font-size: 1.2rem;
+    padding: 0.6rem
+}
+
+td.rate {
+    text-align: end;
+}
+button {
+    font-size: 1.2rem;
+    border-radius: 0.6rem;
+}
+
+button:hover{
+    background: blue;
+    color: white;
+    transition: 0.5s;
+}
+
+.button {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label[for=details] {
+    font-weight: 600;
+}
+
+.about_picture {
+    background-image: url("../images/about_picture.JPG");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+}
+
+.container {
+    display: flex; 
+    width: 44.75%;
+    object-fit: fill;
+    margin: 0 0 0 40px;
+}
+
+.about_text {
+    display: flex;
+    padding: 0 0 1rem 0;
+    flex-direction: column;
+    width: 50%;
+}
+
+.about_container {
+    display: flex;
+    gap: 2rem;
+}
+
+.about_role {
+    font-weight: 700;
+    font-size: 1.8rem;
+    justify-content: center;
+    display: flex;
+}
+
+.projects_details {
+    display: inline-block;
+    text-align: center;
+    width: 30%;
+    height: 50px;
+    padding: 1rem 0;
+    font-size: 1.3rem;
+}
+
+.projects_fill {
+    padding: 0 0 0 5%;
+    width: 100%;
+}
+
+.skills_fill {
+    padding: 1rem 10%;
+    width: 100%;
+}
+
+.skills_details {
+    display: inline-block;
+    text-align: center;
+    width: 40%;
+    height: 50px;
+    font-size: 1.3rem;
+    padding: 0.5rem 0;
+}
+
+.very_good {
+    color: green;
 }

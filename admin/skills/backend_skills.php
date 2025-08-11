@@ -6,6 +6,11 @@
         $name = $_SESSION['name'];
         $email = $_SESSION['email'];
 
+        if(empty($_SESSION['name']) && (empty($_SESSION['email']))) {
+            header('location: /my_portfolio/html/login.html');
+            exit;
+        }
+
         if (isset($_GET['delete'])) {
             $delete_id = intval($_GET['delete']);
             $sql = "DELETE FROM skills WHERE id = $delete_id"; // important for delete // 
@@ -37,5 +42,6 @@
         return $data;
     } 
 
-    $conn->close();
+    mysqli_close($conn);
+    // $conn->close();
 ?>

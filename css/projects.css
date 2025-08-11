@@ -161,3 +161,8 @@ th {
 td#add {
   text-align: center;
 }
+
+.description {
+    display: flex;
+    gap: 0.35rem;
+}

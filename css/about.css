@@ -101,6 +101,13 @@ form {
 
 input[type="submit"] {
     font-size: 1.2rem;
+    border-radius: 0.6rem;
+}
+
+input[type="submit"]:hover {
+    background-color: blue;
+    color: white;
+    transition: 0.5s;
 }
 
 label[for=details] {
