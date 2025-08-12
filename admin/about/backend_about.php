@@ -1,6 +1,6 @@
 <?php
-    $id = $degree = $birthday = $experience = $address = $company = $phone = "";
-    $degreeErr = $birthdayErr = $experienceErr = $addressErr = $companyErr = $phoneErr = "";
+    $id = $degree = $birthday = $experience = $address = $company = $phone = $role = $description = "";
+    $degreeErr = $birthdayErr = $experienceErr = $addressErr = $companyErr = $phoneErr = $roleErr = $description = "";
 
     $user_id = $_SESSION['id'];
     $name = $_SESSION['name'];
@@ -14,6 +14,8 @@
         "phone"=>"",
         "address"=>"",
         "company"=>"",
+        "role"=>"",
+        "description"=>"",
     ];
             
     if(mysqli_num_rows($result)>0) {

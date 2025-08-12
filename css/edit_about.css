@@ -20,15 +20,20 @@ h1 a{
 }
 
 .header_container {
-    display: flex;
+    display: inline-block;
+    width: 100%
+}
+
+.nav_bar {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 50px;
+    gap: 33rem;
 }
 
 .header_text {
     font-weight: 700;
     font-size: 20px;
+    padding: 0;
 }
 
 .header_text li {
@@ -38,10 +43,8 @@ h1 a{
 
 ul {
     gap: 3rem;
-    display: flex;
-    gap: 2rem;
+    display: inline-flex;
     padding: 0;
-    margin: 0;
 }
 
 .header_text li a {
@@ -56,7 +59,9 @@ ul {
 
 .header_title {
     font-size: 30px;
-    color: black;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 0 0 4rem;
 }
 
 .header_title:hover a {
@@ -82,7 +87,7 @@ li#about a {
 .about_container {
     display:grid;
     gap: 0.8rem;
-    width: 15%;
+    width: 18%;
     background-color: lightgray;
     border: 2px solid black;
     border-radius: 10px;
@@ -115,7 +120,7 @@ input[type="submit"]:hover {
     font-weight: 700;
 }
 
-.about_name, .about_email, .about_degree, .about_birthday, .about_experience, .about_phone, .about_address, .about_company {
+.about_name, .about_email, .about_degree, .about_birthday, .about_experience, .about_phone, .about_address, .about_company, .about_role, .about_description {
     display:flex;
     justify-content: space-between;
 }
@@ -134,4 +139,12 @@ button:hover {
     background-color: blue;
     color: white;
     transition: 0.5s;
+}
+
+textarea {
+    resize: none;
+}
+
+li#about a {
+    color: white;
 }

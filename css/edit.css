@@ -20,15 +20,20 @@ h1 a{
 }
 
 .header_container {
-    display: flex;
+    display: inline-block;
+    width: 100%
+}
+
+.nav_bar {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 50px;
+    gap: 33rem;
 }
 
 .header_text {
     font-weight: 700;
     font-size: 20px;
+    padding: 0;
 }
 
 .header_text li {
@@ -38,10 +43,8 @@ h1 a{
 
 ul {
     gap: 3rem;
-    display: flex;
-    gap: 2rem;
+    display: inline-flex;
     padding: 0;
-    margin: 0;
 }
 
 .header_text li a {
@@ -56,7 +59,9 @@ ul {
 
 .header_title {
     font-size: 30px;
-    color: black;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 0 0 4rem;
 }
 
 .header_title:hover a {
@@ -156,4 +161,8 @@ button:hover {
 
 .back_button {
     margin: 1rem;
+}
+
+.user {
+    font-weight: 900;
 }

@@ -11,6 +11,8 @@
         "phone"=>"",
         "address"=>"",
         "company"=>"",
+        "role"=>"",
+        "description"=>"",
     ];
 
     if(mysqli_num_rows($result)>0) {
@@ -25,11 +27,16 @@
             $address = test_input($_POST["address"]);
             $company = test_input($_POST["company"]);
             $phone = test_input($_POST["phone"]);
+            $role = test_input($_POST["role"]);
+            $description = test_input($_POST["description"]);
+            
+            // echo json_encode($description);
+            // exit;
 
-            if ($selected_data['degree'] && $selected_data['birthday'] && $selected_data['experience'] && $selected_data['address'] && $selected_data['company'] && $selected_data['phone']) {
-                $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone' WHERE user_id=$user_id";
+            if ($selected_data['degree'] && $selected_data['birthday'] && $selected_data['experience'] && $selected_data['address'] && $selected_data['company'] && $selected_data['phone'] ) {
+                $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description' WHERE user_id=$user_id";
             } else {
-                $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone')";
+                $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone, role, description) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone', '$role', '$description')";
             }
              //Note: important for update // 
             if ($conn->query($sql) === TRUE) {
@@ -46,4 +53,5 @@
             $data = htmlspecialchars($data);
             return $data;
         }
+
 ?>

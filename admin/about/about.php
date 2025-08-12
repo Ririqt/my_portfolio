@@ -19,61 +19,83 @@
         
         require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
         include 'backend_about.php';
+
+        // echo json_encode($selected_data['description']);
+        // exit;
     ?>
 
     <div class="header">
         <div class="header_container"> 
-            <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
-            <nav class="header_text">
-                <ul>
-                    <li id="about"> <a href="#about"> About </a> </li>
-                    <li> <a href="../skills/skills.php"> Skills </a> </li>
-                    <li> <a href="../projects/projects.php"> Projects </a> </li>
-                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
-                </ul>
-            </nav>
+            <div class="nav_bar">
+                <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
+                <nav class="header_text">
+                    <ul>
+                        <li id="about"> <a href="../about/about.php"> About </a> </li>
+                        <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
+                        <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
+                        <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
+                    </ul>
+                
+                </nav> 
+                <div class="user"> User: <?php echo $_SESSION['name'];  ?> </div> 
+            </div>
         </div>
     </div>
 
     <div class="about_section">
         <div class="about_form"> Your Details  </div>
             <div class="about_container">
-                <div class="about_name">
-                    <label for="details"> Name: </label> <?php echo $name ?> 
+                <div class="column_1"> 
+                    <div class="about_name">
+                        <label for="details"> Name: </label> <?php echo $name ?> 
+                    </div>
+
+                    <div class="about_email">
+                    <label for="details">  Email: </label> <?php echo $email ?> 
+                    </div>
+
+                    <div class="about_degree">
+                        <label for="details"> Degree: </label><?php echo $selected_data['degree'] ?> 
+                    </div>
+
+                    <div class="about_birthday">
+                    <label for="details"> Birthday: </label><?php echo $selected_data['birthday'] ?> 
+                    </div>
+
+                    <div class="about_experience">
+                    <label for="details"> Experience: </label><?php echo $selected_data['experience'] ?> 
+                    </div>
+                </div>
+                
+                <div class="column_2"> 
+                    <div class="about_phone">
+                        <label for="details"> Phone: </label><?php echo $selected_data['phone'] ?> 
+                    </div>
+
+                    <div class="about_address">
+                        <label for="details"> Address: </label><?php echo $selected_data['address'] ?> 
+                    </div>
+
+                    <div class="about_company">
+                        <label for="details"> Company: </label><?php echo $selected_data['company'] ?> 
+                    </div>
+
+                    <div class="about_role">
+                        <label for="details"> Role: </label><?php echo $selected_data['role'] ?> 
+                    </div>
                 </div>
 
-                <div class="about_email">
-                   <label for="details">  Email: </label> <?php echo $email ?> 
+                <div class="for_description">
+                    <div class="about_description">
+                        <label for="details"> Description: </label><?php echo $selected_data['description'] ?> 
+                    </div>
                 </div>
-
-                <div class="about_degree">
-                    <label for="details"> Degree: </label><?php echo $selected_data['degree'] ?> 
-                </div>
-
-                <div class="about_birthday">
-                   <label for="details"> Birthday: </label><?php echo $selected_data['birthday'] ?> 
-                </div>
-
-                <div class="about_experience">
-                   <label for="details"> Experience: </label><?php echo $selected_data['experience'] ?> 
-                </div>
-
-                <div class="about_phone">
-                    <label for="details"> Phone: </label><?php echo $selected_data['phone'] ?> 
-                </div>
-
-                <div class="about_address">
-                    <label for="details"> Address: </label><?php echo $selected_data['address'] ?> 
-                </div>
-
-                <div class="about_company">
-                    <label for="details"> Company: </label><?php echo $selected_data['company'] ?> 
-                </div>
-
-                <form action="../about/edit_about.php">
+               
+            </div> 
+            
+            <form action="../about/edit_about.php">
                     <input type="submit" value="Edit About" />
-                </form>
-            </div>
+            </form>
         </div>
 
 </body>

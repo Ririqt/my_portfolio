@@ -20,15 +20,20 @@ h1 a{
 }
 
 .header_container {
-    display: flex;
+    display: inline-block;
+    width: 100%
+}
+
+.nav_bar {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 50px;
+    gap: 33rem;
 }
 
 .header_text {
     font-weight: 700;
     font-size: 20px;
+    padding: 0;
 }
 
 .header_text li {
@@ -38,10 +43,8 @@ h1 a{
 
 ul {
     gap: 3rem;
-    display: flex;
-    gap: 2rem;
+    display: inline-flex;
     padding: 0;
-    margin: 0;
 }
 
 .header_text li a {
@@ -56,7 +59,9 @@ ul {
 
 .header_title {
     font-size: 30px;
-    color: black;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 0 0 4rem;
 }
 
 .header_title:hover a {
@@ -83,21 +88,22 @@ ul {
 .about_section {
     height: 60%;
     margin: 1rem 0;
+    width: 100%;
 }
 
 .about_circle {
     /* background: lightgray; */
+    display: flex;
     margin: 10rem 8rem;
     border: 2px solid black;
     border-radius: 1rem;
-    display: flex;
     flex-direction: column;
     padding: 0 1rem;
 }
 
 .details {
     display: flex;
-    gap: 12.5rem;
+    gap: 13.5rem;
     margin-bottom: 18rem;
     font-size: 1.2rem;
 }
@@ -105,7 +111,7 @@ ul {
 .about_name, .about_email, .about_degree, .about_birthday, .about_experience, .about_phone, .about_address, .about_company {
     display:flex;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 4rem;
 }
 
 .about {
@@ -115,6 +121,10 @@ ul {
     margin: 0.8rem 0;
     font-size: 1.8rem;
     font-weight: 700;
+}
+
+.about a{
+    text-decoration: none;
     color: #4034eb;
 }
 
@@ -130,9 +140,9 @@ ul {
 }
 
 .table {
-    margin: 1rem 0;
     display: flex;
     justify-content: center;
+    margin: 1rem 0;
 }
 
 /* table {
@@ -149,6 +159,12 @@ ul {
     font-weight: 700;
     color: #4034eb;
 }
+
+.skill a, .projects a{
+    text-decoration: none;
+    color: #4034eb;
+}
+
 
 .skills_section {
     height: 60%;
@@ -169,6 +185,7 @@ td.rate {
 button {
     font-size: 1.2rem;
     border-radius: 0.6rem;
+    padding: 0.5rem;
 }
 
 button:hover{
@@ -181,6 +198,7 @@ button:hover{
     display:flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 1rem;
 }
 
 label[for=details] {
@@ -196,14 +214,14 @@ label[for=details] {
 
 .container {
     display: flex; 
-    width: 44.75%;
+    width: 50%;
     object-fit: fill;
     margin: 0 0 0 40px;
 }
 
 .about_text {
     display: flex;
-    padding: 0 0 1rem 0;
+    /* padding: 0 0 1rem 0; */
     flex-direction: column;
     width: 50%;
 }
@@ -220,17 +238,29 @@ label[for=details] {
     display: flex;
 }
 
+.about_description {
+    font-size: 1.2rem;
+    justify-content: center;
+    display: flex;
+    padding: 1.25rem 0;
+}
+
 .projects_details {
     display: inline-block;
     text-align: center;
     width: 30%;
-    height: 50px;
-    padding: 1rem 0;
+    /* height: 50px; */
+    margin: 1rem 0.5rem;
     font-size: 1.3rem;
+    border: 1px solid black;
+}
+
+.projects_bar {
+    padding: 1rem 0;
 }
 
 .projects_fill {
-    padding: 0 0 0 5%;
+    padding: 0 0 0 4%;
     width: 100%;
 }
 
@@ -242,12 +272,70 @@ label[for=details] {
 .skills_details {
     display: inline-block;
     text-align: center;
-    width: 40%;
+    width: 38%;
     height: 50px;
     font-size: 1.3rem;
-    padding: 0.5rem 0;
+    padding: 1.5rem 1.5rem;
 }
 
 .very_good {
     color: green;
+}
+
+.projects_name {
+    font-weight: 700;
+}
+
+.projects_details a, .skills_details a {
+    color: black;
+}
+
+.very_good_container, .good_container, .satisfactory_container, .bad_container, .very_bad_container {
+    height: 25px;
+    background-color: lightgray;
+    border-radius: 20px;
+    margin-top: 1rem;
+    width: 55%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.very_good_bar, .good_bar, .satisfactory_bar, .bad_bar, .very_bad_bar {
+    height: 25px;
+    border-radius: 20px;
+}
+
+.very_good_bar {
+    background-color: #3ed13b;
+}
+
+.good_bar {
+    background-color: #9fe64e;
+    width: 80%;
+}
+
+.satisfactory_bar {
+    background-color: #fcf400;
+    width: 60%;
+}
+
+.bad_bar {
+    background-color: #f7bc25;
+    width: 40%;
+}
+
+.very_bad_bar {
+    background-color: #fa230f;
+    width: 20%;
+}
+
+.user {
+    font-weight: 900;
+}
+
+.skills_circle {
+    background: steelblue;
+    margin: 0 2rem;
+    border-radius: 1rem;
 }

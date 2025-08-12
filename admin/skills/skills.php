@@ -21,25 +21,23 @@
 
     <div class="header">
         <div class="header_container"> 
-            <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
+            <div class="nav_bar">
+                <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
                 <nav class="header_text">
                     <ul>
-                    <li> <a href="../about/about.php"> About </a> </li>
-                    <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
-                    <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
-                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
+                        <li> <a href="../about/about.php"> About </a> </li>
+                        <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
+                        <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
+                        <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
                     </ul>
-                </nav>
+                </nav> 
+                <div class="user"> User: <?php echo $_SESSION['name'];  ?> </div> 
+            </div>
         </div>
     </div>
+    
 
-    <div class="details"> Your current account: <br>
-        <?php
-            echo $_SESSION['name'], "<br>";
-            echo $_SESSION['email'];
-        ?>
-    </div>
-
+    
     <form action="skills.php" method="POST" class="skill_form"> 
         <div class="skill_section">
             <div class="skill_form"> Input Your Skill Here </div>

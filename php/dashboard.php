@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/dashboard.css">
-    <!-- <script> 
-
-        var x = " // echo "$row"";
-            document.write(x);
-        var div = document.getElementById( 'myDiv' );
-            if (score >= 85) {
-            div.style.color = 'blue';
-        }
-    </script> -->
     <title> Dashboard </title>
 </head>
 <body>
@@ -24,13 +15,6 @@
     $user_id = $_SESSION['id'];
     $name = $_SESSION['name'];
     $email = $_SESSION['email'];
-    //include($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/admin/about/backend_about.php");
-    //include($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/admin/skills/backend_skills.php");
-    // include($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/admin/projects/backend_projects.php");
-
-    // $query = "SELECT * FROM skills WHERE user_id=$user_id";
-    // $result = mysqli_query($conn,$query);
-
     $query = "SELECT * FROM about WHERE user_id=$user_id";
     $result = mysqli_query($conn,$query);
     $selected_data = [
@@ -54,15 +38,19 @@
     
     <div class="header">
         <div class="header_container"> 
-            <h1 class="header_title"> <a href="/my_portfolio/html/index.html"> My Portfolio </a> </h1>
-            <nav class="header_text">
-                <ul>
-                    <li> <a href="../admin/about/about.php"> About </a> </li>
-                    <li> <a href="../admin/skills/skills.php"> Skills </a> </li>
-                    <li> <a href="../admin/projects/projects.php"> Projects </a> </li>
-                    <li> <a href="../php/logout.php"> Log Out </a> </li>
-                </ul>
-            </nav>
+            <div class="nav_bar">
+                <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
+                <nav class="header_text">
+                    <ul>
+                        <li> <a href="../admin/about/about.php"> About </a> </li>
+                        <li id="skills"> <a href="../admin/skills/skills.php"> Skills </a> </li>
+                        <li id="projects"> <a href="../admin/projects/projects.php"> Projects </a> </li>
+                        <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
+                    </ul>
+                
+                </nav> 
+                <div class="user"> User: <?php echo $_SESSION['name'];  ?> </div> 
+            </div>
         </div>
     </div>
 
@@ -74,8 +62,9 @@
         <div class="about_container"> 
             <div class="about_picture container"> </div>
             <div class="about_text"> 
-                <div class="about"> ABOUT </div>
-                <!-- <div class="about_role"> Your Role </div> -->
+                <div class="about"> <a href="../admin/about/about.php"> ABOUT </a> </div>
+                <?php echo '<div class="about_role">', $selected_data['role'],'</div>'; ?>
+                <?php echo '<div class="about_description">', $selected_data['description'],'</div>'; ?>
                 <div class="about_details">
                     <div class="details">
                         <div class="column_1"> 
@@ -121,7 +110,7 @@
 
     <div class="skills_section">
         <div class="skills_circle">
-            <div class="skill"> SKILLS </div>
+            <div class="skill"> <a href="../admin/skills/skills.php"> SKILLS </a> </div>
             <div class="skills_container"> 
                 <div class="skills_fill">
                         <?php
@@ -131,17 +120,22 @@
                             if(mysqli_num_rows($result)>0) {
                                 while($row = mysqli_fetch_assoc($result)) {  
                 
-                                echo '<div class="skills_details">', $row['name'], '<br>';  
+                                echo '<div class="skills_details">', '<a href="../admin/skills/edit_skills.php?edit=' , $row["id"] , '">', $row['name'],  '</a>', ' -';  
                                 if ($row['rate'] ===  "5 - Very Good") {
-                                    echo '<span style="color:#3ed13b"> Very Good </span>', '<br>' ;
+                                    echo '<span style="color:#3ed13b"> Very Good </span>', '<br>';
+                                    echo '<div class="very_good_container">', '<div class="very_good_bar">', '</div>','</div>'; 
                                 } elseif ($row['rate'] ===  "4 - Good") {
-                                    echo '<span style="color:#9fe64e"> Good </span>','<br>';
+                                    echo '<span style="color:#9fe64e"> Good </span>';
+                                    echo '<div class="good_container">', '<div class="good_bar">', '</div>','</div>'; 
                                 } elseif ($row['rate'] ===  "3 - Satisfactory") {
-                                    echo '<span style="color:#fcf400"> Satisfactory </span>','<br>';
+                                    echo '<span style="color:#fcf400"> Satisfactory </span>';
+                                    echo '<div class="satisfactory_container">', '<div class="satisfactory_bar">', '</div>','</div>'; 
                                 } elseif ($row['rate'] ===  "2 - Bad") {
-                                    echo '<span style="color:#f7bc25"> Bad </span>','<br>';
+                                    echo '<span style="color:#f7bc25"> Bad </span>';
+                                    echo '<div class="bad_container">', '<div class="bad_bar">', '</div>','</div>'; 
                                 } elseif ($row['rate'] ===  "1 - Very Bad") {
-                                    echo '<span style="color:#fa230f"> Very Bad </span>','<br>';
+                                    echo '<span style="color:#fa230f"> Very Bad </span>';
+                                    echo '<div class="very_bad_container">', '<div class="very_bad_bar">', '</div>','</div>'; 
                                 }
                                 echo '</div>'; 
                                 }
@@ -156,28 +150,30 @@
     
     <div class="projects_section">
         <div class="projects_circle">
-            <div class="projects"> PROJECTS </div>
+            <div class="projects"> <a href="../admin/projects/projects.php"> PROJECTS </a> </div>
             <div class="projects_container"> 
                 <div class="projects_fill">
-                            <?php
-                                $query = "SELECT * FROM projects WHERE user_id=$user_id";
-                                $result = mysqli_query($conn,$query);
+                    <?php
+                        $query = "SELECT * FROM projects WHERE user_id=$user_id";
+                        $result = mysqli_query($conn,$query);
 
-                                if(mysqli_num_rows($result)>0) {
-                                    while($row = mysqli_fetch_assoc($result)) { 
-                                    echo '<div class="projects_details">', $row['name'], '<br>';  
-                                    echo $row['description'], '<br>';  
-                                    echo $row["status"], '<br>','</div>';  
-                                    }
-                                } else {
-                                     echo "Add something here"; 
-                                }
-                            ?>
+                        if(mysqli_num_rows($result)>0) {
+                            while($row = mysqli_fetch_assoc($result)) { 
+                            echo '<div class="projects_details">', '<div class="projects_bar"> ',
+                                    '<div class="projects_name">', 
+                                        '<a href="../admin/projects/edit_projects.php?edit=' , $row["id"] , '">', $row['name'], '</a>' 
+                                    ,'</div>';  
+                            echo $row['description'], '<br>';  
+                            echo $row["status"], '<br>', '</div>','</div>';  
+                            }
+                        } else {
+                                echo "Add something here"; 
+                        }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
-     
 
     <div class="button">
         <button onclick="location.href='../html/index.html'" type="button"> Go to your Portfolio </button>

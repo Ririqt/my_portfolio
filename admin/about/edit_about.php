@@ -13,19 +13,25 @@
 
     require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
     include 'backend_edit_about.php';
+
+    
     ?>
 
     <div class="header">
         <div class="header_container"> 
-            <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
-            <nav class="header_text">
-                <ul>
-                    <li id="about"> <a href="#about"> About </a> </li>
-                    <li> <a href="../skills/skills.php"> Skills </a> </li>
-                    <li> <a href="../projects/projects.php"> Projects </a> </li>
-                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
-                </ul>
-            </nav>
+            <div class="nav_bar">
+                <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
+                <nav class="header_text">
+                    <ul>
+                        <li id="about"> <a href="../about/about.php"> About </a> </li>
+                        <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
+                        <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
+                        <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
+                    </ul>
+                
+                </nav> 
+                <div class="details"> User: <?php echo $_SESSION['name'];  ?> </div> 
+            </div>
         </div>
     </div>
 
@@ -69,6 +75,16 @@
                     <div class="about_company">
                         <label for="details"> Company: </label>
                         <input type="text" id="company" name="company" value="<?php echo $selected_data['company']?>" required>
+                    </div>
+
+                    <div class="about_role">
+                        <label for="details"> Role: </label>
+                        <input type="text" id="role" name="role" value="<?php echo $selected_data['role']?>" required>
+                    </div>
+
+                    <div class="about_description">
+                        <label for="details"> Description: </label>
+                        <textarea type="text" id="description" name="description" rows="4" cols="27" required> <?php echo $selected_data['description']?></textarea>
                     </div>
 
                     <label for="submit">
