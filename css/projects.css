@@ -173,3 +173,7 @@ td#add {
 .user {
     font-weight: 900;
 }
+
+td#description {
+    text-align: center;
+}

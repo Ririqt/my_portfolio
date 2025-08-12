@@ -84,7 +84,7 @@
                         ?>
                             <tr> 
                                 <td> <?php echo $row['name']; ?> </td>
-                                <td> <?php echo $row['description']; ?> </td>
+                                <td id="description"> <?php echo $row['description']; ?> </td>
                                 <td> <?php echo $row["status"]; ?> </td>
                                 <td> <a href="projects.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Are you sure you want to Delete?')"> Delete </a> </td>
                                 <td> <a href="edit_projects.php?edit=<?php echo $row["id"];?>"> Edit </a> </td>
