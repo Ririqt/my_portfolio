@@ -9,9 +9,14 @@
 <body>
     <?php
     session_start(); 
-
-    $name = $email = "";
     require_once "config.php";
+    if(empty($_SESSION['name']) && (empty($_SESSION['email'])) && (empty($_SESSION['id']))) {
+        header('location: ../html/login.html');
+        exit;
+    }   
+
+    $name = $email = $user_id = "";
+    
     $user_id = $_SESSION['id'];
     $name = $_SESSION['name'];
     $email = $_SESSION['email'];
@@ -25,15 +30,14 @@
         "address"=>"",
         "company"=>"",
     ];
-            
+
+     
+
     if(mysqli_num_rows($result)>0) {
         $selected_data = mysqli_fetch_assoc($result);  
     }
 
-    if(empty($_SESSION['name']) && (empty($_SESSION['email']))) {
-        header('location: ../html/login.html');
-        exit;
-    }
+    
     ?>
     
     <div class="header">
@@ -54,7 +58,7 @@
         </div>
     </div>
 
-    <div class="welcome"> Dashboard <br> </div>
+    <div class="welcome"> Dashboard </div>
         <?php echo '<div class="full_name">',"Welcome ", $_SESSION["name"], "!", '</div>'; ?>
 
 
@@ -121,19 +125,19 @@
                                 while($row = mysqli_fetch_assoc($result)) {  
                 
                                 echo '<div class="skills_details">', '<a href="../admin/skills/edit_skills.php?edit=' , $row["id"] , '">', $row['name'],  '</a>', ' -';  
-                                if ($row['rate'] ===  "5 - Very Good") {
-                                    echo '<span style="color:#3ed13b"> Very Good </span>', '<br>';
+                                if ($row['rate'] ===  "Very Good") {
+                                    echo '<span style="color:#19db15"> Very Good </span>', '<br>';
                                     echo '<div class="very_good_container">', '<div class="very_good_bar">', '</div>','</div>'; 
-                                } elseif ($row['rate'] ===  "4 - Good") {
+                                } elseif ($row['rate'] ===  "Good") {
                                     echo '<span style="color:#9fe64e"> Good </span>';
                                     echo '<div class="good_container">', '<div class="good_bar">', '</div>','</div>'; 
-                                } elseif ($row['rate'] ===  "3 - Satisfactory") {
+                                } elseif ($row['rate'] ===  "Satisfactory") {
                                     echo '<span style="color:#fcf400"> Satisfactory </span>';
                                     echo '<div class="satisfactory_container">', '<div class="satisfactory_bar">', '</div>','</div>'; 
-                                } elseif ($row['rate'] ===  "2 - Bad") {
+                                } elseif ($row['rate'] ===  "Bad") {
                                     echo '<span style="color:#f7bc25"> Bad </span>';
                                     echo '<div class="bad_container">', '<div class="bad_bar">', '</div>','</div>'; 
-                                } elseif ($row['rate'] ===  "1 - Very Bad") {
+                                } elseif ($row['rate'] ===  "Very Bad") {
                                     echo '<span style="color:#fa230f"> Very Bad </span>';
                                     echo '<div class="very_bad_container">', '<div class="very_bad_bar">', '</div>','</div>'; 
                                 }

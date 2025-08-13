@@ -1,4 +1,9 @@
 <?php    
+    if(empty($_SESSION['name']) && (empty($_SESSION['email']))) {
+            header('location: /my_portfolio/html/login.html');
+            exit;
+        }
+
     if (isset($_GET['edit'])) {
         $edit_id = $_GET['edit'];
         $sql = "SELECT * FROM projects WHERE id = $edit_id"; //Note: select all // 

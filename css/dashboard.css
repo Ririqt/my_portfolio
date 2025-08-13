@@ -183,15 +183,20 @@ td.rate {
     text-align: end;
 }
 button {
-    font-size: 1.2rem;
-    border-radius: 0.6rem;
-    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid #34cceb;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #6fb9e3;
+    color: #fcfeff;
 }
 
 button:hover{
-    background: blue;
-    color: white;
-    transition: 0.5s;
+    background-color: #34cceb;
+    color: #1e1e1e;
+    transition: 0.6s;
+    font-weight: 700;
 }
 
 .button {
@@ -307,7 +312,7 @@ label[for=details] {
 }
 
 .very_good_bar {
-    background-color: #3ed13b;
+    background-color: #19db15;
 }
 
 .good_bar {
@@ -335,7 +340,7 @@ label[for=details] {
 }
 
 .skills_circle {
-    background: steelblue;
+    background: #6fb9e3;
     margin: 0 2rem;
     border-radius: 1rem;
 }

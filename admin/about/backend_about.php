@@ -1,4 +1,9 @@
 <?php
+    if(empty($_SESSION['name']) && (empty($_SESSION['email']))) {
+            header('location: /my_portfolio/html/login.html');
+            exit;
+        }
+
     $id = $degree = $birthday = $experience = $address = $company = $phone = $role = $description = "";
     $degreeErr = $birthdayErr = $experienceErr = $addressErr = $companyErr = $phoneErr = $roleErr = $description = "";
 

@@ -47,7 +47,7 @@
                         <input type="text" id="skill_name" name="skill_name" placeholder="Your Skill" required>
                     </div>
 
-                    <div class="type"> <br>
+                    <div class="type">
                         <label for="type"> Type: </label>
                         <select id="type" name="type" required>
                             <option value=""> Select Type </option>
@@ -64,23 +64,25 @@
                     <div class="rate_table_container">  
                         <div class="rate_table"> Rate your Skill </div>
                             <label for="rate"> 5 - Very Good <br />
-                                <input type="radio" id="very_good" name="rate" value="5 - Very Good" required>
+                                <span class="star_rating">
+                                    <input type="radio" id="very_good" name="rate" value="Very Good" required><i></i>
+                                </span>
                             </label> 
                             
                             <label for="rate"> 4 - Good<br /> 
-                                <input type="radio" id="good" name="rate" value="4 - Good" required> 
+                                <input type="radio" id="good" name="rate" value="Good" required> 
                             </label>  
                             
                             <label for="rate"> 3 - Satisfactory <br />
-                                <input type="radio" id="satisfactory" name="rate" value="3 - Satisfactory" required>
+                                <input type="radio" id="satisfactory" name="rate" value="Satisfactory" required>
                             </label>
 
                             <label for="rate"> 2 - Bad <br />
-                                <input type="radio" id="bad" name="rate" value="2 - Bad" required>
+                                <input type="radio" id="bad" name="rate" value="Bad" required>
                             </label>
 
                             <label for="rate"> 1 - Very Bad <br />
-                                <input type="radio" id="very_bad" name="rate" value="1 - Very Bad" required>
+                                <input type="radio" id="very_bad" name="rate" value="Very Bad" required>
                             </label>
                         </div>  
 
@@ -92,15 +94,16 @@
         </div> 
  
         <div id="table" class="table">
-                    <table border="1">
-                        <tr>
-                            <th scope="col"> Skill </th>
-                            <th scope="col" id="col1"> Type </th>
-                            <th scope="col" id="col2"> Rate </th>
-                            <th scope="col" id="col3"> Delete </th>
-                            <th scope="col" id="col3"> Edit </th>
-                        </tr>
-
+                    <table class="styled_table">
+                        <thead>
+                            <tr>
+                                <th scope="col"> Name </th>
+                                <th scope="col" id="col1"> Type </th>
+                                <th scope="col" id="col2"> Skills </th>
+                                <th scope="col" id="col3"> Edit </th>
+                                <th scope="col" id="col3"> Delete </th>
+                            </tr>
+                        </thead>
                         <?php
                              if(mysqli_num_rows($result)>0) {
                                 while($row = mysqli_fetch_assoc($result)) {  
@@ -110,20 +113,20 @@
                                 <td> <?php echo $row['type']; ?> </td>
                                 <td> 
                                 <?php 
-                                $rate = ["5 - Very Good", "4 - Good", "3 - Satisfactory", "2 - Bad", "1 - Very Bad"];  
+                                // $rate = ["5 - Very Good", "4 - Good", "3 - Satisfactory", "2 - Bad", "1 - Very Bad"];  
 
-                                foreach ($rate as $value) {
-                                    $checked = ($row['rate'] === $value) ? "checked" : "";
+                                // foreach ($rate as $value) {
+                                //     $checked = ($row['rate'] === $value) ? "checked" : "";
                                 ?>
-                                    <label>
-                                        <input type="radio" disabled <?php echo $checked; ?>> <?php echo $value; ?>
-                                    </label>
+                                    <?php echo $row['rate']; ?>
+                                    
+                                    
                                 <?php
-                                }
+                                // }
                                 ?>
                                 </td>
-                                <td> <a href="skills.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Are you sure you want to Delete?')"> Delete </a> </td>
                                 <td> <a href="../skills/edit_skills.php?edit=<?php echo $row["id"];?>"> Edit </a> </td> 
+                                <td> <a href="skills.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Are you sure you want to Delete?')"> Delete </a> </td>
                             </tr>
                         <?php
                                 }

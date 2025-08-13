@@ -40,7 +40,7 @@
                         <input type="text" id="skill_name" name="skill_name" value="<?php echo htmlspecialchars($name); ?>">
                     </div>
                     
-                     <div class="type"> <br>
+                     <div class="type">
                         <label for="type"> Type: </label>
                         <select id="type" name="type" required>
                             <option value=""> Select Type </option>

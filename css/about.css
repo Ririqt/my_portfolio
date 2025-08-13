@@ -85,11 +85,11 @@ li#about a {
 }
 
 .about_container {
-    display:grid;
-    gap: 0.8rem;
-    width: 15%;
-    background-color: lightgray;
-    border: 2px solid black;
+    display: flex;
+    gap: 3rem;
+    width: 60%;
+    background-color: #fff;
+    border: 2px solid #ebebeb;
     border-radius: 10px;
     padding: 20px;
 }
@@ -100,19 +100,25 @@ form {
 }
 
 .about_form {
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 700;
 }
 
 input[type="submit"] {
-    font-size: 1.2rem;
-    border-radius: 0.6rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid #34cceb;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #6fb9e3;
+    color: #fcfeff;
 }
 
 input[type="submit"]:hover {
-    background-color: blue;
-    color: white;
-    transition: 0.5s;
+    background-color: #34cceb;
+    color: #1e1e1e;
+    transition: 0.6s;
+    font-weight: 700;
 }
 
 label[for=details] {
@@ -126,10 +132,18 @@ label[for=details] {
 }
 
 .column_1, .column_2 {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 1.3rem;
+    width: 25%;
 }
 
 .user {
     font-weight: 900;
+}
+
+.for_description {
+    display: flex;
+    text-align: justify;
+    width: 51%
 }

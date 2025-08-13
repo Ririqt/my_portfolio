@@ -56,15 +56,17 @@
                             <option value="Done" <?php if ($status == 'Done') echo 'selected'; ?>> Done </option>
                         </select>
                     </div>
+                    <div class="edit_button">
+                        <button type="submit"> Confirm Changes </button>
+                    </div>
+                    <div class="back_button">
+                        <button onclick="location.href='../projects/projects.php'" type="button"> Go back </button>
+                    </div>
                 </div>
 
-                <div class="edit_button">
-                    <button type="submit"> Confirm Changes </button>
-                </div>
+                
     </form>
 
-    <div class="back_button">
-        <button onclick="location.href='../projects/projects.php'" type="button"> Go back </button>
-    </div>
+    
 </body>
 </html>

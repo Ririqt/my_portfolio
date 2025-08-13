@@ -54,7 +54,7 @@
                         <textarea type="text" id="description" name="description" rows="4" cols="38" placeholder="description" required> </textarea>
                     </div>
 
-                    <div class="status"> <br>
+                    <div class="status"> 
                         <label for="status"> Status: </label>
                         <select id="status" name="status" required>
                             <option value=""> Select Status </option>
@@ -63,21 +63,23 @@
                             <option value="Done"> Done </option>
                         </select>
                     </div>
+                    <div class="create_button">
+                            <button type="submit"> Create </button>
+                    </div>
                 </div>
 
-                <div class="create_button">
-                    <button type="submit"> Create </button>
-                </div>
 
                 <div id="table" class="table">
-                <table border="2">
-                    <tr>
-                        <th> Project Name </th>
-                        <th> Description </th>
-                        <th> Status </th> 
-                        <th> Delete </th>
-                        <th> Edit </th>
-                    </tr>
+                <table class="styled_table">
+                    <thead>
+                        <tr>
+                            <th id="name"> Name </th>
+                            <th id="description"> Description </th>
+                            <th> Status </th> 
+                            <th id='delete'> Delete </th>
+                            <th id='edit'> Edit </th>
+                        </tr>
+                    </thead>
                         <?php
                             if(mysqli_num_rows($result)>0) {
                                 while($row = mysqli_fetch_assoc($result)) { 
