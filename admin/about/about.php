@@ -19,9 +19,12 @@
         
         require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
         include 'backend_about.php';
-
+        // include 'backend_edit_about.php';
         // echo json_encode($selected_data['description']);
         // exit;
+        // $file_name = basename( $_FILES["fileToUpload"]["name"]);
+        // $target_dir = $_SERVER['DOCUMENT_ROOT']. "/my_portfolio/uploads/" . $user_id . "/";
+        // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
     ?>
 
     <div class="header">
@@ -44,6 +47,13 @@
 
     <div class="about_section">
         <div class="about_form"> Your Details  </div>
+            <?php
+            if (isset($_SESSION['success_message'])) {
+                echo '<div class="success-message">'
+                    . $_SESSION['success_message'] . '</div>';
+            // Clear the session variable
+                unset($_SESSION['success_message']); 
+            }?>
             <div class="about_container">
                 <div class="column_1"> 
                     <div class="about_name">
@@ -90,6 +100,15 @@
                         <label for="details"> Description: </label><?php echo $selected_data['description'] ?> 
                     </div>
                 </div>
+                
+                <div class="for_file">
+                    <div class="about_file">
+                       <label for="details"> Image: </label>
+                       <img src="<?php echo '../../uploads/'. $user_id. "/". $selected_data['file_name']; ?>" alt="Uploaded Image">
+                       
+                    </div>
+                </div>
+               
                
             </div> 
             
@@ -100,3 +119,4 @@
 
 </body>
 </html>
+

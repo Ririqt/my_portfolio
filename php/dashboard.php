@@ -64,7 +64,7 @@
 
     <div class="about_section">
         <div class="about_container"> 
-            <div class="about_picture container"> </div>
+            <div class="about_picture container" style="background-image: url(<?php echo '../uploads/'. $user_id. "/". $selected_data['file_name']; ?>);"> </div>
             <div class="about_text"> 
                 <div class="about"> <a href="../admin/about/about.php"> ABOUT </a> </div>
                 <?php echo '<div class="about_role">', $selected_data['role'],'</div>'; ?>

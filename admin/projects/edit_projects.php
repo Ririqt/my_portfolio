@@ -47,7 +47,7 @@
                         <textarea type="text" id="description" name="description" rows="4" cols="38" placeholder="description" required> <?php echo htmlspecialchars($description); ?> </textarea>
                     </div>
 
-                    <div class="status"> <br>
+                    <div class="status"> 
                         <label for="status"> Status: </label>
                         <select id="status" name="status" required>
                             <option value=""> Select Status </option>

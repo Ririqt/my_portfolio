@@ -81,42 +81,48 @@ li#about a {
     height: 60%;
     align-items: center;
     gap: 1rem;
-    margin-top: 1.2rem;
+    margin-top: 1rem;
 }
 
 .about_container {
-    display:grid;
-    gap: 0.8rem;
-    width: 18%;
-    background-color: lightgray;
-    border: 2px solid black;
+    display: flex;
+    gap: 3rem;
+    width: 60%;
+    background-color: #fff;
+    border: 2px solid #ebebeb;
     border-radius: 10px;
     padding: 20px;
 }
 
-label[for=details] {
-    font-size: 1rem;
-    font-weight: 700;
-}
-
-label[for=submit] {
+form {
     display: flex;
     justify-content: center;
 }
 
+.about_form {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
 input[type="submit"] {
-    font-size: 1.2rem;
-    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid #34cceb;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #6fb9e3;
+    color: #fcfeff;
 }
 
 input[type="submit"]:hover {
-    background-color: blue;
-    color: white;
-    transition: 0.5s;
+    background-color: #34cceb;
+    color: #1e1e1e;
+    transition: 0.6s;
+    font-weight: 700;
 }
 
-.about_form {
-    font-size: 20px;
+label[for=details] {
+    font-size: 1rem;
     font-weight: 700;
 }
 
@@ -125,26 +131,31 @@ input[type="submit"]:hover {
     justify-content: space-between;
 }
 
-.back_button {
+.column_1, .column_2 {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1.3rem;
+    width: 25%;
 }
 
-button {
-    font-size: 1rem;
-    border-radius: 0.5rem;
+.user {
+    font-weight: 900;
 }
 
-button:hover {
-    background-color: blue;
-    color: white;
-    transition: 0.5s;
+.for_description {
+    text-align: justify;
+    width: 51%
 }
 
 textarea {
     resize: none;
 }
 
-li#about a {
-    color: white;
+.button_section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
 }

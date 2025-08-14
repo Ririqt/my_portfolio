@@ -211,7 +211,7 @@ label[for=details] {
 }
 
 .about_picture {
-    background-image: url("../images/about_picture.JPG");
+    /* background-image: url("../images/about_picture.JPG"); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: left;
