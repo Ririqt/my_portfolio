@@ -87,7 +87,7 @@ li#about a {
 .about_container {
     display: flex;
     gap: 3rem;
-    width: 60%;
+    width: 80%;
     background-color: #fff;
     border: 2px solid #ebebeb;
     border-radius: 10px;
@@ -135,7 +135,7 @@ label[for=details] {
     display: flex;
     flex-direction: column;
     gap: 1.3rem;
-    width: 25%;
+    width: 35%;
 }
 
 .user {
@@ -146,4 +146,24 @@ label[for=details] {
     display: flex;
     text-align: justify;
     width: 51%
+}
+
+.about_file img {
+    width: 100%
+}
+
+.success-message {
+    color:#19db15;
+}
+
+.container {
+    display: flex;
+    width: 50%;
+    object-fit: fill;
+}
+
+.about_file {
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: left;
 }

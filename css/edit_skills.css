@@ -154,3 +154,7 @@ button {
     background-color: #6fb9e3;
     color: #fcfeff;
 }
+
+.user {
+  font-weight: 900;
+}

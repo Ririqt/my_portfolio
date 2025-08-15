@@ -88,4 +88,37 @@ ul {
     justify-content:center;
     align-items:center;
     font-size: 20px;
+    text-align: justify;
+}
+
+.register_message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    color: #19db15;
+}
+
+.button_continue {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+button {
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid #34cceb;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #6fb9e3;
+    color: #fcfeff;
+}
+
+button:hover {
+    background-color: #34cceb;
+    color: #1e1e1e;
+    transition: 0.6s;
+    font-weight: 700;
 }

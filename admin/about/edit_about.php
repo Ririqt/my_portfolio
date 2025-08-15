@@ -20,8 +20,7 @@
     require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
     include 'backend_edit_about.php';
 
-    $_SESSION['success_message'] = 'Edit was successful!';
-    
+   
     // $_SESSION['error'] = 'error';
     ?>
 
@@ -38,7 +37,7 @@
                     </ul>
                 
                 </nav> 
-                <div class="details"> User: <?php echo $_SESSION['name'];  ?> </div> 
+                <div class="user"> User: <?php echo $_SESSION['name'];  ?> </div> 
             </div>
         </div>
     </div>
@@ -59,11 +58,9 @@
 
             <?php
             if (isset($_SESSION['error'])) {
-                echo $_SESSION['error'];
+                echo '<div class="error-message">' . $_SESSION['error'] . '</div>';
                 unset($_SESSION['error']); 
             } 
-
-            unset($_SESSION['error']);
         
             ?>
                 <div class="about_container">

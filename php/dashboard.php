@@ -59,7 +59,14 @@
     </div>
 
     <div class="welcome"> Dashboard </div>
-        <?php echo '<div class="full_name">',"Welcome ", $_SESSION["name"], "!", '</div>'; ?>
+        <?php if (isset($_SESSION['login_message'])) {
+                echo '<div class="login_message">'
+                    . $_SESSION['login_message'] . '</div>';
+            // Clear the session variable
+                unset($_SESSION['login_message']);
+        }?>
+        <?php echo '<div class="full_name">', "Welcome ", $_SESSION["name"], "!", '</div>'; ?>
+
 
 
     <div class="about_section">

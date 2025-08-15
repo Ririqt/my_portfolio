@@ -57,23 +57,23 @@
                     <div class="rate_table_container">  
                         <div class="rate_table"> Rate your Skill </div>
                             <label for="rate"> 5 - Very Good <br />
-                                <input type="radio" id="very_good" name="rate" value="5 - Very Good" <?php echo ($rate == "5 - Very Good") ? "checked" : ""; ?>>
+                                <input type="radio" id="very_good" name="rate" value="Very Good" <?php echo ($rate == "Very Good") ? "checked" : ""; ?>>
                             </label> 
                             
                             <label for="rate"> 4 - Good<br /> 
-                                <input type="radio" id="good" name="rate" value="4 - Good" <?php echo ($rate == "4 - Good") ? "checked" : ""; ?>> 
+                                <input type="radio" id="good" name="rate" value="Good" <?php echo ($rate == "Good") ? "checked" : ""; ?>> 
                             </label>  
                             
                             <label for="rate"> 3 - Satisfactory <br />
-                                <input type="radio" id="satisfactory" name="rate" value="3 - Satisfactory" <?php echo ($rate == "3 - Satisfactory") ? "checked" : ""; ?>>
+                                <input type="radio" id="satisfactory" name="rate" value="Satisfactory" <?php echo ($rate == "Satisfactory") ? "checked" : ""; ?>>
                             </label>
 
                             <label for="rate"> 2 - Bad <br />
-                                <input type="radio" id="bad" name="rate" value="2 - Bad" <?php echo ($rate == "2 - Bad") ? "checked" : ""; ?>>
+                                <input type="radio" id="bad" name="rate" value="Bad" <?php echo ($rate == "Bad") ? "checked" : ""; ?>>
                             </label>
 
                             <label for="rate"> 1 - Very Bad <br />
-                                <input type="radio" id="very_bad" name="rate" value="1 - Very Bad" <?php echo ($rate == "1 - Very Bad") ? "checked" : ""; ?>>
+                                <input type="radio" id="very_bad" name="rate" value="Very Bad" <?php echo ($rate == "Very Bad") ? "checked" : ""; ?>>
                             </label>
                     </div> 
                 </div>

@@ -102,7 +102,7 @@
                 </div>
                 
                 <div class="for_file">
-                    <div class="about_file">
+                    <div class="about_file container">
                        <label for="details"> Image: </label>
                        <img src="<?php echo '../../uploads/'. $user_id. "/". $selected_data['file_name']; ?>" alt="Uploaded Image">
                        

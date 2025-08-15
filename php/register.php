@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/valid_register.css">
+    <link rel="stylesheet" href="../css/register_valid.css">
     <title> Register Succeed</title>
 
     <script>
@@ -112,17 +112,22 @@
         $sql = "INSERT INTO users (name, email, password) VALUES ('$full_name', '$email', '$hashed_password')";
         
         if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
+            echo '<div class="register_message">' , "New record created successfully, Please Press the 'Log In' ", '</div>';
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
     }
 
+    if(empty($name) && empty($email)) {
+        header('location: ../html/register.html');
+        exit;
+    }   
+
     {   
         echo '<div class="full_name">',"Welcome ", ucfirst($full_name), "!<br> <br>",'</div>';
         echo '<div class="details">',"Here are your details: <br>";
         echo "Name: {$full_name} <br>";
-        echo "Email: {$email} <br>";
+        echo "Email: {$email} <br>", "</div>";
     }
     function test_input($data) {
         $data = trim($data);
@@ -130,6 +135,7 @@
         $data = htmlspecialchars($data);
         return $data;
     } 
+    $_SESSION['register_message'] = 'Register was successful, Please Log In';
     ?>
 
     <form action="../html/login.html" method="POST" class="login_form">

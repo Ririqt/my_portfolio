@@ -18,7 +18,7 @@
     <?php
         session_start();
         require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
-        include('backend_projects.php');
+        include('backend_projects_no_image.php');
     
     ?>
 
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <form method="POST"  class="project_form" onSubmit="setSubmit();"> 
+    <form method="POST" class="project_form" onSubmit="setSubmit();" enctype="multipart/form-data"> 
         <div class="project_section">
             <div class="project_form"> Create a Project Here </div>
                 <div class="project_container">
@@ -63,11 +63,47 @@
                             <option value="Done"> Done </option>
                         </select>
                     </div>
+
+                     <!-- <div class="for_file">
+                        <div class="about_file">
+                            <input type="file" name="fileToUpload">
+                        </div>
+                    </div> -->
+
                     <div class="create_button">
-                            <button type="submit"> Create </button>
+                        <button type="submit"> Create </button>
                     </div>
                 </div>
 
+                <?php
+                    if (isset($_SESSION['success_message'])) {
+                        echo '<div class="success-message">'
+                            . $_SESSION['success_message'] . '</div>';
+                    // Clear the session variable
+                        unset($_SESSION['success_message']); 
+                    }
+                
+                    if (isset($_SESSION['deleted_message'])) {
+                        echo '<div class="deleted-message">'
+                            . $_SESSION['deleted_message'] . '</div>';
+                    // Clear the session variable
+                        unset($_SESSION['deleted_message']); 
+                    }
+                
+                    if (isset($_SESSION['edited_message'])) {
+                        echo '<div class="edited-message">'
+                            . $_SESSION['edited_message'] . '</div>';
+                    // Clear the session variable
+                        unset($_SESSION['edited_message']); 
+                    }
+
+                    if (isset($_SESSION['error'])) {
+                        echo '<div class="edited-message">'
+                            . $_SESSION['error'] . '</div>';
+                    // Clear the session variable
+                        unset($_SESSION['error']); 
+                    }
+                ?>
 
                 <div id="table" class="table">
                 <table class="styled_table">
@@ -78,6 +114,7 @@
                             <th> Status </th> 
                             <th id='delete'> Delete </th>
                             <th id='edit'> Edit </th>
+                            <!-- <th id='upload'> Upload </th> -->
                         </tr>
                     </thead>
                         <?php
@@ -90,6 +127,7 @@
                                 <td> <?php echo $row["status"]; ?> </td>
                                 <td> <a href="projects.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Are you sure you want to Delete?')"> Delete </a> </td>
                                 <td> <a href="edit_projects.php?edit=<?php echo $row["id"];?>"> Edit </a> </td>
+                                <!-- <td> // echo json_encode((basename($_FILES["fileToUpload"]["name"])))?> </td> -->
                             </tr>
                         
                         <?php

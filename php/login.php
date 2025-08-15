@@ -6,7 +6,12 @@
     <title> Log In </title>
 </head>
 <body>
-    
+    <?php if (isset($_SESSION['register_message'])) {
+                echo '<div class="register_message">'
+                    . $_SESSION['register_message'] . '</div>';
+            // Clear the session variable
+                unset($_SESSION['register_message']);
+    }?>
     <?php
     session_start(); // indicates for a session to start
 
@@ -28,7 +33,7 @@
                     $_SESSION["id"] = $selected_data["id"];
                     $_SESSION["email"] = $selected_data["email"];
                     $_SESSION["name"] = $selected_data["name"];
-                    echo "Login Success";
+                    $_SESSION['login_message'] = 'Log in was successful!';
                     header("location: ../php/dashboard.php");
                     exit;
                 } else {

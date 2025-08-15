@@ -28,7 +28,7 @@
                     </ul>
                 
                 </nav> 
-                <div class="details"> User: <?php echo $_SESSION['name'];  ?> </div> 
+                <div class="user"> User: <?php echo $_SESSION['name'];  ?> </div> 
             </div>
         </div>
     </div>

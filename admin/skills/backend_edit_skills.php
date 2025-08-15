@@ -29,10 +29,13 @@
 
         $sql = "UPDATE skills SET name='$name', type='$type', rate='$rate' WHERE id=$edit_id"; //Note: important for update // 
          if ($conn->query($sql) === TRUE) {
+            $_SESSION['edited_message'] = "Successfully Edited";
             header("Location: ../skills/skills.php");
             exit;
         } else {
-            echo "Update failed: " . $conn->error;
+            $_SESSION['error'] = 'An error occurred, Please Try again';
+            echo $_SESSION['error'];
+            // echo "Update failed: " . $conn->error;
         }
     }
 ?>

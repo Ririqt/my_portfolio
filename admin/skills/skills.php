@@ -17,6 +17,8 @@
         session_start();
         require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
         include('backend_skills.php');
+
+        // unset($_SESSION['success_message']);
     ?> 
 
     <div class="header">
@@ -92,7 +94,28 @@
                     </div>
                 </div>
         </div> 
- 
+        <?php
+            if (isset($_SESSION['success_message'])) {
+                echo '<div class="success-message">'
+                    . $_SESSION['success_message'] . '</div>';
+            // Clear the session variable
+                unset($_SESSION['success_message']); 
+            }
+        
+            if (isset($_SESSION['deleted_message'])) {
+                echo '<div class="deleted-message">'
+                    . $_SESSION['deleted_message'] . '</div>';
+            // Clear the session variable
+                unset($_SESSION['deleted_message']); 
+            }
+        
+            if (isset($_SESSION['edited_message'])) {
+                echo '<div class="edited-message">'
+                    . $_SESSION['edited_message'] . '</div>';
+            // Clear the session variable
+                unset($_SESSION['edited_message']); 
+            }
+        ?>
         <div id="table" class="table">
                     <table class="styled_table">
                         <thead>

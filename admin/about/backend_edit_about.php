@@ -56,7 +56,8 @@
                     // $error_message = "File is not an image. Please Upload Again";
                     $uploadOk = 0;
                     $_SESSION['error'] = 'Image Error, Please Upload Again';
-                    echo $_SESSION['error'];
+                    // echo '<div class="error-message">'
+                            //. $_SESSION['error'] . '</div>' ;
                     header("Location: ../about/edit_about.php");
                     exit;
                 }
@@ -65,25 +66,6 @@
                 if (!file_exists($target_dir)) {
                     mkdir( $target_dir, 0777, true);
                 }
-
-                // Check if file already exists
-
-                // Allow certain file formats
-                // if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-                //     echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                //     $uploadOk = 0;
-                //     echo $uploadOk;
-                //     // header("Location: ../about/edit_about.php");
-                //     // exit;
-                //     if ($_SESSION['error'] === $file_not_image_message) {
-                //         $_SESSION['error'] = 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.';
-                //         echo 'hi';
-                //         //header("Location: ../about/edit_about.php");
-                //         exit;
-                //     }
-                //     //$_SESSION['error'] = ;
-                //     // echo $_SESSION['error'];
-                // }
 
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk == 0) {
@@ -95,30 +77,7 @@
                 } else {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                         echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-                        
-                        if ($selected_data['degree'] && $selected_data['birthday'] && $selected_data['experience'] && $selected_data['address'] && $selected_data['company'] && $selected_data['phone'] ) {
-                            if ($file_name) {
-                                $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description', file_name='$file_name' WHERE user_id=$user_id";
-                            } else {
-                                $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description' WHERE user_id=$user_id";
-                            }
-                        } else {
-                            if ($file_name) {
-                                $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone, role, description, file_name) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone', '$role', '$description', '$file_name')";
-                            } else {
-                                $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone, role, description) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone', '$role', '$description')";
-                            }
-                        }
-
-                        if ($conn->query($sql) === TRUE) { // no matter what happens in above this will return true
-                            header("Location: ../about/about.php");
-                            exit;
-                        } else {
-                            echo "Update failed: " . $conn->error;
-                        }
-                                
-                        // header("Location: ../about/about.php");
-                        // exit;
+                    
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                         header("Location: ../about/edit_about.php");
@@ -126,30 +85,24 @@
                 }
             }
 
-            // if ($selected_data['degree'] && $selected_data['birthday'] && $selected_data['experience'] && $selected_data['address'] && $selected_data['company'] && $selected_data['phone'] ) {
-                // if ($file_name) {
-                //     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description', file_name='$file_name' WHERE user_id=$user_id";
-                // } else {
-                //     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description' WHERE user_id=$user_id";
-                // }
-                
-                
-           
-                // Check if image file is a actual image or fake image
                 
              //Note: important for update // 
             
             if ($selected_data['degree'] && $selected_data['birthday'] && $selected_data['experience'] && $selected_data['address'] && $selected_data['company'] && $selected_data['phone'] ) {
                 if ($file_name) {
                     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description', file_name='$file_name' WHERE user_id=$user_id";
+                    $_SESSION['success_message'] = "Edit was Successful";
                 } else {
                     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description' WHERE user_id=$user_id";
+                    $_SESSION['success_message'] = "Edit was Successful";
                 }
             } else {
                 if ($file_name) {
                     $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone, role, description, file_name) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone', '$role', '$description', '$file_name')";
+                    $_SESSION['success_message'] = "Edit was Successful";
                 } else {
                     $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone, role, description) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone', '$role', '$description')";
+                    $_SESSION['success_message'] = "Edit was Successful";
                 }
             }
 
