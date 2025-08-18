@@ -170,6 +170,7 @@ textarea {
     background-repeat:no-repeat;
     background-size: cover;
     background-position: left;
+    margin-top: 1rem;
 }
 
 .error-message {
@@ -199,3 +200,4 @@ button:hover {
 .user {
     font-weight: 900;
 }
+

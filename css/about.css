@@ -156,6 +156,10 @@ label[for=details] {
     color:#19db15;
 }
 
+.edit-none-message {
+    color: #494141;
+}
+
 .container {
     display: flex;
     width: 50%;

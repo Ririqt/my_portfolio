@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <form method="POST" class="project_form"> 
+    <form method="POST" class="project_form" enctype="multipart/form-data"> 
         <div class="project_section">
             <div class="project_form"> Edit The Project Here </div>
                 <div class="project_container">
@@ -56,11 +56,19 @@
                             <option value="Done" <?php if ($status == 'Done') echo 'selected'; ?>> Done </option>
                         </select>
                     </div>
+                    
+                    <div class="for_file">
+                        <div class="about_file">
+                            <input type="file" name="fileToUpload">
+                        </div>
+                    </div>
+
                     <div class="edit_button">
                         <button type="submit"> Confirm Changes </button>
+                        <input type="reset" value="Reset">
                     </div>
                     <div class="back_button">
-                        <button onclick="location.href='../projects/projects.php'" type="button"> Go back </button>
+                        <button onclick="location.href='../projects/projects.php'" type="button"> Back </button>
                     </div>
                 </div>
 

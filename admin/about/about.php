@@ -49,11 +49,15 @@
         <div class="about_form"> Your Details  </div>
             <?php
             if (isset($_SESSION['success_message'])) {
-                echo '<div class="success-message">'
-                    . $_SESSION['success_message'] . '</div>';
-            // Clear the session variable
+                echo '<div class="success-message">' . $_SESSION['success_message'] . '</div>';
                 unset($_SESSION['success_message']); 
-            }?>
+            }
+
+            if (isset($_SESSION['edit_none_message'])) {
+                echo '<div class="edit-none-message">' . $_SESSION['edit_none_message'] . '</div>';
+                unset($_SESSION['edit_none_message']); 
+            }
+            ?>
             <div class="about_container">
                 <div class="column_1"> 
                     <div class="about_name">

@@ -352,3 +352,9 @@ label[for=details] {
     margin-bottom: 0.5rem;
     color:#19db15;
 }
+
+.add_skills {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}

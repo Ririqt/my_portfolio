@@ -1,3 +1,8 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(../font/NataSans-VariableFont_wght.ttf);
+}
+
 body {
     min-height: 100vh;
     width: 100%;
@@ -29,6 +34,7 @@ h1 a{
 .header_text {
     font-weight: 700;
     font-size: 20px;
+    font-family: myFirstFont;
 }
 
 .header_text li {
@@ -612,9 +618,9 @@ ul {
 }
 
 .contact_action_text {
-    font-size: 30px;
+    font-size: 1.25rem;
     font-weight: 700;
-    padding: 25px;
+    padding: 1.2rem;
     border: 2px solid blue;
     border-radius: 35px;
     transition-duration: 0.5s;
@@ -669,6 +675,13 @@ ul {
     transition-duration: 0.5s;
 }
 
+.twitter_logo:hover {
+    background: url("../images/facebook.png")
+}
+
+.facebook_logo {
+    background-image: url("../images/facebook_logo.png")
+}
 .facebook_logo:hover, .twitter_logo:hover, .linked_in_logo:hover, .github_logo:hover {
     background-color: blue;
     border: 1px solid black;

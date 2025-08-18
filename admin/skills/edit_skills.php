@@ -85,7 +85,7 @@
     </form>
 
         <div class="back_button">
-            <button onclick="location.href='../skills/skills.php'" type="button"> Go back </button>
+            <button onclick="location.href='../skills/skills.php'" type="button"> Back </button>
         </div>
     </div>
 </body>

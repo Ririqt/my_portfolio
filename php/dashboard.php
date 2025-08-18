@@ -29,6 +29,9 @@
         "phone"=>"",
         "address"=>"",
         "company"=>"",
+        "role"=>"",
+        "description"=>"",
+        "file_name"=>"",
     ];
 
      
@@ -151,7 +154,7 @@
                                 echo '</div>'; 
                                 }
                             } else {
-                                echo "Add something here";
+                                echo '<div class="add_skills">' , "Add something by pressing the 'Skills' ", '</div>'; // put div here
                             }
                         ?>
                 </div>
@@ -178,7 +181,7 @@
                             echo $row["status"], '<br>', '</div>','</div>';  
                             }
                         } else {
-                                echo "Add something here"; 
+                                echo "Add something here"; // put div here as well
                         }
                     ?>
                 </div>

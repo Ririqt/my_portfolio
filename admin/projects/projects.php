@@ -18,7 +18,7 @@
     <?php
         session_start();
         require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
-        include('backend_projects_no_image.php');
+        include('backend_projects.php');
     
     ?>
 
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <form method="POST" class="project_form" onSubmit="setSubmit();" enctype="multipart/form-data"> 
+    <form action="projects.php" method="POST" class="project_form" onSubmit="setSubmit();" enctype="multipart/form-data"> 
         <div class="project_section">
             <div class="project_form"> Create a Project Here </div>
                 <div class="project_container">
@@ -64,11 +64,11 @@
                         </select>
                     </div>
 
-                     <!-- <div class="for_file">
+                    <div class="for_file">
                         <div class="about_file">
                             <input type="file" name="fileToUpload">
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="create_button">
                         <button type="submit"> Create </button>
@@ -77,31 +77,28 @@
 
                 <?php
                     if (isset($_SESSION['success_message'])) {
-                        echo '<div class="success-message">'
-                            . $_SESSION['success_message'] . '</div>';
-                    // Clear the session variable
+                        echo '<div class="success-message">' . $_SESSION['success_message'] . '</div>';
                         unset($_SESSION['success_message']); 
                     }
                 
                     if (isset($_SESSION['deleted_message'])) {
-                        echo '<div class="deleted-message">'
-                            . $_SESSION['deleted_message'] . '</div>';
-                    // Clear the session variable
+                        echo '<div class="deleted-message">' . $_SESSION['deleted_message'] . '</div>';
                         unset($_SESSION['deleted_message']); 
                     }
                 
                     if (isset($_SESSION['edited_message'])) {
-                        echo '<div class="edited-message">'
-                            . $_SESSION['edited_message'] . '</div>';
-                    // Clear the session variable
+                        echo '<div class="edited-message">' . $_SESSION['edited_message'] . '</div>';
                         unset($_SESSION['edited_message']); 
                     }
 
                     if (isset($_SESSION['error'])) {
-                        echo '<div class="edited-message">'
-                            . $_SESSION['error'] . '</div>';
-                    // Clear the session variable
+                        echo '<div class="edited-message">' . $_SESSION['error'] . '</div>';
                         unset($_SESSION['error']); 
+                    }
+
+                    if (isset($_SESSION['edit_none_message'])) {
+                        echo '<div class="edit-none-message">' . $_SESSION['edit_none_message'] . '</div>';
+                        unset($_SESSION['edit_none_message']); 
                     }
                 ?>
 
@@ -114,7 +111,7 @@
                             <th> Status </th> 
                             <th id='delete'> Delete </th>
                             <th id='edit'> Edit </th>
-                            <!-- <th id='upload'> Upload </th> -->
+                            <th id='upload'> Upload </th>
                         </tr>
                     </thead>
                         <?php
@@ -127,14 +124,19 @@
                                 <td> <?php echo $row["status"]; ?> </td>
                                 <td> <a href="projects.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Are you sure you want to Delete?')"> Delete </a> </td>
                                 <td> <a href="edit_projects.php?edit=<?php echo $row["id"];?>"> Edit </a> </td>
-                                <!-- <td> // echo json_encode((basename($_FILES["fileToUpload"]["name"])))?> </td> -->
+                                <td> <?php if ($row['file_name'] === null) {
+                                        echo "No File Uploaded";
+                                    } else {
+                                        echo $row['file_name'];
+                                        } ?> </td>
+                        
                             </tr>
                         
                         <?php
                                 }
                             } else {
                         ?>
-                            <tr> <td colspan="5" id="add"> Add something here. </td> </tr>
+                            <tr> <td colspan="6" id="add"> Add something here. </td> </tr>
                         <?php
                         }
                         ?>

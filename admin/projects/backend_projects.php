@@ -36,9 +36,8 @@
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
                 $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
                 
-
-                header("Location: ../about/about.php");
-                exit;
+                // header("Location: ../about/about.php");
+                // exit;
                 if($check !== false) {
                     $uploadOk = 1; 
                 } else {
@@ -49,28 +48,37 @@
                 }
 
                 if (!file_exists($target_dir)) {
-                    mkdir( $target_dir, 0777, true);
+                    mkdir($target_dir, 0777, true);
                 }
 
                 if ($uploadOk == 0) {
-                    // hello
                 } else {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                        // hello
-                    } else {}
-                }
+                        echo 'try';
+                        exit;
+                    } else {
+                        echo 'no';
+                        exit;
+                    }
                 }
             }
+       
 
-        $sql = "INSERT INTO projects (name, description, status, user_id, file_name) VALUES ('$project_name', '$description', '$status', '$user_id', '$file_name')"; // important for create // 
-        if ($conn->query($sql) === TRUE) {
+        if ($file_name) {
+           $sql = "INSERT INTO projects (name, description, status, user_id, file_name) VALUES ('$project_name', '$description', '$status', '$user_id', '$file_name')";
+           $_SESSION['success_message'] = "Successfully Created a Project!";
+        } else {
+            $sql = "INSERT INTO projects (name, description, status, user_id) VALUES ('$project_name', '$description', '$status', '$user_id')";
             $_SESSION['success_message'] = "Successfully Created a Project!";
+        }
+        // $sql = "INSERT INTO projects (name, description, status, user_id, file_name) VALUES ('$project_name', '$description', '$status', '$user_id', '$file_name')"; // important for create // 
+        
+        if ($conn->query($sql) === TRUE) {
+            //$_SESSION['success_message'] = "Successfully Created a Project!";
         } else {
             echo $_SESSION['error'];
         }
-
-       
-
+    }
         $query = "SELECT * FROM projects WHERE user_id=$user_id";
         $result = mysqli_query($conn,$query);
     

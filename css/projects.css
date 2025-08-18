@@ -176,7 +176,7 @@ th#description {
 }
 
 th#name{
-    width:24%;
+    width:20%;
 }
 
 .project_name {
@@ -198,7 +198,7 @@ th#name{
 }
 
 td#add {
-  text-align: center;
+    text-align: center;
 }
 
 .description {
@@ -226,26 +226,28 @@ td a {
     color: black;
 }
 
-.success-message {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  color: #19db15;
+.success-message, .deleted-message, .edited-message, .edit-none-message {
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
 }
 
+.success-message {
+    color: #19db15;
+}
 .deleted-message {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  color: hsl(24, 96%, 47%);
+    color: hsl(24, 96%, 47%);
 }
 
 .edited-message {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  color: #eed709;
+    color: #eed709;
+}
+
+.edit-none-message {
+    color: #494141;
+}
+
+.for_file {
+    margin-bottom: 1rem;
 }

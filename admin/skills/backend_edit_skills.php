@@ -27,15 +27,25 @@
         $type = trim($_POST['type']);
         $rate = trim($_POST['rate']);
 
-        $sql = "UPDATE skills SET name='$name', type='$type', rate='$rate' WHERE id=$edit_id"; //Note: important for update // 
-         if ($conn->query($sql) === TRUE) {
-            $_SESSION['edited_message'] = "Successfully Edited";
+        // echo $rate;
+        // echo $get['rate'];
+        // exit;
+
+        if (($name !== $get['name']) || ($type !== $get['type']) || ($rate !== $get['rate'])) {
+            $sql = "UPDATE skills SET name='$name', type='$type', rate='$rate' WHERE id=$edit_id"; //Note: important for update // 
+            if ($conn->query($sql) === TRUE) {
+                $_SESSION['edited_message'] = "Successfully Edited";
+                header("Location: ../skills/skills.php");
+                exit;
+            } else {
+                $_SESSION['error'] = 'An error occurred, Please Try again';
+                echo $_SESSION['error'];
+                // echo "Update failed: " . $conn->error;
+            }
+        } else {
+            $_SESSION['edit_none_message'] = "Nothing was Edited";
             header("Location: ../skills/skills.php");
             exit;
-        } else {
-            $_SESSION['error'] = 'An error occurred, Please Try again';
-            echo $_SESSION['error'];
-            // echo "Update failed: " . $conn->error;
         }
     }
 ?>

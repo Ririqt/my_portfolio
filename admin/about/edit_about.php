@@ -75,7 +75,7 @@
 
                         <div class="about_degree">
                             <label for="details"> Degree: </label>
-                            <input type="text" id="degree" name="degree" value="<?php echo $selected_data['degree']?>" required>
+                            <input type="text" id="degree" name="degree" placeholder="BSCPE" value="<?php echo $selected_data['degree']?>" required>
                         </div>
 
                         <div class="about_birthday">
@@ -85,29 +85,30 @@
 
                         <div class="about_experience">
                             <label for="details"> Experience: </label>
-                            <input type="text" id="experience" name="experience" value="<?php echo $selected_data['experience']?>" required>
+                            <input type="text" id="experience" name="experience" placeholder="QA" value="<?php echo $selected_data['experience']?>" required>
                         </div>
                     </div>
 
                     <div class="column_2"> 
                         <div class="about_phone">
                             <label for="details"> Phone: </label>
-                            <input type="number" id="phone" name="phone" value="<?php echo $selected_data['phone']?>" required>
+                            <input type="tel" id="phone" name="phone" placeholder="0912-345-6789" pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" value="<?php echo $selected_data['phone']?>" required>
                         </div>
 
                         <div class="about_address">
                             <label for="details"> Address: </label>
-                            <input type="text" id="address" name="address" value="<?php echo $selected_data['address']?>" required>
+                            <input type="text" id="address" name="address" placeholder="Street, City, Country" value="<?php echo $selected_data['address']?>" required>
+                            
                         </div>
 
                         <div class="about_company">
                             <label for="details"> Company: </label>
-                            <input type="text" id="company" name="company" value="<?php echo $selected_data['company']?>" required>
+                            <input type="text" id="company" name="company" placeholder="CITYSTYLE" value="<?php echo $selected_data['company']?>" required>
                         </div>
 
                         <div class="about_role">
                             <label for="details"> Role: </label>
-                            <input type="text" id="role" name="role" value="<?php echo $selected_data['role']?>" required>
+                            <input type="text" id="role" name="role" placeholder="Intern" value="<?php echo $selected_data['role']?>" required>
                         </div>
                     </div>
 

@@ -50,30 +50,17 @@
                 
                 if($check !== false) {
                     echo "File is an image - " . $check["mime"] . ".";
-                   
                     $uploadOk = 1; 
                 } else {
-                    // $error_message = "File is not an image. Please Upload Again";
                     $uploadOk = 0;
                     $_SESSION['error'] = 'Image Error, Please Upload Again';
-                    // echo '<div class="error-message">'
-                            //. $_SESSION['error'] . '</div>' ;
                     header("Location: ../about/edit_about.php");
                     exit;
                 }
-            
-
                 if (!file_exists($target_dir)) {
                     mkdir( $target_dir, 0777, true);
                 }
-
-                // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk == 0) {
-                    //echo "Sorry, your file was not uploaded.";
-                    
-                    // echo "error";
-                    // exit;
-                    // if everything is ok, try to upload file
                 } else {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                         echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
@@ -85,6 +72,9 @@
                 }
             }
 
+            // echo $degree;
+            // echo $selected_data['degree'];
+            // exit;
                 
              //Note: important for update // 
             
@@ -92,9 +82,15 @@
                 if ($file_name) {
                     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description', file_name='$file_name' WHERE user_id=$user_id";
                     $_SESSION['success_message'] = "Edit was Successful";
-                } else {
+                } elseif (($degree !== $selected_data['degree']) || ($birthday !== $selected_data['birthday']) || ($experience !== $selected_data['experience']) ||
+                         ($address !== $selected_data['address']) || ($company !== $selected_data['company']) || ($phone !== $selected_data['phone']) || 
+                         ($role !== $selected_data['role']) || ($description !== $selected_data['description'])) {
                     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description' WHERE user_id=$user_id";
                     $_SESSION['success_message'] = "Edit was Successful";
+                } else {
+                    $_SESSION['edit_none_message'] = "Nothing was Edited";
+                    header("Location: ../about/about.php");
+                    exit;
                 }
             } else {
                 if ($file_name) {

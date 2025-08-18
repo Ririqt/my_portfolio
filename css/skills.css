@@ -165,7 +165,7 @@ th {
 }
 
 table {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   width:70%;
   border-collapse: collapse;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -194,6 +194,7 @@ table {
 td {
   text-align: center;
   height: 50px;
+  font-size: 1.35rem;
 }
 
 .user {
@@ -204,26 +205,25 @@ td a {
   color: black;
 }
 
-.success-message {
+.success-message, .deleted-message, .edited-message, .edit-none-message {
   font-size: 1.3rem;
   font-weight: 700;
   display: flex;
   justify-content: center;
+}
+
+.success-message {
   color: #19db15;
 }
 
 .deleted-message {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
   color: hsl(24, 96%, 47%);
 }
 
 .edited-message {
-  font-size: 1.3rem;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
   color: #eed709;
+}
+
+.edit-none-message {
+  color: #494141;
 }

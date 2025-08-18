@@ -1,4 +1,3 @@
-
 .register_container {
     width: 100%;
     display: flex;
@@ -7,54 +6,62 @@
 
 .full_name {
     margin-top: 40px;
-    font-size: 40px;
+    font-size: 2rem;
     justify-content: center;
     display: flex;
+    color: #1e1e1e;
     gap: 180px;
+    font-weight: 500;
 }
 
 .email {
     margin-top: 40px;
     display: flex;
     justify-content: center;
-    font-size: 40px;
-    gap: 115px;
+    font-size: 2rem;
+    color: #1e1e1e;
+    gap: 125px;
+    font-weight: 500;
 }
 
 .password {
     margin-top: 40px;
     justify-content: center;
-    font-size: 40px;
+    font-size: 2rem;
     gap: 195px;
     display: flex;
+    color: #1e1e1e;
+    font-weight: 500;
 }
 
 .confirm_password {
     margin-top: 40px;
     justify-content: center;
-    font-size: 40px;
-    gap: 35px;
+    font-size: 2rem;
+    gap: 75px;
     display: flex;
+    color: #1e1e1e;
+    font-weight: 500;
 }
 
 .full_name input[type="text"], .email input[type="email"], .password input[type="password"], .confirm_password input[type="password"] {
-    font-size: 40px;
+    font-size: 2rem;
 }
 
 .register_section {
     width: 70rem;
-    height: 600px;
-    background-color: lightgray;
+    height: 50%;
+    background-color: #fff;
     margin: 30px 0;
     border-radius: 20px;
-    border: 2px solid black;
+    border: 2px solid #ebebeb;
 }
 
 .register_form {
     display: flex;
     justify-content: center;
-    font-size: 40px;
-    color: blue;
+    font-size: 2.5rem;
+    color: #4034eb;
     font-weight: 700;
     padding-top: 30px;
 }
@@ -63,20 +70,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 2rem;
 }
 
 button {
-    width: 200px;
-    height: 50px;
-    font-size: 30px;
-    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 5px;
     transition-duration: 0.5s;
+    padding: 5px 10px;
+    background-color: #6fb9e3;
+    color: #fcfeff;
+    border: 2px solid #34cceb;
 }
 
 button:hover {
-    background-color: blue;
-    color: white;
+    background-color: #34cceb;
+    color: #1e1e1e;
+    transition: 0.6s;
+    font-weight: 700;
 }
 
 body {

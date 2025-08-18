@@ -115,6 +115,11 @@
             // Clear the session variable
                 unset($_SESSION['edited_message']); 
             }
+
+            if (isset($_SESSION['edit_none_message'])) {
+                echo '<div class="edit-none-message">' . $_SESSION['edit_none_message'] . '</div>';
+                unset($_SESSION['edit_none_message']); 
+            }
         ?>
         <div id="table" class="table">
                     <table class="styled_table">
