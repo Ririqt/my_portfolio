@@ -42,7 +42,7 @@
 
     <form action="projects.php" method="POST" class="project_form" onSubmit="setSubmit();" enctype="multipart/form-data"> 
         <div class="project_section">
-            <div class="project_form"> Create a Project Here </div>
+            <div class="project_create"> Create a Project Here </div>
                 <div class="project_container">
                     <div class="project_name">
                         <label for="name"> Name: </label>

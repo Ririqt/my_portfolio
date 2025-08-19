@@ -254,14 +254,21 @@ label[for=details] {
     display: inline-block;
     text-align: center;
     width: 30%;
-    /* height: 50px; */
+    height: 15rem;
     margin: 1rem 0.5rem;
     font-size: 1.3rem;
-    border: 1px solid black;
+    border: 1px solid #3c3b3b;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
 }
 
 .projects_bar {
     padding: 1rem 0;
+    text-align: center;
+    position: relative;
+    top: 25%;
+    opacity: 0;
 }
 
 .projects_fill {
@@ -312,7 +319,7 @@ label[for=details] {
 }
 
 .very_good_bar {
-    background-color: #19db15;
+    background-color: #83ff00;
 }
 
 .good_bar {
@@ -357,4 +364,9 @@ label[for=details] {
     width: 80%;
     display: flex;
     justify-content: center;
+}
+
+.projects_bar:hover {
+    opacity: 1;
+    transition: 0.5s;
 }

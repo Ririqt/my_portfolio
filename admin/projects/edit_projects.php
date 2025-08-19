@@ -59,7 +59,8 @@
                     
                     <div class="for_file">
                         <div class="about_file">
-                            <input type="file" name="fileToUpload">
+                            <!-- <label for="files">Select file</label> -->
+                            <input type="file" name="fileToUpload" value="<?php echo '../../uploads/projects/'. $user_id. "/". $file_name; ?>">
                         </div>
                     </div>
 

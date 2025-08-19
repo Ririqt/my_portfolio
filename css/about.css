@@ -27,7 +27,9 @@ h1 a{
 .nav_bar {
     display: inline-flex;
     align-items: center;
-    gap: 33rem;
+    gap: 35rem;
+    position:relative;
+    left: 3%;
 }
 
 .header_text {
@@ -61,7 +63,6 @@ ul {
     font-size: 30px;
     display: flex;
     justify-content: flex-start;
-    padding: 0 0 0 4rem;
 }
 
 .header_title:hover a {
@@ -81,7 +82,7 @@ li#about a {
     height: 60%;
     align-items: center;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .about_container {
@@ -100,7 +101,7 @@ form {
 }
 
 .about_form {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
 }
 
@@ -162,7 +163,8 @@ label[for=details] {
 
 .container {
     display: flex;
-    width: 50%;
+    width: 80%;
+    height: 100%;
     object-fit: fill;
 }
 
@@ -170,4 +172,8 @@ label[for=details] {
     background-repeat:no-repeat;
     background-size: cover;
     background-position: left;
+}
+
+.for_file {
+    width: 30%;
 }

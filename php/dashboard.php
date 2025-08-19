@@ -125,7 +125,7 @@
     <div class="skills_section">
         <div class="skills_circle">
             <div class="skill"> <a href="../admin/skills/skills.php"> SKILLS </a> </div>
-            <div class="skills_container"> 
+            <div class="skills_container" > 
                 <div class="skills_fill">
                         <?php
                             $query = "SELECT * FROM skills WHERE user_id=$user_id";
@@ -136,7 +136,7 @@
                 
                                 echo '<div class="skills_details">', '<a href="../admin/skills/edit_skills.php?edit=' , $row["id"] , '">', $row['name'],  '</a>', ' -';  
                                 if ($row['rate'] ===  "Very Good") {
-                                    echo '<span style="color:#19db15"> Very Good </span>', '<br>';
+                                    echo '<span style="color:#83ff00"> Very Good </span>', '<br>';
                                     echo '<div class="very_good_container">', '<div class="very_good_bar">', '</div>','</div>'; 
                                 } elseif ($row['rate'] ===  "Good") {
                                     echo '<span style="color:#9fe64e"> Good </span>';
@@ -173,7 +173,7 @@
 
                         if(mysqli_num_rows($result)>0) {
                             while($row = mysqli_fetch_assoc($result)) { 
-                            echo '<div class="projects_details">', '<div class="projects_bar"> ',
+                            echo '<div class="projects_details container" style="background-image: url('. '../uploads/projects/' . $user_id. "/". $row['file_name'].')"'.");". '>'                                                                     , '<div class="projects_bar"> ', 
                                     '<div class="projects_name">', 
                                         '<a href="../admin/projects/edit_projects.php?edit=' , $row["id"] , '">', $row['name'], '</a>' 
                                     ,'</div>';  
@@ -181,7 +181,7 @@
                             echo $row["status"], '<br>', '</div>','</div>';  
                             }
                         } else {
-                                echo "Add something here"; // put div here as well
+                            echo "Add something here"; // put div here as well
                         }
                     ?>
                 </div>

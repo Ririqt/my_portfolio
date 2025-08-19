@@ -81,6 +81,7 @@
             if ($selected_data['degree'] && $selected_data['birthday'] && $selected_data['experience'] && $selected_data['address'] && $selected_data['company'] && $selected_data['phone'] ) {
                 if ($file_name) {
                     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description', file_name='$file_name' WHERE user_id=$user_id";
+                    unlink($_SERVER['DOCUMENT_ROOT'] . "/my_portfolio/uploads/" . $user_id . "/".DIRECTORY_SEPARATOR. $selected_data['file_name']);
                     $_SESSION['success_message'] = "Edit was Successful";
                 } elseif (($degree !== $selected_data['degree']) || ($birthday !== $selected_data['birthday']) || ($experience !== $selected_data['experience']) ||
                          ($address !== $selected_data['address']) || ($company !== $selected_data['company']) || ($phone !== $selected_data['phone']) || 
