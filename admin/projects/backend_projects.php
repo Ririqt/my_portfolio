@@ -11,8 +11,10 @@
             $delete_id = intval($_GET['delete']);
 
             $sql = "SELECT * FROM projects WHERE id = $delete_id"; //Note: select all // 
+            // echo $sql; exit;
             $result = mysqli_query($conn,$sql);
-            
+            echo json_encode($result);
+            exit;
             if (mysqli_num_rows($result) == 1) {
                 $get = mysqli_fetch_assoc($result); // Note: getting the result into an array //
                 $file_name = $get['file_name']; 
@@ -28,6 +30,46 @@
                 echo $_SESSION['error'];
             }
         }
+
+        if (isset($_GET['delete_all'])) {
+            function deleteDirectory($dir) { // creating a function for deleting a directory
+                if (!file_exists($dir)) { // if the file is not existed in the directory 
+                    return true; // after this condition, it will go to rmdir($dir)
+                }
+
+                if (!is_dir($dir)) {
+                    return unlink($dir); // It's a file, delete it
+                }
+
+                foreach (scandir($dir) as $item) {
+                    if ($item == '.' || $item == '..') {
+                        continue;
+                    }
+                    if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                        return false; // Failed to delete a sub-item
+                    }
+                }
+                return rmdir($dir); // Delete the empty directory
+            }
+            $user_id = intval($_GET['delete_all']);
+            $folder_to_delete =  $_SERVER['DOCUMENT_ROOT']. "/my_portfolio/uploads/projects/" . $user_id . "/";
+
+            if (deleteDirectory($folder_to_delete)) {
+            } else {
+                echo "Failed to delete folder '$folder_to_delete' or its contents. Check permissions.";
+            }
+
+            $sql = "DELETE FROM projects WHERE user_id = $user_id"; // important for delete // 
+            if ($conn->query($sql) === TRUE) {
+                $_SESSION['deleted_message'] = "Successfully Deleted All Entries";
+                header("Location: projects.php");
+                exit;
+            } else {
+                $_SESSION['error'] = "error";
+                echo $_SESSION['error'];
+            }
+        }
+
 
         $project_name = $description = $status = "";
         $projectNameErr = $descriptionErr = "";

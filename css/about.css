@@ -5,6 +5,10 @@ body {
     padding: 0;
     box-sizing: border-box;
     overflow-x: hidden;
+    /* background-image: url("../images/about_background.jpg"); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
 }
 
 h1 a{

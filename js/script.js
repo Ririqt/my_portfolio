@@ -6,3 +6,8 @@ function passWord() {
     x.type = "password";
   }
 }
+
+$('a').click(function(e) {
+    e.preventDefault();  //stop the browser from following
+    window.location.href = '../files/resume.pdf';
+});

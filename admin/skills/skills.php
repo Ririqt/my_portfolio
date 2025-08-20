@@ -11,6 +11,34 @@
         window.history.replaceState(null, null, window.location.href );
     }
     </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script> 
+        $(document).ready(function(){ // jQuery: Document Ready Event //$(the selector).action() 
+        $('#data').after('<div id="nav"></div>');
+            var rowsShown = 6;
+            var rowsTotal = $('#data tbody tr').length;
+            var numPages = rowsTotal/rowsShown;
+            for(i = 0;i < numPages;i++) {
+                var pageNum = i + 1;
+                $('#nav').append('<a href="javascript:void()" rel="'+i+'">'+pageNum+'</a> ');
+            }
+        $('#data tbody tr').hide();
+        $('#data tbody tr').slice(0, rowsShown).show();
+        $('#nav a:first').addClass('active');
+        $('#nav a').bind('click', function(){
+
+            $('#nav a').removeClass('active');
+            $(this).addClass('active');
+            var currPage = $(this).attr('rel');
+            var startItem = currPage * rowsShown;
+            var endItem = startItem + rowsShown;
+            $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+            css('display','table-row').animate({opacity:1}, 300);
+        });
+    });
+
+    </script>
 </head>
 <body>
     <?php
@@ -122,20 +150,21 @@
             }
         ?>
         <div id="table" class="table">
-                    <table class="styled_table">
+                    <table class="styled_table" id=data>
                         <thead>
                             <tr>
                                 <th scope="col"> Name </th>
                                 <th scope="col" id="col1"> Type </th>
                                 <th scope="col" id="col2"> Skills </th>
                                 <th scope="col" id="col3"> Edit </th>
-                                <th scope="col" id="col3"> Delete </th>
+                                <th scope="col" id="delete"> <a href="skills.php?delete_all=<?php echo $user_id;?>" onclick="return confirm('Are you sure you want to Delete all of the entries?')"> Delete </a> </th>
                             </tr>
                         </thead>
                         <?php
                              if(mysqli_num_rows($result)>0) {
                                 while($row = mysqli_fetch_assoc($result)) {  
                         ?>
+                        <tbody>
                             <tr> 
                                 <td> <?php echo $row['name']; ?> </td>
                                 <td> <?php echo $row['type']; ?> </td>
@@ -146,9 +175,22 @@
                                 // foreach ($rate as $value) {
                                 //     $checked = ($row['rate'] === $value) ? "checked" : "";
                                 ?>
-                                    <?php echo $row['rate']; ?>
-                                    
-                                    
+                                    <?php if ($row['rate'] ===  "Very Good") {
+                                    echo '<span style="color:#00d312"> Very Good </span>', '<br>';
+                                
+                                    } elseif ($row['rate'] ===  "Good") {
+                                    echo '<span style="color:#9fe64e"> Good </span>';
+                                
+                                    } elseif ($row['rate'] ===  "Satisfactory") {
+                                    echo '<span style="color:#fcf400"> Satisfactory </span>';
+
+                                    } elseif ($row['rate'] ===  "Bad") {
+                                    echo '<span style="color:#f7bc25"> Bad </span>';
+
+                                    } elseif ($row['rate'] ===  "Very Bad") {
+                                    echo '<span style="color:#fa230f"> Very Bad </span>';
+                                } 
+                                    ?>
                                 <?php
                                 // }
                                 ?>
@@ -164,6 +206,7 @@
                         <?php
                         }
                         ?>
+                        </tbody>
                     </table>
         </div>             
 </form>

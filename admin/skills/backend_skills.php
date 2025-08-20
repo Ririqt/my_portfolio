@@ -24,6 +24,20 @@
             }
         }
 
+
+         if (isset($_GET['delete_all'])) {
+            $sql = "DELETE FROM skills WHERE user_id = $user_id"; // important for delete // 
+            if ($conn->query($sql) === TRUE) {
+                $_SESSION['deleted_message'] = "Successfully Deleted All Entries";
+                header("Location: skills.php");
+                exit;
+            } else {
+                $_SESSION['error'] = "error";
+                echo $_SESSION['error'];
+            }
+        }
+
+
         if($_SERVER["REQUEST_METHOD"] == "POST") {
             $user_id = $_SESSION['id'];
             $skill_name = test_input($_POST["skill_name"]);

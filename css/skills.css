@@ -126,6 +126,9 @@ input[type="submit"]:hover {
     display: flex;
     justify-content: center;
     font-weight: 500;
+    flex-direction: column;
+    position: relative;
+    left: 15%;
 }
 
 .rate_table {
@@ -226,4 +229,24 @@ td a {
 
 .edit-none-message {
   color: #494141;
+}
+
+#nav {
+    margin: 1rem 0;
+    font-size: 1rem;
+}
+#nav a {
+    background-color: #6fb9e3;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+#nav a.active {
+    background-color:#1e1e1e;
+}
+
+#delete a {
+    text-decoration: none;
+    color: white;
 }

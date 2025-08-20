@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="script.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>
+    <script>
+        $('a').click(function(e) {
+            e.preventDefault();  //stop the browser from following
+            window.location.href = '../files/resume.pdf';
+        });
+    </script>
     <title> My Portfolio </title>
 </head>
 <body>
@@ -29,7 +37,7 @@
             <div class="profile_name"> MHARC REINALD RIGOS </div>
             <div class="profile_role"> Future Software Engineer and Web Developer </div>
             <div class="profile_actions">
-                <div class="container_cv"> <a href="#download"> Download CV </a> </div>
+                <div class="container_cv"> <a href="../files/resume.pdf" download> Download CV </a> </div>
                 <div class="profile_video"> <a href="https://youtu.be/xrRDlOWR1OU?si=73BdcwQgsBQCgG2c" target="_blank"> Play Video </a> </div>
             </div>
         </div>
@@ -212,7 +220,7 @@
 
                 <div class="contact_message">
                     <label for="message"></label>
-                    <textarea type="text" id="message" name="message" placeholder="Your Message" required></textarea>
+                    <textarea type="text" id="message" name="message" placeholder="Your Message" required rows="4"></textarea>
                 </div>
                 
                 

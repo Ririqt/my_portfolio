@@ -13,6 +13,32 @@
         window.history.replaceState(null, null, window.location.href );
     }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script> 
+        $(document).ready(function(){ // jQuery: Document Ready Event //$(the selector).action() 
+            $('#data').after('<div id="nav"></div>'); // Insert the content that is inside the ()
+            var rowsShown = 6; // var is declaring a variable 
+            var rowsTotal = $('#data tbody tr').length; //selects the tbody tr andd get its length
+            var numPages = rowsTotal/rowsShown; //determining the number of pages by dividing the number of total to the number of shown
+            for(i = 0;i < numPages;i++) {
+                var pageNum = i + 1;
+                $('#nav').append('<a href="javascript:void()" rel="'+i+'">'+pageNum+'</a> '); //"+n+" is a concatenation of a variable
+                }
+            $('#data tbody tr').hide(); //hide the extra in page 1 but still works without this when refreshing
+            $('#data tbody tr').slice(0, rowsShown).show(); //show the rows that is within the range of the slice
+            $('#nav a:first').addClass('active'); //add the class of active to show the current page
+            $('#nav a').bind('click', function(){ //attaches an event for the element and specifies the function to run when the 'click' occurs
+
+                $('#nav a').removeClass('active'); //removing the class of active in previous link
+                $(this).addClass('active'); // adding again the class to the current active link
+                var currPage = $(this).attr('rel'); // getting the value of a current page
+                var startItem = currPage * rowsShown; // specifies the number of items that is the current page
+                var endItem = startItem + rowsShown; // specifies the number of items within the total of all the pages
+                $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).css('display','table-row').animate({opacity:1}, 300);
+            });
+        });
+
+    </script>
 </head>
 <body>
     <?php
@@ -103,13 +129,13 @@
                 ?>
 
                 <div id="table" class="table">
-                <table class="styled_table">
+                <table class="styled_table" id="data">
                     <thead>
                         <tr>
                             <th id="name"> Name </th>
                             <th id="description"> Description </th>
                             <th> Status </th> 
-                            <th id='delete'> Delete </th>
+                            <th id='delete'> <a href="projects.php?delete_all=<?php echo $user_id;?>" onclick="return confirm('Are you sure you want to Delete all of the entries?')"> Delete </a> </th>
                             <th id='edit'> Edit </th>
                             <th id='upload'> Upload </th>
                         </tr>
@@ -118,6 +144,7 @@
                             if(mysqli_num_rows($result)>0) {
                                 while($row = mysqli_fetch_assoc($result)) { 
                         ?>
+                        <tbody>
                             <tr> 
                                 <td> <?php echo $row['name']; ?> </td>
                                 <td id="description"> <?php echo $row['description']; ?> </td>
@@ -140,6 +167,7 @@
                         <?php
                         }
                         ?>
+                        </tbody>
                 </table>
                 </div>
             </div>

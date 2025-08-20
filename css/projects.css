@@ -142,6 +142,7 @@ td a{
     display: flex;
     margin: auto;
     font-weight: 500;
+    flex-direction: column;
 }
 
 table {
@@ -193,7 +194,7 @@ th#name{
     padding: 1.5rem 0;
     display: flex;
     gap: 6rem;
-    width: 100%;
+    width: 50%;
 }
 
 .status select {
@@ -254,4 +255,23 @@ td a {
 
 .for_file {
     margin-bottom: 1rem;
+}
+
+#nav {
+    margin: 1rem 0;
+}
+#nav a {
+    background-color: #6fb9e3;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+#nav a.active {
+    background-color:#1e1e1e;
+}
+
+#delete a {
+    text-decoration: none;
+    color: white;
 }
