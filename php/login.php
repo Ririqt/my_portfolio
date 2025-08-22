@@ -34,6 +34,13 @@
                     $_SESSION["email"] = $selected_data["email"];
                     $_SESSION["name"] = $selected_data["name"];
                     $_SESSION['login_message'] = 'Log in was successful!';
+                    $user_id = $selected_data["id"];
+                    $action = "Logged In";
+                    $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                    if ($conn->query($sql) === TRUE) {
+                        
+                    }
                     header("location: ../php/dashboard.php");
                     exit;
                 } else {

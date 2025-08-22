@@ -8,6 +8,14 @@
 <body>
     <?php
         session_start();
+        require_once("config.php");
+        $user_id = $_SESSION['id'];
+        $action = "Logged Out";
+        $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+        if ($conn->query($sql) === TRUE) {
+            
+        }
         session_destroy(); //important for log out
         header("location: /my_portfolio/html/login.html"); // proceed to log in
         exit;

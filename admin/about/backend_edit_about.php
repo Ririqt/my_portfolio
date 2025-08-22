@@ -1,11 +1,8 @@
 <?php
-// session_start();
-
     if(empty($_SESSION['name']) && (empty($_SESSION['email']))) {
             header('location: /my_portfolio/html/login.html');
             exit;
         }
-    
     
     $user_id = $_SESSION['id'];
     $name = $_SESSION['name'];
@@ -38,8 +35,6 @@
             $role = test_input($_POST["role"]);
             $description = test_input($_POST["description"]);
             $file_name = basename( $_FILES["fileToUpload"]["name"]);
-            // echo json_encode($description);
-            // exit;
 
             if(isset($_POST["submit"]) && !empty(basename($_FILES["fileToUpload"]["name"]))) {
                 $target_dir = $_SERVER['DOCUMENT_ROOT']. "/my_portfolio/uploads/" . $user_id . "/";
@@ -64,30 +59,26 @@
                 } else {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                         echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-                    
+                        $action = "Uploaded a Picture";
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                         header("Location: ../about/edit_about.php");
                     }
                 }
-            }
-
-            // echo $degree;
-            // echo $selected_data['degree'];
-            // exit;
-                
-             //Note: important for update // 
+            } 
             
             if ($selected_data['degree'] && $selected_data['birthday'] && $selected_data['experience'] && $selected_data['address'] && $selected_data['company'] && $selected_data['phone'] ) {
                 if ($file_name) {
                     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description', file_name='$file_name' WHERE user_id=$user_id";
                     unlink($_SERVER['DOCUMENT_ROOT'] . "/my_portfolio/uploads/" . $user_id . "/".DIRECTORY_SEPARATOR. $selected_data['file_name']);
                     $_SESSION['success_message'] = "Edit was Successful";
+                    
                 } elseif (($degree !== $selected_data['degree']) || ($birthday !== $selected_data['birthday']) || ($experience !== $selected_data['experience']) ||
                          ($address !== $selected_data['address']) || ($company !== $selected_data['company']) || ($phone !== $selected_data['phone']) || 
                          ($role !== $selected_data['role']) || ($description !== $selected_data['description'])) {
                     $sql = "UPDATE about SET birthday='$birthday', degree='$degree', experience='$experience', address='$address', company='$company', phone='$phone', role='$role', description='$description' WHERE user_id=$user_id";
                     $_SESSION['success_message'] = "Edit was Successful";
+                    $action = "Edited About";
                 } else {
                     $_SESSION['edit_none_message'] = "Nothing was Edited";
                     header("Location: ../about/about.php");
@@ -101,9 +92,15 @@
                     $sql = "INSERT INTO about (name, email, user_id, degree, birthday, experience, address, company, phone, role, description) VALUES ('$name', '$email', '$user_id', '$degree', '$birthday','$experience','$address','$company','$phone', '$role', '$description')";
                     $_SESSION['success_message'] = "Edit was Successful";
                 }
+                $action = "Inserted About";
             }
 
             if ($conn->query($sql) === TRUE) { // no matter what happens in above this will return true
+                $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                    if ($conn->query($sql) === TRUE) {
+                        
+                    }
                 header("Location: ../about/about.php");
                 exit;
             } else {

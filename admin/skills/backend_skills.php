@@ -17,6 +17,12 @@
             $sql = "DELETE FROM skills WHERE id = $delete_id"; // important for delete // 
             if ($conn->query($sql) === TRUE) {
                 $_SESSION['deleted_message'] = "Successfully Deleted";
+                $action = "Deleted a Skill";
+                $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                if ($conn->query($sql) === TRUE) {
+                    
+                }
                 header("location: skills.php");
                 exit;
             } else {
@@ -47,6 +53,12 @@
             $sql = "INSERT INTO skills (name, type, rate, user_id) VALUES ('$skill_name', '$type', '$rate', '$user_id')"; 
             if ($conn->query($sql) === TRUE) {
                 $_SESSION['success_message'] = "Successfully Created a Skill!";
+                $action = "Created a Skill";
+                $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                if ($conn->query($sql) === TRUE) {
+                    
+                }
             } else {
                 echo $_SESSION['error'];
                 // echo "Error: " . $sql . "<br>" . $conn->error;

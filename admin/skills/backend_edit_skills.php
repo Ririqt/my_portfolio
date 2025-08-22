@@ -35,6 +35,13 @@
             $sql = "UPDATE skills SET name='$name', type='$type', rate='$rate' WHERE id=$edit_id"; //Note: important for update // 
             if ($conn->query($sql) === TRUE) {
                 $_SESSION['edited_message'] = "Successfully Edited";
+                $user_id = $_SESSION['id'];
+                $action = "Edited a Skill";
+                $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                if ($conn->query($sql) === TRUE) {
+                    
+                }
                 header("Location: ../skills/skills.php");
                 exit;
             } else {

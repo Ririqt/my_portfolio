@@ -13,8 +13,7 @@
             $sql = "SELECT * FROM projects WHERE id = $delete_id"; //Note: select all // 
             // echo $sql; exit;
             $result = mysqli_query($conn,$sql);
-            echo json_encode($result);
-            exit;
+
             if (mysqli_num_rows($result) == 1) {
                 $get = mysqli_fetch_assoc($result); // Note: getting the result into an array //
                 $file_name = $get['file_name']; 
@@ -24,6 +23,12 @@
             $sql = "DELETE FROM projects WHERE id = $delete_id"; // important for delete // 
             if ($conn->query($sql) === TRUE) {
                 $_SESSION['deleted_message'] = "Successfully Deleted";
+                $action = "Deleted a Project";
+                $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                if ($conn->query($sql) === TRUE) {
+                        
+                }
                 header("Location: projects.php");
                 exit;
             } else {
@@ -127,6 +132,12 @@
                     
         if ($conn->query($sql) === TRUE) {
             //$_SESSION['success_message'] = "Successfully Created a Project!";
+            $action = "Created a Project";
+            $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+            if ($conn->query($sql) === TRUE) {
+                    
+            }
         } else {
             echo $_SESSION['error'];
         }

@@ -29,5 +29,5 @@
     }
 
     // if(isset($_POST["submit"])) {
-        $target_dir = $_SERVER['DOCUMENT_ROOT']. "/my_portfolio/uploads/" . $user_id . "/"; 
+        // $target_dir = $_SERVER['DOCUMENT_ROOT']. "/my_portfolio/uploads/" . $user_id . "/"; 
 ?>

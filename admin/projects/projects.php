@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <form action="projects.php" method="POST" class="project_form" onSubmit="setSubmit();" enctype="multipart/form-data"> 
+    <form action="projects.php" method="POST" class="project_form" enctype="multipart/form-data"> 
         <div class="project_section">
             <div class="project_create"> Create a Project Here </div>
                 <div class="project_container">
@@ -151,7 +151,7 @@
                                 <td> <?php echo $row["status"]; ?> </td>
                                 <td> <a href="projects.php?delete=<?php echo $row["id"];?>" onclick="return confirm('Are you sure you want to Delete?')"> Delete </a> </td>
                                 <td> <a href="edit_projects.php?edit=<?php echo $row["id"];?>"> Edit </a> </td>
-                                <td> <?php if ($row['file_name'] === null) {
+                                <td> <?php if ($row['file_name'] === null || $row['file_name'] == "") {
                                         echo "No File Uploaded";
                                     } else {
                                         echo $row['file_name'];

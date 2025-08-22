@@ -1,5 +1,7 @@
 <?php
     $user_id = $_SESSION['id'];
+    // $file_name = $_GET['file_name'];
+    // echo $file_name; exit;
 
     if(empty($_SESSION['name']) && (empty($_SESSION['email']))) {
             header('location: /my_portfolio/html/login.html');
@@ -17,6 +19,8 @@
             $description = $get['description'];
             $status = $get['status'];
             $file_name = $get['file_name'];
+
+            // echo json_encode($get); exit;
         }
     }
 
@@ -27,6 +31,12 @@
             $status = trim($_POST['status']);
             $file_name = basename($_FILES["fileToUpload"]["name"]);
 
+            // echo json_encode($get);
+            // echo json_encode($get['file_name']) . "<br>"; 
+            // echo $file_name;
+            // // echo $get['file_name'];
+            // // exit;
+            // exit;
             if(!empty(basename($_FILES["fileToUpload"]["name"]))) {
                 $target_dir = $_SERVER['DOCUMENT_ROOT']. "/my_portfolio/uploads/projects/" . $user_id . "/";
                 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -63,12 +73,24 @@
                         exit;
                     }
                 }
-                
+            } else {
+                $file_name = $get["file_name"];
+            }
+            if (($name === $get['name'] && $file_name !== $get['file_name']) && ($description === $get['description'] && $file_name !== $get['file_name']) && ($status === $get['status'] && $file_name !== $get['file_name'])) {
+                $sql = "UPDATE projects SET file_name='$file_name' WHERE id=$edit_id"; 
+                $_SESSION['edited_message'] = "Successfully Uploaded";
+                $action = "Uploaded a Picture in Projects";
+
+            } elseif (($name !== $get['name'] && $file_name !== $get['file_name']) || ($description !== $get['description'] && $file_name !== $get['file_name']) || ($status !== $get['status'] && $file_name !== $get['file_name'])
+                    ) {
                 $sql = "UPDATE projects SET name='$name', description='$description', status='$status', file_name='$file_name' WHERE id=$edit_id"; 
+                $_SESSION['edited_message'] = "Successfully Edited and Uploaded";
+                $action = "Edited and Uploaded a Picture in Project";
+
+            } elseif (($name !== $get['name'] && $file_name === $get["file_name"]) || ($description !== $get['description'] && $file_name === $get["file_name"]) || ($status !== $get['status'] && $file_name === $get["file_name"])) {
+                $sql = "UPDATE projects SET name='$name', description='$description', status='$status', file_name='$file_name' WHERE id=$edit_id"; //Note: important for update // 
                 $_SESSION['edited_message'] = "Successfully Edited";
-            } elseif (($name !== $get['name']) || ($description !== $get['description']) || ($status !== $get['status'])) {
-                $sql = "UPDATE projects SET name='$name', description='$description', status='$status' WHERE id=$edit_id"; //Note: important for update // 
-                $_SESSION['edited_message'] = "Successfully Edited";
+                $action = "Edited a Project";
             
             } else {
                 $_SESSION['edit_none_message'] = "Nothing was Edited";
@@ -78,11 +100,19 @@
             
             if ($conn->query($sql) === TRUE) {
                     //$_SESSION['edited_message'] = "Successfully Edited";
+                    
+                    $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                    if ($conn->query($sql) === TRUE) {
+                        
+                    }
                     header("Location: ../projects/projects.php");
                     exit;
-                } else {
-                    echo "Update failed: " . $conn->error;
-                }
+            } else {
+                echo "Update failed: " . $conn->error;
+            }
         }
+        
+            
 
 ?>
