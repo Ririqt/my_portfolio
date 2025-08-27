@@ -50,18 +50,25 @@
             $type = test_input($_POST["type"]);
             $rate = test_input($_POST["rate"]);
 
-            $sql = "INSERT INTO skills (name, type, rate, user_id) VALUES ('$skill_name', '$type', '$rate', '$user_id')"; 
-            if ($conn->query($sql) === TRUE) {
-                $_SESSION['success_message'] = "Successfully Created a Skill!";
-                $action = "Created a Skill";
-                $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+            $check_sql = "SELECT * FROM skills WHERE user_id = '$user_id' AND name = '$skill_name'";
+            $check_result = $conn->query($check_sql);
 
-                if ($conn->query($sql) === TRUE) {
-                    
-                }
+            if ($check_result && $check_result->num_rows > 0) {
+                $_SESSION['error'] = "You already added the skill: $skill_name";
             } else {
-                echo $_SESSION['error'];
-                // echo "Error: " . $sql . "<br>" . $conn->error;
+                $sql = "INSERT INTO skills (name, type, rate, user_id) VALUES ('$skill_name', '$type', '$rate', '$user_id')"; 
+                if ($conn->query($sql) === TRUE) {
+                    $_SESSION['success_message'] = "Successfully Created a Skill!";
+                    $action = "Created a Skill";
+                    $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
+
+                    if ($conn->query($sql) === TRUE) {
+                        
+                    }
+                } else {
+                    echo $_SESSION['error'];
+                    // echo "Error: " . $sql . "<br>" . $conn->error;
+                }
             }
         }
 
