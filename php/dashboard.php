@@ -102,6 +102,8 @@
                         <li> <a href="../admin/about/about.php"> About </a> </li>
                         <li id="skills"> <a href="../admin/skills/skills.php"> Skills </a> </li>
                         <li id="projects"> <a href="../admin/projects/projects.php"> Projects </a> </li>
+                        <li id="logs"> <a href="../php/logs.php"> Logs </a> </li>
+                        <li id="inquiries"> <a href="../admin/projects/projects.php"> Inquiries </a> </li>
                         <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
                     </ul>
                 
@@ -255,10 +257,10 @@
         </div>
     </div>
 
-    <div class="activity_log"> 
+    <!-- <div class="activity_log"> 
         <button> Logs </button> 
-    </div>    
-        <div id="table" class="activity_log_data_table">
+    </div>     -->
+        <!-- <div id="table" class="activity_log_data_table">
             <table class="styled_table" id="data">
                 <thead>
                     <tr>
@@ -266,37 +268,39 @@
                         <th> Action </th>
                         <th> Time </th>
                     </tr>
-                </thead>
+                </thead> -->
         <?php
-            $query = "SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5 ";
-            $result = mysqli_query($conn, $query);
+            // $query = "SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5 ";
+            // $result = mysqli_query($conn, $query);
             
-            if(mysqli_num_rows($result)>0) {
-                while($row = mysqli_fetch_assoc($result)) {
+            // if(mysqli_num_rows($result)>0) {
+            //     while($row = mysqli_fetch_assoc($result)) {
         ?>
-        <tbody>
+        <!-- <tbody>
             <tr>
-                <td> <?php echo $row['user_id']; ?> </td>  
-                <td> <?php echo $row['action']; ?> </td> 
-                <td> <?php echo $row['timestamp']; ?> </td> 
+                <td> <?php //echo $row['user_id']; ?> </td>  
+                <td> <?php //echo $row['action']; ?> </td> 
+                <td> <?php //echo $row['timestamp']; ?> </td>  -->
             <?php
-                }
-            } else {
-                echo '<tr> <td colspan="3" id="add">' , "Nothing in the Logs" , "</td>" , "</tr>";
-            }
+            //     }
+            // } else {
+            //     echo '<tr> <td colspan="3" id="add">' , "Nothing in the Logs" , "</td>" , "</tr>";
+            // }
         ?>
-            </tr>
+            <!-- </tr>
         </tbody>
             </table>
 
             <div class="see_all"> <a href="../php/logs.php"> See all </a> </div>
         </div>
-    
+     -->
 
     <div class="button">
         <button onclick="location.href='../html/index.html'" type="button"> Go to your Portfolio </button>
     </div> 
 
+    <!-- <div class="footer_section">
 
+    </div> -->
 </body>
 </html>

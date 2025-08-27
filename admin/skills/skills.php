@@ -58,6 +58,8 @@
                         <li> <a href="../about/about.php"> About </a> </li>
                         <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
                         <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
+                        <li id="logs"> <a href="/my_portfolio/php/logs.php"> Logs </a> </li>
+                        <li id="inquiries"> <a href="/my_portfolio/php/inquiries.php"> Inquiries </a> </li>
                         <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
                     </ul>
                 </nav> 
@@ -148,6 +150,11 @@
                 echo '<div class="edit-none-message">' . $_SESSION['edit_none_message'] . '</div>';
                 unset($_SESSION['edit_none_message']); 
             }
+
+            if (isset($_SESSION['error'])) {
+                echo '<div class="edited-message">' . $_SESSION['error'] . '</div>';
+                unset($_SESSION['error']); 
+            }
         ?>
         <div id="table" class="table">
                     <table class="styled_table" id=data>
@@ -166,7 +173,19 @@
                         ?>
                         <tbody>
                             <tr> 
-                                <td> <?php echo $row['name']; ?> </td>
+                                <td> 
+                                    <?php 
+                                    // if ($row['name'] == $row['name']) {
+                                    //     $_SESSION['error_message'] = "Duplicated Skills";
+                                    //     echo "haha";
+                                    //     exit;
+                                    //     header("Location: ../skills/skills.php");
+                                    //     exit;
+                                    // } else { 
+                                        echo $row['name']; 
+                                    // }
+                                    ?> 
+                                </td>
                                 <td> <?php echo $row['type']; ?> </td>
                                 <td> 
                                 <?php 

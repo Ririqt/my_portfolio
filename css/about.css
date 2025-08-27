@@ -31,7 +31,7 @@ h1 a{
 .nav_bar {
     display: inline-flex;
     align-items: center;
-    gap: 35rem;
+    gap: 28rem;
     position:relative;
     left: 3%;
 }

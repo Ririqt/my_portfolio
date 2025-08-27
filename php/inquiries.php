@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/logs.css">
-    <title> Logs </title>
+    <title> Inquiries </title>
+    <link rel="stylesheet" href="../css/inquiries.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>
     <script>
@@ -37,11 +37,6 @@
     <?php
     session_start();
     require_once "config.php";
-
-    if(empty($_SESSION['name']) && (empty($_SESSION['email'])) && (empty($_SESSION['id']))) {
-        header('location: ../html/login.html');
-        exit;
-    }   
     ?>
     <div class="header">
         <div class="header_container"> 
@@ -65,44 +60,40 @@
 
     <div class="table_container"> 
         <div id="table" class="activity_log_data_table">
-            <table class="styled_table" id="data">
-                <thead>
-                    <tr class="header_row">
-                        <th> Action </th>
-                        <th> Date </th>
-                        <th> Time </th> 
-                    </tr>
-                </thead>
-                <?php
-                    $user_id = $_SESSION["id"];
-                    $query = "SELECT * FROM logs WHERE user_id=$user_id ORDER BY timestamp DESC";            
-                    $result = mysqli_query($conn, $query);
-                    
-                    if(mysqli_num_rows($result)>0) {
-                        while($row = mysqli_fetch_assoc($result)) {
-                ?>
-                <tbody>
-                    <tr>
-                        <?php 
-                        $time = new DateTime($row['timestamp']);
-                        $date = $time->format('n-j-Y');
-                        $time = $time->format('H:ia');
-                        ?>
-                        
-                        <td> <?php echo $row['action']; ?> </td> 
-                        <td> <?php echo $date; ?> </td>  
-                        <td> <?php echo $time; ?> </td> 
+                <table class="styled_table" id="data">
+                    <thead>
+                        <tr class="message_row">
+                            <th> Name </th>
+                            <th> Subject </th>
+                            <th> Messages </th>
+                        </tr>
+                    </thead>
+        <?php
+        $sql = "SELECT * FROM contacts";
+        $result = mysqli_query($conn,$sql);
 
-                    <?php
-                        }
-                    } else {
-                        echo '<tr> <td colspan="3" id="add">' , "Nothing in the Logs" , "</td>" , "</tr>";
-                    }
-                ?>
-                    </tr>
-                </tbody>
-            </table>
+        // echo json_encode($result);
+        // exit;
+        if(mysqli_num_rows($result)>0) {
+                    while($row = mysqli_fetch_assoc($result)) {
+        ?>
+
+        <tbody>
+            <tr>
+                <td> <?php echo $row['name']; ?> </td>  
+                <td> <?php echo $row['subject']; ?> </td> 
+                <td> <?php echo $row['message']; ?> </td> 
+            <?php
+                }
+            } else {
+                echo '<tr> <td colspan="3" id="add">' , "Nothing in the Inquiries" , "</td>" , "</tr>";
+            }
+        ?>
+            </tr>
+        </tbody>
+                </table>
         </div>
-    </div> 
+    </div>
+
 </body>
 </html>

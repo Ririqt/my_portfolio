@@ -27,7 +27,7 @@ h1 a{
 .nav_bar {
     display: inline-flex;
     align-items: center;
-    gap: 33rem;
+    gap: 28rem;
 }
 
 .header_text {

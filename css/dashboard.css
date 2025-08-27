@@ -27,7 +27,7 @@ h1 a{
 .nav_bar {
     display: inline-flex;
     align-items: center;
-    gap: 33rem;
+    gap: 28rem;
 }
 
 .header_text {
@@ -203,7 +203,7 @@ button:hover{
     display:flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
 }
 
 label[for=details] {
@@ -369,4 +369,23 @@ label[for=details] {
 .projects_bar:hover {
     opacity: 1;
     transition: 0.5s;
+}
+
+.activity_log_data_table {
+    position: relative;
+    left: 38%;
+}
+
+.styled_table {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.see_all a {
+    color: #4034eb;
+}
+
+.activity_log {
+    display: flex;
+    justify-content: center;
 }

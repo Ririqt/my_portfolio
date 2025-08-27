@@ -33,6 +33,8 @@
                         <li id="about"> <a href="../about/about.php"> About </a> </li>
                         <li id="skills"> <a href="../skills/skills.php"> Skills </a> </li>
                         <li id="projects"> <a href="../projects/projects.php"> Projects </a> </li>
+                        <li id="logs"> <a href="/my_portfolio/php/logs.php"> Logs </a> </li>
+                        <li id="inquiries"> <a href="/my_portfolio/php/inquiries.php"> Inquiries </a> </li>
                         <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
                     </ul>
                 

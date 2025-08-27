@@ -79,12 +79,14 @@
             if (($name === $get['name'] && $file_name !== $get['file_name']) && ($description === $get['description'] && $file_name !== $get['file_name']) && ($status === $get['status'] && $file_name !== $get['file_name'])) {
                 $sql = "UPDATE projects SET file_name='$file_name' WHERE id=$edit_id"; 
                 $_SESSION['edited_message'] = "Successfully Uploaded";
+                unlink($_SERVER['DOCUMENT_ROOT'] . "/my_portfolio/uploads/projects/" . $user_id . "/".DIRECTORY_SEPARATOR. $get['file_name']);
                 $action = "Uploaded a Picture in Projects";
 
             } elseif (($name !== $get['name'] && $file_name !== $get['file_name']) || ($description !== $get['description'] && $file_name !== $get['file_name']) || ($status !== $get['status'] && $file_name !== $get['file_name'])
                     ) {
                 $sql = "UPDATE projects SET name='$name', description='$description', status='$status', file_name='$file_name' WHERE id=$edit_id"; 
                 $_SESSION['edited_message'] = "Successfully Edited and Uploaded";
+                unlink($_SERVER['DOCUMENT_ROOT'] . "/my_portfolio/uploads/projects/" . $user_id . "/".DIRECTORY_SEPARATOR. $get['file_name']);
                 $action = "Edited and Uploaded a Picture in Project";
 
             } elseif (($name !== $get['name'] && $file_name === $get["file_name"]) || ($description !== $get['description'] && $file_name === $get["file_name"]) || ($status !== $get['status'] && $file_name === $get["file_name"])) {
