@@ -63,6 +63,7 @@
                 <table class="styled_table" id="data">
                     <thead>
                         <tr class="message_row">
+                            <th> No. </th>
                             <th> Name </th>
                             <th> Subject </th>
                             <th> Messages </th>
@@ -75,11 +76,13 @@
         // echo json_encode($result);
         // exit;
         if(mysqli_num_rows($result)>0) {
+            $i = 1;
                     while($row = mysqli_fetch_assoc($result)) {
         ?>
 
         <tbody>
             <tr>
+                <td> <?php echo $i; $i++; ?> </td>  
                 <td> <?php echo $row['name']; ?> </td>  
                 <td> <?php echo $row['subject']; ?> </td> 
                 <td> <?php echo $row['message']; ?> </td> 

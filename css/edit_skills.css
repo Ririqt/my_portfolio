@@ -1,92 +1,92 @@
 body {
-    min-height: 100vh;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-x: hidden;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 h1 a{
-    display: inline-flex;
-    text-decoration: none;
-    color: black;
+  display: inline-flex;
+  text-decoration: none;
+  color: black;
 }
 
 .header {
-    background-color: #34cceb;
-    border-radius: 0px 0px 20px 20px;
-    box-shadow:  5px 10px 8px #888888;
+  background-color: #34cceb;
+  border-radius: 0px 0px 20px 20px;
+  box-shadow:  5px 10px 8px #888888;
 }
 
 .header_container {
-    display: inline-block;
-    width: 100%
+  display: inline-block;
+  width: 100%
 }
 
 .nav_bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 28rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 28rem;
 }
 
 .header_text {
-    font-weight: 700;
-    font-size: 20px;
-    padding: 0;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 0;
 }
 
 .header_text li {
-    list-style: none;
-    display: flex;
+  list-style: none;
+  display: flex;
 }
 
 ul {
-    gap: 3rem;
-    display: inline-flex;
-    padding: 0;
+  gap: 3rem;
+  display: inline-flex;
+  padding: 0;
 }
 
 .header_text li a {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 .header_text li a:hover {
-    color: beige;
-    transition: 0.5s;
+  color: beige;
+  transition: 0.5s;
 }
 
 .header_title {
-    font-size: 30px;
-    display: flex;
-    justify-content: flex-start;
-    padding: 0 0 0 4rem;
+  font-size: 30px;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 0 0 4rem;
 }
 
 .header_title:hover a {
-    color: white;
-    transition: 0.5s;
+  color: white;
+  transition: 0.5s;
 }
 
 li#skills a {
-    color: white;
+  color: white;
 }
 
 .skill_section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem 30%;
-    height: 60%;
-    border: 2px solid #ebebeb;
-    border-radius: 20px;
-    background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 30%;
+  height: 60%;
+  border: 2px solid #ebebeb;
+  border-radius: 20px;
+  background-color: #fff;
 }
 
 .skill_container {
-   margin: 1rem 0;
+  margin: 1rem 0;
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -99,7 +99,6 @@ li#skills a {
   font-weight: 700;
 }
 
-
 .skill_name, .type{
   display:flex;
   justify-content: space-between;
@@ -108,7 +107,7 @@ li#skills a {
 
 .skill_name input[type="text"] {
   font-size: 1.2rem;
-  width: 84%
+  width: 84%;
 }
 
 label[for="name"] {
@@ -128,13 +127,14 @@ label[for="rate"] {
   font-size: 20px;
   font-weight: 500;
 }
+
 .type select {
   height: 30px;
   width: 86%;
 }
 
 .table {
-    margin-top: 2rem;
+margin-top: 2rem;
 }
 
 .rate_table {
@@ -144,21 +144,21 @@ label[for="rate"] {
 }
 
 button {
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border: 2px solid #34cceb;
-    border-radius: 5px;
-    padding: 5px 10px;
-    background-color: #6fb9e3;
-    color: #fcfeff;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid #34cceb;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: #6fb9e3;
+  color: #fcfeff;
 }
 
 button:hover {
-    background-color: #34cceb;
-    color: #1e1e1e;
-    transition: 0.6s;
-    font-weight: 700;
+  background-color: #34cceb;
+  color: #1e1e1e;
+  transition: 0.6s;
+  font-weight: 700;
 }
 .user {
   font-weight: 900;

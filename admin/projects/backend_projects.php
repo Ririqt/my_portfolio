@@ -85,6 +85,8 @@
             $description = test_input($_POST['description']);
             $status = test_input($_POST["status"]);
             $file_name = basename($_FILES["fileToUpload"]["name"]);
+            $sql = "SELECT * FROM projects WHERE user_id = '$user_id' AND name = '$project_name'";
+            $result = $conn->query($sql);
 
             if(!empty(basename($_FILES["fileToUpload"]["name"]))) {
                 $target_dir = $_SERVER['DOCUMENT_ROOT']. "/my_portfolio/uploads/projects/" . $user_id . "/";
@@ -123,12 +125,21 @@
                     }
                 }
 
-                $sql = "INSERT INTO projects (name, description, status, user_id, file_name) VALUES ('$project_name', '$description', '$status', '$user_id', '$file_name')";
-                $_SESSION['success_message'] = "Successfully Created a Project!";
-            } else {
+                // $check_sql = "SELECT * FROM projects WHERE user_id = '$user_id' AND name = '$project_name'";
+                // $check_result = $conn->query($check_sql);
+
+                if ($result && $result->num_rows > 0) {
+                    $_SESSION['error'] = "You already added the project: $project_name";
+                } else {
+                    $sql = "INSERT INTO projects (name, description, status, user_id, file_name) VALUES ('$project_name', '$description', '$status', '$user_id', '$file_name')";
+                    $_SESSION['success_message'] = "Successfully Created a Project!";
+                }
+            } elseif ($result && $result->num_rows > 0) {
+                $_SESSION['error'] = "You already added the project: $project_name"; 
+                } else {
                 $sql = "INSERT INTO projects (name, description, status, user_id) VALUES ('$project_name', '$description', '$status', '$user_id')";
                 $_SESSION['success_message'] = "Successfully Created a Project!";
-            }
+                }   
                     
         if ($conn->query($sql) === TRUE) {
             //$_SESSION['success_message'] = "Successfully Created a Project!";
@@ -139,7 +150,7 @@
                     
             }
         } else {
-            echo $_SESSION['error'];
+            // echo $_SESSION['error'];
         }
     }
         $query = "SELECT * FROM projects WHERE user_id=$user_id";

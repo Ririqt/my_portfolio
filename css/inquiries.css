@@ -89,8 +89,9 @@ li#inquiries a {
     padding: 0.5rem 1rem;
 }
 
-td, th {
+td {
     padding: 0.6rem;
+    font-size: 1.2rem;
 }
 
 .styled_table thead tr {
@@ -104,5 +105,17 @@ table {
 }
 
 th {
-    height: 3rem;
+    /* height: 3rem; */
+    padding: 0.6rem;
+}
+
+#nav a.active {
+    background-color: black;
+}
+
+#nav a {
+    background-color: #6fb9e3;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    text-decoration: none;
 }

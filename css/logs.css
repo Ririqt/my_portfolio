@@ -94,7 +94,8 @@ ul {
 }
 
 td {
-    padding: 0.6rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 1.2rem;
 }
 
 #nav a.active {

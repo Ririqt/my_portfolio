@@ -33,7 +33,7 @@
                     </ul>
                 
                 </nav> 
-                <div class="user"> <a href="../php/users.php"> User:</a> <?php echo $_SESSION['name'];  ?> </div> 
+                <div class="user"> User: <?php echo $_SESSION['name'];  ?> </div> 
             </div>
         </div>
     </div>
@@ -51,13 +51,9 @@
                 <tbody>
                 <?php
                     $user_id = $_SESSION["id"];
-                    $total_query = "SELECT COUNT(*) as total FROM logs WHERE user_id=$user_id";            
-                    $total_result = mysqli_query($conn, $total_query);
-                    $total = mysqli_fetch_assoc($total_result)['total']; 
-                    // echo json_encode($total); exit; 
-                    $query = "SELECT * FROM logs WHERE user_id=$user_id ORDER BY timestamp DESC LIMIT $total";   
+                    $query = "SELECT * FROM logs WHERE user_id=$user_id ORDER BY timestamp DESC";            
                     $result = mysqli_query($conn, $query);
-                   
+                    
                     if(mysqli_num_rows($result)>0) {
                         while($row = mysqli_fetch_assoc($result)) {
                 ?>
@@ -91,8 +87,8 @@
         $(document).ready(function(){ // jQuery: Document Ready Event //$(the selector).action() 
         $('#data').after('<div id="nav"></div>');
             var rowsShown = 18;
-            // var rowsTotal = $('#data tbody tr').length;
             var rowsTotal = $('#data tbody tr').length;
+            
             var numPages = rowsTotal/rowsShown;
             for(i = 0;i < numPages;i++) {
                 var pageNum = i + 1;
@@ -110,8 +106,6 @@
             var endItem = startItem + rowsShown;
             $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
             css('display','table-row').animate({opacity:1}, 300);
-
-            
         });
     });
 </script>

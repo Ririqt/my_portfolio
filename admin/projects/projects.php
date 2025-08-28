@@ -15,7 +15,10 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script> 
+
         $(document).ready(function(){ // jQuery: Document Ready Event //$(the selector).action() 
+            
+
             $('#data').after('<div id="nav"></div>'); // Insert the content that is inside the ()
             var rowsShown = 6; // var is declaring a variable 
             var rowsTotal = $('#data tbody tr').length; //selects the tbody tr andd get its length
@@ -32,6 +35,7 @@
                 $('#nav a').removeClass('active'); //removing the class of active in previous link
                 $(this).addClass('active'); // adding again the class to the current active link
                 var currPage = $(this).attr('rel'); // getting the value of a current page
+                console.log(JSON.stringify(currPage));
                 var startItem = currPage * rowsShown; // specifies the number of items that is the current page
                 var endItem = startItem + rowsShown; // specifies the number of items within the total of all the pages
                 $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).css('display','table-row').animate({opacity:1}, 300);
