@@ -5,113 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/logs.css">
     <title> Logs </title>
-
-    
 </head>
 <body>
-    <?php
-    session_start();
-    require_once "config.php";
+<?php
+session_start();
+require_once "config.php";
 
-    if(empty($_SESSION['name']) && (empty($_SESSION['email'])) && (empty($_SESSION['id']))) {
-        header('location: ../html/login.html');
-        exit;
-    }   
-    ?>
-    <div class="header">
-        <div class="header_container"> 
-            <div class="nav_bar">
-                <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
-                <nav class="header_text">
-                    <ul>
-                        <li> <a href="../admin/about/about.php"> About </a> </li>
-                        <li id="skills"> <a href="../admin/skills/skills.php"> Skills </a> </li>
-                        <li id="projects"> <a href="../admin/projects/projects.php"> Projects </a> </li>
-                        <li id="logs"> <a href="../php/logs.php"> Logs </a> </li>
-                        <li id="inquiries"> <a href="../php/inquiries.php"> Inquiries </a> </li>
-                        <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
-                    </ul>
-                
-                </nav> 
-                <div class="user"> <a href="../php/users.php"> User:</a> <?php echo $_SESSION['name'];  ?> </div> 
-            </div>
+if (empty($_SESSION['name']) && (empty($_SESSION['email'])) && (empty($_SESSION['id']))) {
+    header('location: ../html/login.html');
+    exit;
+}
+
+$user_id = $_SESSION["id"];
+
+// Number of rows per page
+$rows_per_page = 18;
+
+// Get current page from query string (default = 1)
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Calculate offset
+$offset = ($page - 1) * $rows_per_page;
+
+// Count total logs
+$total_query = "SELECT COUNT(*) as total FROM logs WHERE user_id=$user_id";
+$total_result = mysqli_query($conn, $total_query);
+$total = mysqli_fetch_assoc($total_result)['total'];
+
+// Calculate total pages
+$total_pages = ceil($total / $rows_per_page);
+
+// Fetch logs only for the current page
+$query = "SELECT * FROM logs 
+          WHERE user_id=$user_id 
+          ORDER BY timestamp DESC 
+          LIMIT $rows_per_page OFFSET $offset";
+$result = mysqli_query($conn, $query);
+?>
+
+<div class="header">
+    <div class="header_container"> 
+        <div class="nav_bar">
+            <h1 class="header_title"> <a href="/my_portfolio/php/dashboard.php"> My Portfolio </a> </h1>
+            <nav class="header_text">
+                <ul>
+                    <li> <a href="../admin/about/about.php"> About </a> </li>
+                    <li id="skills"> <a href="../admin/skills/skills.php"> Skills </a> </li>
+                    <li id="projects"> <a href="../admin/projects/projects.php"> Projects </a> </li>
+                    <li id="logs"> <a href="../php/logs.php"> Logs </a> </li>
+                    <li id="inquiries"> <a href="../php/inquiries.php"> Inquiries </a> </li>
+                    <li> <a href="/my_portfolio/php/logout.php" onclick="return confirm('Are you sure you want to Log Out?')"> Log Out </a> </li>
+                </ul>
+            </nav> 
+            <div class="user"> <a href="../php/users.php"> User:</a> <?php echo $_SESSION['name']; ?> </div> 
         </div>
     </div>
+</div>
 
-    <div class="table_container"> 
-        <div id="table" class="activity_log_data_table">
-            <table class="styled_table" id="data">
-                <thead>
-                    <tr class="header_row">
-                        <th> Action </th>
-                        <th> Date </th>
-                        <th> Time </th> 
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                    $user_id = $_SESSION["id"];
-                    $total_query = "SELECT COUNT(*) as total FROM logs WHERE user_id=$user_id";            
-                    $total_result = mysqli_query($conn, $total_query);
-                    $total = mysqli_fetch_assoc($total_result)['total']; 
-                    // echo json_encode($total); exit; 
-                    $query = "SELECT * FROM logs WHERE user_id=$user_id ORDER BY timestamp DESC LIMIT $total";   
-                    $result = mysqli_query($conn, $query);
-                   
-                    if(mysqli_num_rows($result)>0) {
-                        while($row = mysqli_fetch_assoc($result)) {
-                ?>
-                
-                    <tr>
-                        <?php 
-                        $time = new DateTime($row['timestamp']);
-                        $date = $time->format('F j, Y');
-                        $time = $time->format('H:i a');
-                        ?>
-                        
-                        <td> <?php echo $row['action']; ?> </td> 
-                        <td> <?php echo $date; ?> </td>  
-                        <td> <?php echo $time; ?> </td> 
+<div class="table_container"> 
+    <div id="table" class="activity_log_data_table">
+        <table class="styled_table" id="data">
+            <thead>
+                <tr class="header_row">
+                    <th> Action </th>
+                    <th> Date </th>
+                    <th> Time </th> 
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $time = new DateTime($row['timestamp']);
+                    $date = $time->format('F j, Y');
+                    $time = $time->format('h:i a');
+                    echo "<tr>
+                            <td>{$row['action']}</td>
+                            <td>{$date}</td>
+                            <td>{$time}</td>
+                          </tr>";
+                }
+            } else {
+                echo '<tr><td colspan="3" id="add">Nothing in the Logs</td></tr>';
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+</div> 
 
-                    <?php
-                        }
-                    } else {
-                        echo '<tr> <td colspan="3" id="add">' , "Nothing in the Logs" , "</td>" , "</tr>";
-                    }
-                ?>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div> 
+<!-- Pagination -->
+<div id="nav" style="margin-top:20px; text-align:center;">
+    <?php if ($total_pages > 1): ?>
+        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+            <?php if ($i == $page): ?>
+                <strong><?php echo $i; ?></strong>
+            <?php else: ?>
+                <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+            <?php endif; ?>
+        <?php endfor; ?>
+    <?php endif; ?>
+</div>
+
 </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>
-    <script>
-        $(document).ready(function(){ // jQuery: Document Ready Event //$(the selector).action() 
-        $('#data').after('<div id="nav"></div>');
-            var rowsShown = 18;
-            // var rowsTotal = $('#data tbody tr').length;
-            var rowsTotal = $('#data tbody tr').length;
-            var numPages = rowsTotal/rowsShown;
-            for(i = 0;i < numPages;i++) {
-                var pageNum = i + 1;
-                $('#nav').append('<a href="javascript:void()" rel="'+i+'">'+pageNum+'</a> ');
-            }
-        $('#data tbody tr').hide();
-        $('#data tbody tr').slice(0, rowsShown).show();
-        $('#nav a:first').addClass('active');
-        $('#nav a').bind('click', function(){
-
-            $('#nav a').removeClass('active');
-            $(this).addClass('active');
-            var currPage = $(this).attr('rel');
-            var startItem = currPage * rowsShown;
-            var endItem = startItem + rowsShown;
-            $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
-            css('display','table-row').animate({opacity:1}, 300);
-
-            
-        });
-    });
-</script>
