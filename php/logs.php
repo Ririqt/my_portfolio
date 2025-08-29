@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="logs of the user">
     <link rel="stylesheet" href="../css/logs.css">
     <title> Logs </title>
 </head>
@@ -24,9 +25,11 @@ $rows_per_page = 18;
 // Get current page from query string (default = 1)
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
 
+// echo json_encode(isset($_GET['page']));
+// echo "<br> page:" , $page , "</br>"; 
 // Calculate offset
 $offset = ($page - 1) * $rows_per_page;
-
+// echo "kung ano man ito:", $offset; 
 // Count total logs
 $total_query = "SELECT COUNT(*) as total FROM logs WHERE user_id=$user_id";
 $total_result = mysqli_query($conn, $total_query);
@@ -34,12 +37,12 @@ $total = mysqli_fetch_assoc($total_result)['total'];
 
 // Calculate total pages
 $total_pages = ceil($total / $rows_per_page);
-
+// echo $total_pages; exit;
 // Fetch logs only for the current page
 $query = "SELECT * FROM logs 
           WHERE user_id=$user_id 
           ORDER BY timestamp DESC 
-          LIMIT $rows_per_page OFFSET $offset";
+          LIMIT $rows_per_page OFFSET $offset"; //Start on record (+1) on whatever value of offset, Return only n of rows per page records.
 $result = mysqli_query($conn, $query);
 ?>
 

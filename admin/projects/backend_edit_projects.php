@@ -46,7 +46,7 @@
                 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
                 $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
                 
-                 if($check !== false) {
+                if($check !== false) {
                     $uploadOk = 1; 
                 } else {
                     $uploadOk = 0;

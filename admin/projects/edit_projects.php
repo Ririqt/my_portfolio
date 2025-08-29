@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edit Projects of the user">
     <link rel="stylesheet" href="/my_portfolio/css/edit.css">
     <title> Edit Your Project </title>
 </head>

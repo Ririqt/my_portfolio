@@ -389,3 +389,7 @@ label[for=details] {
     display: flex;
     justify-content: center;
 }
+
+.no_pic {
+    width: 50%;
+}

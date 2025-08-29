@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edit about of the user">
     <link rel="stylesheet" href="/my_portfolio/css/edit_about.css">
     <title> Edit About </title>
 
@@ -117,7 +118,7 @@
                     <div class="for_description">
                         <div class="about_description">
                             <label for="details"> Description: </label>
-                            <textarea type="text" id="description" name="description" rows="6" cols="50" required> <?php echo $selected_data['description']?></textarea>
+                            <textarea maxlength="256" type="text" id="description" name="description" rows="6" cols="50" required> <?php echo $selected_data['description']?></textarea>
                         </div>
 
                     <div class="for_file">

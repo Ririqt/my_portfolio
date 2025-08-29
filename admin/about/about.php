@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/my_portfolio/css/about.css">
+    <meta name="description" content="About of the user">
     <title> About Me </title>
 
     <script>

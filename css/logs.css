@@ -65,7 +65,7 @@ ul {
 }
 
 .header_title:hover a {
-    color: white;
+    color: #2B2B2B;
     transition: 0.5s;
 }
 
@@ -104,18 +104,18 @@ td {
 
 #nav a {
     background-color: #6fb9e3;
-    color: white;
+    color: #2B2B2B;
     padding: 0.2rem 0.5rem;
     text-decoration: none;
 }
 
 li#logs a{
-    color: white;
+    color: #2B2B2B;
 }
 
 .styled_table thead tr {
     background-color: #6fb9e3;
-    color: #ffffff;
+    color: #2B2B2B;
 }
 
 table {
