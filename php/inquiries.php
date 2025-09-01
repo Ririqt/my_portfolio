@@ -6,37 +6,27 @@
     <title> Inquiries </title>
     <link rel="stylesheet" href="../css/inquiries.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"> </script>
-    <script>
-        $(document).ready(function(){ // jQuery: Document Ready Event //$(the selector).action() 
-        $('#data').after('<div id="nav"></div>');
-            var rowsShown = 20;
-            var rowsTotal = $('#data tbody tr').length;
-            var numPages = rowsTotal/rowsShown;
-            for(i = 0;i < numPages;i++) {
-                var pageNum = i + 1;
-                $('#nav').append('<a href="javascript:void()" rel="'+i+'">'+pageNum+'</a> ');
-            }
-        $('#data tbody tr').hide();
-        $('#data tbody tr').slice(0, rowsShown).show();
-        $('#nav a:first').addClass('active');
-        $('#nav a').bind('click', function(){
-
-            $('#nav a').removeClass('active');
-            $(this).addClass('active');
-            var currPage = $(this).attr('rel');
-            var startItem = currPage * rowsShown;
-            var endItem = startItem + rowsShown;
-            $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
-            css('display','table-row').animate({opacity:1}, 300);
-        });
-    });
-    </script>
 </head>
 <body>
     <?php
     session_start();
     require_once "config.php";
+
+    $user_id = $_SESSION['id'];
+    $rows_per_page = 1;
+
+    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+
+    $offset = ($page - 1) * $rows_per_page;
+
+    $total_query = "SELECT COUNT(*) as total FROM projects WHERE user_id=$user_id";
+    $total_result = mysqli_query($conn, $total_query);
+    $total = mysqli_fetch_assoc($total_result)['total'];
+
+    $total_pages = ceil($total / $rows_per_page); 
+
+    $query = "SELECT * FROM projects WHERE user_id=$user_id LIMIT $rows_per_page OFFSET $offset";
+    $result = mysqli_query($conn, $query);
     ?>
     <div class="header">
         <div class="header_container"> 
@@ -98,5 +88,39 @@
         </div>
     </div>
 
+    <div id="nav"> 
+    <?php if ($total_pages > 1): //Pagination ?>
+        <?php 
+            $max_visible = 5;
+            $start = max(1, $page - floor($max_visible / 2)); //floor rounds down
+            $end = min($total_pages, $start + $max_visible - 1);
+
+            if ($end - $start + 1 < $max_visible) {
+                $start = max(1, $end - $max_visible + 1);
+            }
+        ?>
+
+        <?php if ($page > 1): ?>
+            <a href="?page=1"> First </a> <!-- Page 1 this is useful when page has been double-triple digit-->
+            <a href="?page=<?php echo $page - 1; ?>"> Prev </a> <!-- Allocating the previous page -->
+        <?php endif; ?> <!-- signifies the end of the condition statement-->
+
+        <!-- Page numbers -->
+        <?php for ($i = $start; $i <= $end; $i++): ?>
+            <?php if ($i == $page): ?> <!-- If i reaches the certain page it will echo that i--> 
+                <b> <?php echo $i; ?> </b> <!-- Current Page -->
+            <?php else: ?> <!-- Everything Else -->
+                <a href="?page=<?php echo $i; ?>"> <!-- allocating the other pages --> <?php echo $i; ?> </a>
+            <?php endif; ?>
+        <?php endfor; ?>
+
+        <!-- Next and Last -->
+        <?php if ($page < $total_pages): ?> 
+            <a href="?page=<?php echo $page + 1; ?>">Next</a>
+            <a href="?page=<?php echo $total_pages; ?>">Last</a>
+        <?php endif; ?>
+
+    <?php endif; ?>
+</div>
 </body>
 </html>

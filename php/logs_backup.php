@@ -101,8 +101,11 @@ $result = mysqli_query($conn, $query);
         <?php
             $max_visible = 5; // how many page numbers to show
             $start = max(1, $page - floor($max_visible / 2));
+            echo $start; 
+            // echo $page; 
+            // echo $max_visible; exit;
             $end = min($total_pages, $start + $max_visible - 1);
-
+            // echo $end; exit;
             // shift window if at the end
             if ($end - $start + 1 < $max_visible) {
                 $start = max(1, $end - $max_visible + 1);

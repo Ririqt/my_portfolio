@@ -63,13 +63,17 @@
 
     <div class="welcome"> Dashboard </div>
         <?php 
-        if (isset($_SESSION['login_message'])) {
-            echo '<div class="login_message">' . $_SESSION['login_message'] . '</div>';
-            unset($_SESSION['login_message']);
-        }
+        if (isset($_SESSION['login_message'])) : 
         ?>
-        <div class="full_name"> Welcome <?php echo $_SESSION["name"]; ?> </div> 
-        <div id="time_message"> </div>
+            <div class="login_message">  
+            <?php echo $_SESSION['login_message'] ?> 
+            </div>
+            <?php unset($_SESSION['login_message']);  
+        endif;
+        ?>
+       
+        <div class="full_name" id='time_message'>  </div> 
+        <!-- <div > </div> -->
 
     <div class="quick_stats"> Quick Stats: 
         <?php
@@ -89,16 +93,15 @@
 
     <div class="about_section">
         <div class="about_container"> 
-            <div class="about_picture container" 
-            <?php 
-            if (empty(basename($selected_data['file_name']))) {
-                echo ">" . '<div class="no_pic">' . "Please Upload Your Picture Here" . '</div>';
-            } else { 
-            ?>
-                style="background-image: url('<?php echo '../uploads/'. $user_id. "/". $selected_data['file_name']; ?>');"> </div>
-            <?php 
-            } 
-            ?>
+                <?php if (!empty($selected_data['file_name'])): ?>
+                    <div class="about_picture container"
+                        style="background-image: url('<?php echo '../uploads/' . $user_id . '/' . $selected_data['file_name']; ?>');">
+                    </div>
+                <?php else: ?>
+                    <div class="about_picture container">
+                        <div class="no_pic">Please Upload Your Picture Here</div>
+                    </div>
+                <?php endif; ?>
             <div class="about_text"> 
                 <div class="about"> 
                     <a href="../admin/about/about.php"> ABOUT </a> 
@@ -168,22 +171,22 @@
                             while($row = mysqli_fetch_assoc($result)) {  
             
                             echo '<div class="skills_details">', '<a href="../admin/skills/edit_skills.php?edit=' , $row["id"] , '">', $row['name'],  '</a>', ' -';  
-                            if ($row['rate'] ===  "Very Good") {
+                            if ($row['rate'] ===  "Very Good"): 
                                 echo '<span style="color:#83ff00"> Very Good </span>', '<br>';
                                 echo '<div class="very_good_container">', '<div class="very_good_bar">', '</div>','</div>'; 
-                            } elseif ($row['rate'] ===  "Good") {
+                            elseif ($row['rate'] ===  "Good"): 
                                 echo '<span style="color:#9fe64e"> Good </span>';
                                 echo '<div class="good_container">', '<div class="good_bar">', '</div>','</div>'; 
-                            } elseif ($row['rate'] ===  "Satisfactory") {
+                            elseif ($row['rate'] ===  "Satisfactory"): 
                                 echo '<span style="color:#fcf400"> Satisfactory </span>';
                                 echo '<div class="satisfactory_container">', '<div class="satisfactory_bar">', '</div>','</div>'; 
-                            } elseif ($row['rate'] ===  "Bad") {
+                            elseif ($row['rate'] ===  "Bad"): 
                                 echo '<span style="color:#f7bc25"> Bad </span>';
                                 echo '<div class="bad_container">', '<div class="bad_bar">', '</div>','</div>'; 
-                            } elseif ($row['rate'] ===  "Very Bad") {
+                            elseif ($row['rate'] ===  "Very Bad"): 
                                 echo '<span style="color:#fa230f"> Very Bad </span>';
                                 echo '<div class="very_bad_container">', '<div class="very_bad_bar">', '</div>','</div>'; 
-                            }
+                            endif;
                             echo '</div>'; 
                             }
                         } else {
@@ -234,7 +237,8 @@
     console.log(JSON.stringify(today));
     var time = today.getHours(); // getting only the hour
     var greet; // assigning the value of the greeting
-    
+    var user = <?= json_encode($_SESSION["name"], JSON_HEX_TAG); ?>;
+
     if (time > 18) {
         greet = "Good Evening"; 
     } else if (time > 12) {
@@ -246,7 +250,7 @@
     }
 
     var show = document.getElementById('time_message');
-    show.textContent = greet;
+    show.textContent = greet + ", " + user + "!";
     
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

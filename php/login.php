@@ -38,9 +38,9 @@
                     $action = "Logged In";
                     $sql = "INSERT INTO logs (user_id, action) VALUES ('$user_id', '$action')";
 
-                    if ($conn->query($sql) === TRUE) {
-                        
-                    }
+                    if ($conn->query($sql) === TRUE) :
+                    endif;
+                    
                     header("location: ../php/dashboard.php");
                     exit;
                 } else {

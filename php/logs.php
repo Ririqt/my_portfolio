@@ -18,31 +18,23 @@ if (empty($_SESSION['name']) && (empty($_SESSION['email'])) && (empty($_SESSION[
 }
 
 $user_id = $_SESSION["id"];
-
-// Number of rows per page
 $rows_per_page = 18;
 
 // Get current page from query string (default = 1)
-$page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1; //Getting the number of page if the page is set and is a number then It will assigned the n of a page which the default is page 1
 
-// echo json_encode(isset($_GET['page']));
-// echo "<br> page:" , $page , "</br>"; 
-// Calculate offset
-$offset = ($page - 1) * $rows_per_page;
-// echo "kung ano man ito:", $offset; 
-// Count total logs
+// Calculate offset (this is for database offset)
+$offset = ($page - 1) * $rows_per_page; //this formula calculates the offset (the data cutoff) for example: 3 is the $page then (3-1) * 18 is 36 which means the data will be up to 36  
+
 $total_query = "SELECT COUNT(*) as total FROM logs WHERE user_id=$user_id";
 $total_result = mysqli_query($conn, $total_query);
 $total = mysqli_fetch_assoc($total_result)['total'];
 
 // Calculate total pages
-$total_pages = ceil($total / $rows_per_page);
-// echo $total_pages; exit;
+$total_pages = ceil($total / $rows_per_page); //ceil rounds the number to the nearest integer above its current value
+
 // Fetch logs only for the current page
-$query = "SELECT * FROM logs 
-          WHERE user_id=$user_id 
-          ORDER BY timestamp DESC 
-          LIMIT $rows_per_page OFFSET $offset"; //Start on record (+1) on whatever value of offset, Return only n of rows per page records.
+$query = "SELECT * FROM logs WHERE user_id=$user_id ORDER BY timestamp DESC LIMIT $rows_per_page OFFSET $offset";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -97,16 +89,43 @@ $result = mysqli_query($conn, $query);
     </div>
 </div> 
 
-<!-- Pagination -->
 <div id="nav" style="margin-top:20px; text-align:center;">
     <?php if ($total_pages > 1): ?>
-        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-            <?php if ($i == $page): ?>
-                <strong><?php echo $i; ?></strong>
-            <?php else: ?>
-                <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+        <?php
+            $max_visible = 5; // how many page numbers to show
+            $start = max(1, $page - floor($max_visible / 2)); // floor rounds down the number, max gets the value of highest value in that range
+            echo $total_pages;
+            echo $start; 
+            echo $page; 
+            // echo $max_visible; exit;
+            $end = min($total_pages, $start + $max_visible - 1); // signifies the end in which it gets the smallest from total pages to t
+            echo $end; 
+            // shift window if at the end
+            if ($end - $start + 1 < $max_visible) { // this calculates the start value if the end value is greater than the max visible pages
+                $start = max(1, $end - $max_visible + 1); // this returns the value of start whether the user is in the end value
+            }
+        ?>
+
+        <!-- First + Prev -->
+        <?php if ($page > 1): ?>
+            <a href="?page=1"> First </a> <!-- Page 1 this is useful when page has been double-triple digit-->
+            <a href="?page=<?php echo $page - 1; ?>"> Prev </a> <!-- Allocating the previous page -->
+        <?php endif; ?> <!-- signifies the end of the condition statement-->
+
+        <!-- Page numbers -->
+        <?php for ($i = $start; $i <= $end; $i++): ?>
+            <?php if ($i == $page): ?> <!-- If i reaches the certain page it will echo that i--> 
+                <b> <?php echo $i; ?> </b> <!-- Current Page -->
+            <?php else: ?> <!-- Everything Else -->
+                <a href="?page=<?php echo $i; ?>"> <!-- allocating the other pages --> <?php echo $i; ?> </a>
             <?php endif; ?>
         <?php endfor; ?>
+
+        <!-- Next + Last -->
+        <?php if ($page < $total_pages): ?>
+            <a href="?page=<?php echo $page + 1; ?>">Next</a>
+            <a href="?page=<?php echo $total_pages; ?>">Last</a>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 

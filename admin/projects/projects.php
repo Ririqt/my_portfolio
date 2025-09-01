@@ -7,17 +7,29 @@
     <meta HTTP-EQUIV="Expires" content="-1" >
     <meta name="description" content="Projects of the user">
     <link rel="stylesheet" href="/my_portfolio/css/projects.css">
-    
     <title> Projects </title>
-
-   
 </head>
 <body>
     <?php
         session_start();
         require_once($_SERVER['DOCUMENT_ROOT']. "/my_portfolio/php/config.php");
         include('backend_projects.php');
-    
+
+        $user_id = $_SESSION['id'];
+        $rows_per_page = 6;
+
+        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+
+        $offset = ($page - 1) * $rows_per_page;
+
+        $total_query = "SELECT COUNT(*) as total FROM projects WHERE user_id=$user_id";
+        $total_result = mysqli_query($conn, $total_query);
+        $total = mysqli_fetch_assoc($total_result)['total'];
+
+        $total_pages = ceil($total / $rows_per_page); 
+
+        $query = "SELECT * FROM projects WHERE user_id=$user_id LIMIT $rows_per_page OFFSET $offset";
+        $result = mysqli_query($conn, $query);
     ?>
 
     <div class="header">
@@ -149,6 +161,42 @@
         </div>
 
     </form>
+
+<div id="nav"> 
+    <?php if ($total_pages > 1): //Pagination ?>
+        <?php 
+            $max_visible = 5;
+            $start = max(1, $page - floor($max_visible / 2)); //floor rounds down
+            $end = min($total_pages, $start + $max_visible - 1);
+
+            if ($end - $start + 1 < $max_visible) {
+                $start = max(1, $end - $max_visible + 1);
+            }
+        ?>
+
+        <?php if ($page > 1): ?>
+            <a href="?page=1"> First </a> <!-- Page 1 this is useful when page has been double-triple digit-->
+            <a href="?page=<?php echo $page - 1; ?>"> Prev </a> <!-- Allocating the previous page -->
+        <?php endif; ?> <!-- signifies the end of the condition statement-->
+
+        <!-- Page numbers -->
+        <?php for ($i = $start; $i <= $end; $i++): ?>
+            <?php if ($i == $page): ?> <!-- If i reaches the certain page it will echo that i--> 
+                <b> <?php echo $i; ?> </b> <!-- Current Page -->
+            <?php else: ?> <!-- Everything Else -->
+                <a href="?page=<?php echo $i; ?>"> <!-- allocating the other pages --> <?php echo $i; ?> </a>
+            <?php endif; ?>
+        <?php endfor; ?>
+
+        <!-- Next and Last -->
+        <?php if ($page < $total_pages): ?> 
+            <a href="?page=<?php echo $page + 1; ?>">Next</a>
+            <a href="?page=<?php echo $total_pages; ?>">Last</a>
+        <?php endif; ?>
+
+    <?php endif; ?>
+</div>
+
 </body>
 </html>
  <script>
@@ -157,32 +205,4 @@
     }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script> 
-
-        $(document).ready(function(){ // jQuery: Document Ready Event //$(the selector).action() 
-            
-
-            $('#data').after('<div id="nav"></div>'); // Insert the content that is inside the ()
-            var rowsShown = 6; // var is declaring a variable 
-            var rowsTotal = $('#data tbody tr').length; //selects the tbody tr andd get its length
-            var numPages = rowsTotal/rowsShown; //determining the number of pages by dividing the number of total to the number of shown
-            for(i = 0;i < numPages;i++) {
-                var pageNum = i + 1;
-                $('#nav').append('<a href="javascript:void()" rel="'+i+'">'+pageNum+'</a> '); //"+n+" is a concatenation of a variable
-                }
-            $('#data tbody tr').hide(); //hide the extra in page 1 but still works without this when refreshing
-            $('#data tbody tr').slice(0, rowsShown).show(); //show the rows that is within the range of the slice
-            $('#nav a:first').addClass('active'); //add the class of active to show the current page
-            $('#nav a').bind('click', function(){ //attaches an event for the element and specifies the function to run when the 'click' occurs
-
-                $('#nav a').removeClass('active'); //removing the class of active in previous link
-                $(this).addClass('active'); // adding again the class to the current active link
-                var currPage = $(this).attr('rel'); // getting the value of a current page
-                console.log(JSON.stringify(currPage));
-                var startItem = currPage * rowsShown; // specifies the number of items that is the current page
-                var endItem = startItem + rowsShown; // specifies the number of items within the total of all the pages
-                $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).css('display','table-row').animate({opacity:1}, 300);
-            });
-        });
-
-    </script>
+    
