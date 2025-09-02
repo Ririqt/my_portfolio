@@ -13,19 +13,19 @@
     require_once "config.php";
 
     $user_id = $_SESSION['id'];
-    $rows_per_page = 1;
+    $rows_per_page = 2;
 
     $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
 
     $offset = ($page - 1) * $rows_per_page;
 
-    $total_query = "SELECT COUNT(*) as total FROM projects WHERE user_id=$user_id";
+    $total_query = "SELECT COUNT(*) as total FROM contacts ";
     $total_result = mysqli_query($conn, $total_query);
     $total = mysqli_fetch_assoc($total_result)['total'];
 
     $total_pages = ceil($total / $rows_per_page); 
 
-    $query = "SELECT * FROM projects WHERE user_id=$user_id LIMIT $rows_per_page OFFSET $offset";
+    $query = "SELECT * FROM contacts LIMIT $rows_per_page OFFSET $offset";
     $result = mysqli_query($conn, $query);
     ?>
     <div class="header">
@@ -60,8 +60,8 @@
                         </tr>
                     </thead>
         <?php
-        $sql = "SELECT * FROM contacts";
-        $result = mysqli_query($conn,$sql);
+        // $sql = "SELECT * FROM contacts";
+        // $result = mysqli_query($conn,$sql);
 
         // echo json_encode($result);
         // exit;
