@@ -5,13 +5,13 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-slate-200/80 bg-white py-10 dark:border-slate-800/80 dark:bg-slate-950">
+    <footer className="border-t border-cream-200/90 bg-white py-10 dark:border-cocoa-800/80 dark:bg-cocoa-950">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6 lg:px-8">
         <div className="text-center sm:text-left">
-          <p className="font-display text-sm font-bold text-slate-900 dark:text-white">
+          <p className="font-display text-sm font-bold text-cocoa-950 dark:text-white">
             {PROFILE.fullName}
           </p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-xs text-cocoa-600 dark:text-cocoa-300">
             © {year} {PROFILE.fullName}. Built with Vite, React &amp; TypeScript.
           </p>
         </div>
@@ -22,7 +22,7 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600 dark:border-slate-800 dark:text-slate-400 dark:hover:border-blue-500/40 dark:hover:text-blue-400"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-cream-200 text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-800 dark:text-cocoa-300 dark:hover:border-cocoa-500 dark:hover:text-white"
           >
             <Github className="h-4 w-4" />
           </a>
@@ -31,21 +31,21 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600 dark:border-slate-800 dark:text-slate-400 dark:hover:border-blue-500/40 dark:hover:text-blue-400"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-cream-200 text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-800 dark:text-cocoa-300 dark:hover:border-cocoa-500 dark:hover:text-white"
           >
             <Linkedin className="h-4 w-4" />
           </a>
           <a
             href={`mailto:${PROFILE.email}`}
             aria-label="Email"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600 dark:border-slate-800 dark:text-slate-400 dark:hover:border-blue-500/40 dark:hover:text-blue-400"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-cream-200 text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-800 dark:text-cocoa-300 dark:hover:border-cocoa-500 dark:hover:text-white"
           >
             <Mail className="h-4 w-4" />
           </a>
           <a
             href="#top"
             aria-label="Back to top"
-            className="ml-2 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-blue-300 hover:text-blue-600 dark:border-slate-800 dark:text-slate-300 dark:hover:border-blue-500/40 dark:hover:text-blue-400"
+            className="ml-2 inline-flex items-center gap-1.5 rounded-lg border border-cream-200 px-3 py-2 text-xs font-semibold text-cocoa-800 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-800 dark:text-cocoa-200 dark:hover:border-cocoa-500 dark:hover:text-white"
           >
             <ArrowUp className="h-3.5 w-3.5" />
             <span>Top</span>

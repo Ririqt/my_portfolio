@@ -6,6 +6,25 @@
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Warm white & linen surface scale */
+  --color-cream-50: #faf7f2;
+  --color-cream-100: #f4ede3;
+  --color-cream-200: #e7dac9;
+  --color-cream-300: #d5c1a8;
+
+  /* Rich brown, mocha & espresso scale */
+  --color-cocoa-50: #f9f3ec;
+  --color-cocoa-100: #f1e3d4;
+  --color-cocoa-200: #e2c8ad;
+  --color-cocoa-300: #cca47e;
+  --color-cocoa-400: #b27e53;
+  --color-cocoa-500: #8f5c38;
+  --color-cocoa-600: #734426;
+  --color-cocoa-700: #5a341d;
+  --color-cocoa-800: #422515;
+  --color-cocoa-900: #28160d;
+  --color-cocoa-950: #170d08;
 }
 
 @layer base {
@@ -25,15 +44,15 @@
 
 .bg-engineering-grid {
   background-image:
-    linear-gradient(to right, rgba(148, 163, 184, 0.14) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+    linear-gradient(to right, rgba(115, 68, 38, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(115, 68, 38, 0.09) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 .dark .bg-engineering-grid {
   background-image:
-    linear-gradient(to right, rgba(51, 65, 85, 0.32) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(51, 65, 85, 0.32) 1px, transparent 1px);
+    linear-gradient(to right, rgba(204, 164, 126, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204, 164, 126, 0.12) 1px, transparent 1px);
 }
 
 @keyframes subtle-float {

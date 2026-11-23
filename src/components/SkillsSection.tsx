@@ -10,11 +10,11 @@ const CATEGORY_ICONS = {
 
 const LEVEL_STYLES: Record<SkillItem['level'], string> = {
   Proficient:
-    'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/30',
+    'bg-cocoa-800 text-cream-50 border-cocoa-800 dark:bg-cocoa-500/25 dark:text-cocoa-200 dark:border-cocoa-500/50',
   Comfortable:
-    'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-500/30',
+    'bg-cocoa-100 text-cocoa-800 border-cocoa-200 dark:bg-cocoa-800/80 dark:text-cocoa-200 dark:border-cocoa-700',
   Foundational:
-    'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
+    'bg-cream-100 text-cocoa-700 border-cream-200 dark:bg-cocoa-900 dark:text-cocoa-300 dark:border-cocoa-800',
 };
 
 export function SkillsSection() {
@@ -25,18 +25,18 @@ export function SkillsSection() {
   return (
     <section
       id="skills"
-      className="border-y border-slate-200/80 bg-white py-20 sm:py-24 dark:border-slate-800/80 dark:bg-slate-900/40"
+      className="border-y border-cream-200/90 bg-white py-20 sm:py-24 dark:border-cocoa-800/80 dark:bg-cocoa-900/45"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
-            <p className="font-mono text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+            <p className="font-mono text-xs font-semibold uppercase tracking-widest text-cocoa-600 dark:text-cocoa-300">
               02 · Technical Skills
             </p>
-            <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+            <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-cocoa-950 sm:text-4xl dark:text-white">
               Toolkit across web, software &amp; hardware.
             </h2>
-            <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
+            <p className="mt-3 text-base text-cocoa-700/85 dark:text-cream-100/75">
               {activeCategory.description}
             </p>
           </div>
@@ -44,7 +44,7 @@ export function SkillsSection() {
           <div
             role="tablist"
             aria-label="Skill categories"
-            className="inline-flex flex-wrap gap-1.5 rounded-2xl border border-slate-200 bg-slate-100/80 p-1.5 dark:border-slate-800 dark:bg-slate-900"
+            className="inline-flex flex-wrap gap-1.5 rounded-2xl border border-cream-200 bg-cream-100/90 p-1.5 dark:border-cocoa-800 dark:bg-cocoa-950"
           >
             {SKILL_CATEGORIES.map((category) => {
               const Icon = CATEGORY_ICONS[category.id];
@@ -58,8 +58,8 @@ export function SkillsSection() {
                   onClick={() => setActiveId(category.id)}
                   className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all sm:text-sm ${
                     isSelected
-                      ? 'bg-white text-slate-900 shadow-xs dark:bg-blue-600 dark:text-white'
-                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                      ? 'bg-white text-cocoa-900 shadow-xs dark:bg-cocoa-700 dark:text-white'
+                      : 'text-cocoa-600 hover:text-cocoa-950 dark:text-cocoa-300 dark:hover:text-white'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -74,10 +74,10 @@ export function SkillsSection() {
           {activeCategory.items.map((skill) => (
             <div
               key={skill.name}
-              className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 transition-all hover:border-blue-300 hover:bg-white hover:shadow-sm dark:border-slate-800 dark:bg-slate-900/80 dark:hover:border-blue-500/40"
+              className="rounded-2xl border border-cream-200 bg-cream-50/75 p-5 transition-all hover:border-cocoa-300 hover:bg-white hover:shadow-sm dark:border-cocoa-800 dark:bg-cocoa-900/85 dark:hover:border-cocoa-600"
             >
               <div className="flex items-start justify-between gap-2">
-                <h3 className="font-display text-base font-bold text-slate-900 dark:text-white">
+                <h3 className="font-display text-base font-bold text-cocoa-950 dark:text-white">
                   {skill.name}
                 </h3>
                 <span
@@ -87,13 +87,13 @@ export function SkillsSection() {
                 </span>
               </div>
 
-              <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mt-2 text-xs leading-relaxed text-cocoa-700/80 dark:text-cocoa-200/80">
                 {skill.note}
               </p>
 
               <div className="mt-4">
                 <div
-                  className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800"
+                  className="h-2 w-full overflow-hidden rounded-full bg-cream-200 dark:bg-cocoa-800"
                   role="progressbar"
                   aria-label={`${skill.name} proficiency`}
                   aria-valuenow={skill.percent}
@@ -101,7 +101,7 @@ export function SkillsSection() {
                   aria-valuemax={100}
                 >
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-cocoa-700 to-cocoa-400 transition-all duration-500 dark:from-cocoa-400 dark:to-cocoa-200"
                     style={{ width: `${skill.percent}%` }}
                   />
                 </div>

@@ -33,49 +33,49 @@ export function AboutSection() {
     <section id="about" className="py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
-          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+          <p className="font-mono text-xs font-semibold uppercase tracking-widest text-cocoa-600 dark:text-cocoa-300">
             01 · About Me
           </p>
-          <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+          <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-cocoa-950 sm:text-4xl dark:text-white">
             Engineering fundamentals paired with thoughtful web craft.
           </h2>
         </div>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-12">
           <div className="space-y-6 lg:col-span-7">
-            <div className="space-y-4 text-base leading-relaxed text-slate-600 dark:text-slate-300">
+            <div className="space-y-4 text-base leading-relaxed text-cocoa-800/85 dark:text-cream-100/80">
               {PROFILE.aboutParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
+            <div className="rounded-2xl border border-cream-200 bg-white p-6 shadow-xs dark:border-cocoa-800 dark:bg-cocoa-900/80">
               <div className="flex items-start gap-3.5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cocoa-100 text-cocoa-700 dark:bg-cocoa-800 dark:text-cocoa-300">
                   <GraduationCap className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-display text-lg font-bold text-slate-900 dark:text-white">
+                  <h3 className="font-display text-lg font-bold text-cocoa-950 dark:text-white">
                     {PROFILE.degree}
                   </h3>
-                  <p className="text-sm font-medium text-slate-600 dark:text-slate-300">
+                  <p className="text-sm font-medium text-cocoa-700 dark:text-cocoa-200">
                     {PROFILE.university}
                   </p>
-                  <p className="mt-1 font-mono text-xs text-blue-600 dark:text-blue-400">
+                  <p className="mt-1 font-mono text-xs text-cocoa-600 dark:text-cocoa-300">
                     {PROFILE.graduation}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-5 border-t border-slate-100 pt-4 dark:border-slate-800">
-                <p className="mb-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <div className="mt-5 border-t border-cream-200/80 pt-4 dark:border-cocoa-800">
+                <p className="mb-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-cocoa-500 dark:text-cocoa-300">
                   Relevant Coursework
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {COURSEWORK.map((course) => (
                     <span
                       key={course}
-                      className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 dark:border-slate-700/80 dark:bg-slate-800/70 dark:text-slate-300"
+                      className="rounded-lg border border-cream-200 bg-cream-50 px-2.5 py-1 text-xs font-medium text-cocoa-800 dark:border-cocoa-700/80 dark:bg-cocoa-800/70 dark:text-cream-100"
                     >
                       {course}
                     </span>
@@ -91,17 +91,17 @@ export function AboutSection() {
               return (
                 <div
                   key={pillar.title}
-                  className="group rounded-2xl border border-slate-200 bg-white p-5 transition-all hover:border-blue-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-blue-500/40"
+                  className="group rounded-2xl border border-cream-200 bg-white p-5 transition-all hover:border-cocoa-300 hover:shadow-md hover:shadow-cocoa-950/5 dark:border-cocoa-800 dark:bg-cocoa-900/80 dark:hover:border-cocoa-600"
                 >
                   <div className="flex items-start gap-3.5">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors group-hover:bg-blue-600 group-hover:text-white dark:bg-slate-800 dark:text-slate-200 dark:group-hover:bg-blue-500">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cream-100 text-cocoa-700 transition-colors group-hover:bg-cocoa-700 group-hover:text-white dark:bg-cocoa-800 dark:text-cocoa-200 dark:group-hover:bg-cocoa-500 dark:group-hover:text-white">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="font-display text-base font-bold text-slate-900 dark:text-white">
+                      <h3 className="font-display text-base font-bold text-cocoa-950 dark:text-white">
                         {pillar.title}
                       </h3>
-                      <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                      <p className="mt-1 text-sm leading-relaxed text-cocoa-700/85 dark:text-cocoa-200/80">
                         {pillar.description}
                       </p>
                     </div>

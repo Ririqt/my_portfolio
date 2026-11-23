@@ -26,10 +26,10 @@ export function App() {
   }, [isDark]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen bg-cream-50 text-cocoa-950 dark:bg-cocoa-950 dark:text-cream-50">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-cocoa-700 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
       >
         Skip to main content
       </a>
