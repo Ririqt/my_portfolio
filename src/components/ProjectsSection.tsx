@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { ArrowUpRight, CheckCircle2, ExternalLink, Github, Sparkles, X } from 'lucide-react';
 import {
   PROJECT_CATEGORIES,
-  PROJECTS,
   type ProjectCategory,
   type ProjectItem,
 } from '../data/portfolio';
+import { resolveAssetUrl, type DynamicProject } from '../lib/api';
 import { ProjectVisual } from './ProjectVisual';
 
 const STATUS_BADGES: Record<ProjectItem['status'], string> = {
@@ -16,14 +16,18 @@ const STATUS_BADGES: Record<ProjectItem['status'], string> = {
     'bg-cream-100 text-cocoa-700 border-cream-300 dark:bg-cocoa-900 dark:text-cocoa-300 dark:border-cocoa-700',
 };
 
-export function ProjectsSection() {
+interface ProjectsSectionProps {
+  projects: DynamicProject[];
+}
+
+export function ProjectsSection({ projects }: ProjectsSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('All');
-  const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
+  const [activeProject, setActiveProject] = useState<DynamicProject | null>(null);
 
   const filteredProjects =
     selectedCategory === 'All'
-      ? PROJECTS
-      : PROJECTS.filter((project) => project.category === selectedCategory);
+      ? projects
+      : projects.filter((project) => project.category === selectedCategory);
 
   useEffect(() => {
     if (!activeProject) return;
@@ -35,6 +39,21 @@ export function ProjectsSection() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [activeProject]);
+
+  function renderProjectPreview(project: DynamicProject) {
+    if (project.imageUrl) {
+      return (
+        <div className="h-52 w-full overflow-hidden bg-cocoa-900">
+          <img
+            src={resolveAssetUrl(project.imageUrl)}
+            alt={project.title}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+      );
+    }
+    return <ProjectVisual type={project.visualType} />;
+  }
 
   return (
     <section id="projects" className="py-20 sm:py-24">
@@ -56,8 +75,8 @@ export function ProjectsSection() {
             {PROJECT_CATEGORIES.map((category) => {
               const count =
                 category === 'All'
-                  ? PROJECTS.length
-                  : PROJECTS.filter((project) => project.category === category).length;
+                  ? projects.length
+                  : projects.filter((project) => project.category === category).length;
               const isActive = selectedCategory === category;
 
               return (
@@ -94,7 +113,7 @@ export function ProjectsSection() {
               className="group flex flex-col overflow-hidden rounded-3xl border border-cream-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-cocoa-300 hover:shadow-xl hover:shadow-cocoa-950/8 dark:border-cocoa-800 dark:bg-cocoa-900/85 dark:hover:border-cocoa-600"
             >
               <div className="relative overflow-hidden border-b border-cream-200/90 dark:border-cocoa-800">
-                <ProjectVisual type={project.visualType} />
+                {renderProjectPreview(project)}
                 {project.featured && (
                   <span className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full border border-cocoa-300/30 bg-cocoa-950/80 px-2.5 py-1 font-mono text-[10px] font-semibold text-cocoa-200 backdrop-blur-md">
                     <Sparkles className="h-3 w-3" />
@@ -191,7 +210,7 @@ export function ProjectsSection() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="relative">
-              <ProjectVisual type={activeProject.visualType} />
+              {renderProjectPreview(activeProject)}
               <button
                 type="button"
                 onClick={() => setActiveProject(null)}
@@ -228,22 +247,24 @@ export function ProjectsSection() {
                 {activeProject.summary}
               </p>
 
-              <div className="mt-6">
-                <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-cocoa-500 dark:text-cocoa-300">
-                  Key Highlights
-                </h4>
-                <ul className="mt-3 space-y-2.5">
-                  {activeProject.highlights.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2.5 text-sm text-cocoa-800 dark:text-cream-100"
-                    >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cocoa-600 dark:text-cocoa-300" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {activeProject.highlights.length > 0 && (
+                <div className="mt-6">
+                  <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-cocoa-500 dark:text-cocoa-300">
+                    Key Highlights
+                  </h4>
+                  <ul className="mt-3 space-y-2.5">
+                    {activeProject.highlights.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2.5 text-sm text-cocoa-800 dark:text-cream-100"
+                      >
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cocoa-600 dark:text-cocoa-300" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {activeProject.tech.map((tech) => (

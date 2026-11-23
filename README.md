@@ -1,50 +1,52 @@
-# Mharc Reinald Rigos — Developer Portfolio
+# Mharc Reinald Rigos — Developer Portfolio & Owner CMS
 
-A fast, responsive, modern static portfolio built with **Vite**, **React**, **TypeScript**, and **Tailwind CSS** — designed for free one-click hosting on **GitHub Pages**, **Vercel**, or **Netlify**.
+A fast, responsive **brown-and-white** personal developer portfolio built with **Vite, React, TypeScript, and Tailwind CSS**, paired with a hardened, owner-only **PHP 8 + MySQL REST API** (`api/` + `database/`) behind `/#/admin`.
 
-> **Note:** The original PHP & MySQL portfolio CMS remains preserved in Git history on the `main` branch prior to this modernization.
+> **Note:** Your original PHP & MySQL codebase remains untouched on `main` in Git history.
 
-## Highlights
+## Architecture Highlights
 
-- **Responsive Modern UI/UX:** Clean editorial engineering layout with Light & Dark theme toggle, mobile navigation drawer, active scroll-spy navigation, and accessible dialogs.
-- **Data-Driven Content:** Update your bio, skills, projects, experience, certifications, and social links in a single file: `src/data/portfolio.ts`.
-- **Interactive Portfolio Features:** Working project category filters, rich project detail modals, categorized skills tabs, one-click email copy, and a validated contact form (with optional Formspree support).
-- **Lightweight Build:** Removed 15+ MB of unused fonts, test uploads, and backup files from the repo.
-- **Automated Deployment:** Includes `.github/workflows/deploy.yml` for GitHub Pages deployment.
+- **Public Portfolio (`/`):** Clean, recruiter-friendly presentation with zero public login/register clutter, Light & Dark mode, active scroll-spy navigation, categorized skills, filterable project showcase + modals, and graceful static fallback (works seamlessly on GitHub Pages / Vercel / Netlify even without PHP running).
+- **Owner-Only Admin CMS (`/#/admin`):** Discreetly accessible via the footer `Admin` link or `/#/admin` URL. Manage Profile/About, Skills CRUD, Projects CRUD, Contact Inquiries inbox, Activity Logs, portrait uploads, and owner password updates.
+- **Hardened PHP + MySQL Backend (`api/`):**
+  - 100% native **PDO prepared statements** (`ATTR_EMULATE_PREPARES => false`) — eliminates SQL injection.
+  - **Owner-only authentication** with `password_hash` / `password_verify`, `session_regenerate_id(true)`, and `HttpOnly` + `SameSite=Lax` cookies.
+  - **CSRF token verification** (`X-CSRF-Token` header) on all state-changing requests (`POST`, `PUT`, `PATCH`, `DELETE`).
+  - **Safe image uploads** (`api/upload.php`) using `finfo` MIME validation, 3 MB size cap, cryptographic filenames, and `.htaccess` script execution blocking.
+  - **Local Preview Mode:** When PHP/MySQL isn't running locally, `/#/admin` offers an instant browser preview mode so you can test the entire CMS UI anytime.
 
-## Local Development
+## Local Frontend Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Production Build & Preview
+Open `http://localhost:5173/` for the public portfolio and `http://localhost:5173/#/admin` for the owner CMS.
 
-```bash
-npm run build
-npm run preview
-```
+## Connecting the PHP + MySQL Backend
 
-## Customizing Your Content
-
-Edit [`src/data/portfolio.ts`](src/data/portfolio.ts) to update:
-
-- **Profile & Contact Info:** `PROFILE` (optionally set `formspreeEndpoint` for serverless contact form submissions)
-- **Skills:** `SKILL_CATEGORIES`
-- **Projects:** `PROJECTS`
-- **Experience, Organizations & Certifications:** `EXPERIENCE`, `ORGANIZATIONS`, `CERTIFICATIONS`
-
-To update your resume or portrait photo, replace `public/resume.pdf` or `public/images/rei-portrait.jpg`.
+1. **Import the schema** into MySQL / MariaDB (e.g., via phpMyAdmin or CLI):
+   ```bash
+   mysql -u root -p < database/schema.sql
+   ```
+2. **Configure credentials:** Copy `api/.env.example` to `api/.env` and fill in your MySQL `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS`.
+3. **Seed your owner account & initial data** (CLI-only for security):
+   ```bash
+   php database/seed.php "ChooseAStrongPassword123!"
+   ```
+4. **Run PHP locally** (either via XAMPP/Apache or PHP's built-in server):
+   ```bash
+   php -S 127.0.0.1:8000
+   ```
+   Vite automatically proxies `/api/*` to `http://127.0.0.1:8000` during `npm run dev` (override with `VITE_API_PROXY_TARGET` if hosting under XAMPP like `http://localhost/my_portfolio`).
 
 ## Deploying
 
-### GitHub Pages
-1. Merge this branch into `main` and push to GitHub.
-2. In your GitHub repo, open **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
-3. Every push to `main` automatically runs `.github/workflows/deploy.yml` and publishes to `https://<username>.github.io/<repo>/`.
+### Static Portfolio (GitHub Pages / Vercel / Netlify)
+- Includes `.github/workflows/deploy.yml` for automatic GitHub Pages publishing on `main`.
+- Build command: `npm run build` · Output directory: `dist`.
 
-### Vercel or Netlify
-Import the GitHub repository directly:
-- **Build command:** `npm run build`
-- **Output directory:** `dist`
+### Full-Stack Hosting (PHP + MySQL Host)
+1. Run `npm run build`.
+2. Deploy `dist/` contents alongside `api/` (with your production `api/.env`) to your PHP/MySQL web root, and run `database/schema.sql` + `php database/seed.php`.

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Code2, Cpu, Wrench } from 'lucide-react';
-import { SKILL_CATEGORIES, type SkillCategory, type SkillItem } from '../data/portfolio';
+import type { SkillCategory, SkillItem } from '../data/portfolio';
 
 const CATEGORY_ICONS = {
   languages: Code2,
@@ -17,10 +17,15 @@ const LEVEL_STYLES: Record<SkillItem['level'], string> = {
     'bg-cream-100 text-cocoa-700 border-cream-200 dark:bg-cocoa-900 dark:text-cocoa-300 dark:border-cocoa-800',
 };
 
-export function SkillsSection() {
+interface SkillsSectionProps {
+  categories: SkillCategory[];
+}
+
+export function SkillsSection({ categories }: SkillsSectionProps) {
   const [activeId, setActiveId] = useState<SkillCategory['id']>('languages');
-  const activeCategory =
-    SKILL_CATEGORIES.find((cat) => cat.id === activeId) ?? SKILL_CATEGORIES[0];
+  const activeCategory = categories.find((cat) => cat.id === activeId) ?? categories[0];
+
+  if (!activeCategory) return null;
 
   return (
     <section
@@ -46,7 +51,7 @@ export function SkillsSection() {
             aria-label="Skill categories"
             className="inline-flex flex-wrap gap-1.5 rounded-2xl border border-cream-200 bg-cream-100/90 p-1.5 dark:border-cocoa-800 dark:bg-cocoa-950"
           >
-            {SKILL_CATEGORIES.map((category) => {
+            {categories.map((category) => {
               const Icon = CATEGORY_ICONS[category.id];
               const isSelected = category.id === activeCategory.id;
               return (

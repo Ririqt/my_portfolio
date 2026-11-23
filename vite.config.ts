@@ -4,10 +4,19 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', 'VITE_');
+  const apiProxyTarget = env.VITE_API_PROXY_TARGET || 'http://127.0.0.1:8000';
 
   return {
     base: env.VITE_BASE_PATH || './',
     plugins: [react(), tailwindcss()],
+    server: {
+      proxy: {
+        '/api': {
+          target: apiProxyTarget,
+          changeOrigin: true,
+        },
+      },
+    },
     build: {
       target: 'es2020',
       sourcemap: false,

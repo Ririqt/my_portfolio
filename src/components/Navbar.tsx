@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Download, Menu, Moon, Sun, X } from 'lucide-react';
-import { PROFILE } from '../data/portfolio';
+import { resolveAssetUrl, type PortfolioProfileData } from '../lib/api';
 
 const NAV_ITEMS = [
   { id: 'about', label: 'About' },
@@ -11,16 +11,17 @@ const NAV_ITEMS = [
 ] as const;
 
 interface NavbarProps {
+  profile: PortfolioProfileData;
   isDark: boolean;
   onToggleTheme: () => void;
 }
 
-export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
+export function Navbar({ profile, isDark, onToggleTheme }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
 
-  const resumeHref = `${import.meta.env.BASE_URL}${PROFILE.resumeFile}`;
+  const resumeHref = resolveAssetUrl(profile.resumeFile);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,7 +82,7 @@ export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
             R<span className="text-cocoa-300 dark:text-cream-100">.</span>
           </span>
           <span className="hidden sm:inline">
-            {PROFILE.nickname}{' '}
+            {profile.nickname}{' '}
             <span className="font-medium text-cocoa-500 dark:text-cocoa-300">Rigos</span>
           </span>
         </a>
@@ -118,7 +119,7 @@ export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
           <a
             href={resumeHref}
             download="Mharc_Reinald_Rigos_Resume.pdf"
-            className="hidden items-center gap-1.5 rounded-lg bg-cocoa-800 px-3.5 py-2 text-sm font-semibold text-white transition-all hover:bg-cocoa-700 sm:inline-flex dark:bg-cocoa-500 dark:hover:bg-cocoa-400 dark:text-white"
+            className="hidden items-center gap-1.5 rounded-lg bg-cocoa-800 px-3.5 py-2 text-sm font-semibold text-white transition-all hover:bg-cocoa-700 sm:inline-flex dark:bg-cocoa-500 dark:text-white dark:hover:bg-cocoa-400"
           >
             <Download className="h-4 w-4" />
             <span>Resume</span>

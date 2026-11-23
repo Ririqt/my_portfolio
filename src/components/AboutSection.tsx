@@ -1,5 +1,6 @@
 import { Cpu, GraduationCap, Layout, ShieldCheck, Terminal } from 'lucide-react';
-import { COURSEWORK, PROFILE } from '../data/portfolio';
+import { COURSEWORK } from '../data/portfolio';
+import type { PortfolioProfileData } from '../lib/api';
 
 const FOCUS_PILLARS = [
   {
@@ -28,7 +29,11 @@ const FOCUS_PILLARS = [
   },
 ] as const;
 
-export function AboutSection() {
+interface AboutSectionProps {
+  profile: PortfolioProfileData;
+}
+
+export function AboutSection({ profile }: AboutSectionProps) {
   return (
     <section id="about" className="py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -44,8 +49,8 @@ export function AboutSection() {
         <div className="mt-10 grid gap-8 lg:grid-cols-12">
           <div className="space-y-6 lg:col-span-7">
             <div className="space-y-4 text-base leading-relaxed text-cocoa-800/85 dark:text-cream-100/80">
-              {PROFILE.aboutParagraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+              {profile.aboutParagraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
               ))}
             </div>
 
@@ -56,13 +61,13 @@ export function AboutSection() {
                 </div>
                 <div>
                   <h3 className="font-display text-lg font-bold text-cocoa-950 dark:text-white">
-                    {PROFILE.degree}
+                    {profile.degree}
                   </h3>
                   <p className="text-sm font-medium text-cocoa-700 dark:text-cocoa-200">
-                    {PROFILE.university}
+                    {profile.university}
                   </p>
                   <p className="mt-1 font-mono text-xs text-cocoa-600 dark:text-cocoa-300">
-                    {PROFILE.graduation}
+                    {profile.graduation}
                   </p>
                 </div>
               </div>

@@ -1,12 +1,19 @@
 import { type FormEvent, useState } from 'react';
 import { Check, Copy, Github, Linkedin, Mail, MapPin, Send } from 'lucide-react';
-import { PROFILE } from '../data/portfolio';
+import {
+  loadPreviewStore,
+  savePreviewStore,
+  submitPublicInquiry,
+  type BackendMode,
+  type PortfolioProfileData,
+} from '../lib/api';
 
 interface ContactFormState {
   name: string;
   email: string;
   subject: string;
   message: string;
+  website: string; // honeypot
 }
 
 const INITIAL_FORM: ContactFormState = {
@@ -14,9 +21,15 @@ const INITIAL_FORM: ContactFormState = {
   email: '',
   subject: '',
   message: '',
+  website: '',
 };
 
-export function ContactSection() {
+interface ContactSectionProps {
+  profile: PortfolioProfileData;
+  backendMode: BackendMode;
+}
+
+export function ContactSection({ profile, backendMode }: ContactSectionProps) {
   const [form, setForm] = useState<ContactFormState>(INITIAL_FORM);
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'mailto' | 'error'>('idle');
@@ -24,11 +37,11 @@ export function ContactSection() {
 
   async function handleCopyEmail() {
     try {
-      await navigator.clipboard.writeText(PROFILE.email);
+      await navigator.clipboard.writeText(profile.email);
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     } catch {
-      window.location.href = `mailto:${PROFILE.email}`;
+      window.location.href = `mailto:${profile.email}`;
     }
   }
 
@@ -39,6 +52,7 @@ export function ContactSection() {
       email: form.email.trim(),
       subject: form.subject.trim(),
       message: form.message.trim(),
+      website: form.website.trim(),
     };
 
     if (!trimmed.name || !trimmed.email || !trimmed.subject || !trimmed.message) {
@@ -47,17 +61,41 @@ export function ContactSection() {
       return;
     }
 
-    if (PROFILE.formspreeEndpoint) {
+    if (backendMode === 'php') {
       setStatus('submitting');
       setFeedback('');
       try {
-        const response = await fetch(PROFILE.formspreeEndpoint, {
+        const res = await submitPublicInquiry(trimmed);
+        setStatus('sent');
+        setFeedback(res.message);
+        setForm(INITIAL_FORM);
+      } catch (err) {
+        setStatus('error');
+        setFeedback(
+          err instanceof Error
+            ? err.message
+            : `Could not submit right now. You can email me directly at ${profile.email}.`,
+        );
+      }
+      return;
+    }
+
+    if (profile.formspreeEndpoint) {
+      setStatus('submitting');
+      setFeedback('');
+      try {
+        const response = await fetch(profile.formspreeEndpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
           },
-          body: JSON.stringify(trimmed),
+          body: JSON.stringify({
+            name: trimmed.name,
+            email: trimmed.email,
+            subject: trimmed.subject,
+            message: trimmed.message,
+          }),
         });
 
         if (!response.ok) {
@@ -70,22 +108,38 @@ export function ContactSection() {
       } catch {
         setStatus('error');
         setFeedback(
-          `Could not submit right now. You can email me directly at ${PROFILE.email}.`,
+          `Could not submit right now. You can email me directly at ${profile.email}.`,
         );
       }
       return;
     }
 
-    const body = `Hi Rei,\n\n${trimmed.message}\n\n— ${trimmed.name} (${trimmed.email})`;
-    const mailtoUrl = `mailto:${PROFILE.email}?subject=${encodeURIComponent(
+    // Preview mode: record inquiry locally so it can be inspected in /#/admin -> Inquiries,
+    // and offer direct email client draft.
+    const store = loadPreviewStore();
+    const nextId = store.inquiries.reduce((max, item) => Math.max(max, item.id), 0) + 1;
+    store.inquiries.unshift({
+      id: nextId,
+      name: trimmed.name,
+      email: trimmed.email,
+      subject: trimmed.subject,
+      message: trimmed.message,
+      isRead: false,
+      createdAt: new Date().toISOString(),
+    });
+    savePreviewStore(store);
+
+    const body = `Hi ${profile.nickname},\n\n${trimmed.message}\n\n— ${trimmed.name} (${trimmed.email})`;
+    const mailtoUrl = `mailto:${profile.email}?subject=${encodeURIComponent(
       trimmed.subject,
     )}&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailtoUrl;
     setStatus('mailto');
     setFeedback(
-      `Your email client has been opened with your message to ${PROFILE.email}. You can also copy my email address directly.`,
+      `Email draft prepared for ${profile.email} (and saved in local Admin preview inbox).`,
     );
+    setForm(INITIAL_FORM);
   }
 
   return (
@@ -117,10 +171,10 @@ export function ContactSection() {
                       Email
                     </p>
                     <a
-                      href={`mailto:${PROFILE.email}`}
+                      href={`mailto:${profile.email}`}
                       className="mt-0.5 block truncate font-display text-base font-bold text-cocoa-950 hover:text-cocoa-600 dark:text-white dark:hover:text-cocoa-300"
                     >
-                      {PROFILE.email}
+                      {profile.email}
                     </a>
                     <button
                       type="button"
@@ -151,7 +205,7 @@ export function ContactSection() {
                       Location
                     </p>
                     <p className="mt-0.5 font-display text-base font-bold text-cocoa-950 dark:text-white">
-                      {PROFILE.location}
+                      {profile.location}
                     </p>
                     <p className="mt-0.5 text-xs text-cocoa-600 dark:text-cocoa-300">
                       Open to remote, hybrid &amp; Metro Manila internships
@@ -165,24 +219,28 @@ export function ContactSection() {
                   Profiles
                 </p>
                 <div className="flex flex-wrap gap-2.5">
-                  <a
-                    href={PROFILE.socials.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl border border-cream-200 bg-cream-50 px-3.5 py-2 text-xs font-semibold text-cocoa-800 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-700 dark:bg-cocoa-800 dark:text-cream-100 dark:hover:border-cocoa-500"
-                  >
-                    <Github className="h-4 w-4" />
-                    <span>GitHub</span>
-                  </a>
-                  <a
-                    href={PROFILE.socials.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl border border-cream-200 bg-cream-50 px-3.5 py-2 text-xs font-semibold text-cocoa-800 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-700 dark:bg-cocoa-800 dark:text-cream-100 dark:hover:border-cocoa-500"
-                  >
-                    <Linkedin className="h-4 w-4" />
-                    <span>LinkedIn</span>
-                  </a>
+                  {profile.socials.github && (
+                    <a
+                      href={profile.socials.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-xl border border-cream-200 bg-cream-50 px-3.5 py-2 text-xs font-semibold text-cocoa-800 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-700 dark:bg-cocoa-800 dark:text-cream-100 dark:hover:border-cocoa-500"
+                    >
+                      <Github className="h-4 w-4" />
+                      <span>GitHub</span>
+                    </a>
+                  )}
+                  {profile.socials.linkedin && (
+                    <a
+                      href={profile.socials.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-xl border border-cream-200 bg-cream-50 px-3.5 py-2 text-xs font-semibold text-cocoa-800 transition-colors hover:border-cocoa-400 hover:text-cocoa-950 dark:border-cocoa-700 dark:bg-cocoa-800 dark:text-cream-100 dark:hover:border-cocoa-500"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                      <span>LinkedIn</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -193,6 +251,20 @@ export function ContactSection() {
             noValidate
             className="rounded-3xl border border-cream-200 bg-white p-6 shadow-xs sm:p-8 lg:col-span-7 dark:border-cocoa-800 dark:bg-cocoa-900/85"
           >
+            {/* Hidden honeypot field for spam bots */}
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="contact-website">Website</label>
+              <input
+                id="contact-website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={form.website}
+                onChange={(e) => setForm({ ...form, website: e.target.value })}
+              />
+            </div>
+
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label

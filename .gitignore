@@ -12,6 +12,11 @@ dist-ssr/
 .env
 .env.local
 .env.*.local
+api/.env
+
+# Uploaded user media (keep .htaccess)
+api/uploads/*
+!api/uploads/.htaccess
 
 # Logs
 npm-debug.log*

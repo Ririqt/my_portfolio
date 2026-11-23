@@ -1,9 +1,14 @@
 import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from 'lucide-react';
-import { PROFILE, QUICK_METRICS } from '../data/portfolio';
+import { QUICK_METRICS } from '../data/portfolio';
+import { resolveAssetUrl, type PortfolioProfileData } from '../lib/api';
 
-export function Hero() {
-  const portraitSrc = `${import.meta.env.BASE_URL}${PROFILE.portraitFile}`;
-  const resumeHref = `${import.meta.env.BASE_URL}${PROFILE.resumeFile}`;
+interface HeroProps {
+  profile: PortfolioProfileData;
+}
+
+export function Hero({ profile }: HeroProps) {
+  const portraitSrc = resolveAssetUrl(profile.portraitFile);
+  const resumeHref = resolveAssetUrl(profile.resumeFile);
 
   return (
     <section
@@ -27,22 +32,22 @@ export function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cocoa-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-cocoa-600 dark:bg-cocoa-300" />
               </span>
-              <span>{PROFILE.status}</span>
+              <span>{profile.status}</span>
             </div>
 
             <h1 className="font-display text-4xl font-extrabold tracking-tight text-cocoa-950 sm:text-5xl lg:text-[3.35rem] lg:leading-[1.1] dark:text-white">
               Hi, I&apos;m{' '}
               <span className="bg-gradient-to-r from-cocoa-800 via-cocoa-600 to-cocoa-400 bg-clip-text text-transparent dark:from-cream-100 dark:via-cocoa-300 dark:to-cocoa-400">
-                {PROFILE.fullName}
+                {profile.fullName}
               </span>
             </h1>
 
             <p className="mt-4 font-mono text-sm font-medium text-cocoa-600 sm:text-base dark:text-cocoa-300">
-              {PROFILE.role} · {PROFILE.university}
+              {profile.role} · {profile.university}
             </p>
 
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-cocoa-800/85 sm:text-lg dark:text-cream-100/80">
-              {PROFILE.headlineSummary}
+              {profile.headlineSummary}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3.5">
@@ -64,26 +69,30 @@ export function Hero() {
               </a>
 
               <div className="flex items-center gap-2 pl-1">
+                {profile.socials.github && (
+                  <a
+                    href={profile.socials.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="GitHub profile"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cream-200 bg-white text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-900 dark:border-cocoa-800 dark:bg-cocoa-900 dark:text-cocoa-200 dark:hover:border-cocoa-500 dark:hover:text-white"
+                  >
+                    <Github className="h-5 w-5" />
+                  </a>
+                )}
+                {profile.socials.linkedin && (
+                  <a
+                    href={profile.socials.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn profile"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cream-200 bg-white text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-900 dark:border-cocoa-800 dark:bg-cocoa-900 dark:text-cocoa-200 dark:hover:border-cocoa-500 dark:hover:text-white"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                  </a>
+                )}
                 <a
-                  href={PROFILE.socials.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub profile"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cream-200 bg-white text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-900 dark:border-cocoa-800 dark:bg-cocoa-900 dark:text-cocoa-200 dark:hover:border-cocoa-500 dark:hover:text-white"
-                >
-                  <Github className="h-5 w-5" />
-                </a>
-                <a
-                  href={PROFILE.socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn profile"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cream-200 bg-white text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-900 dark:border-cocoa-800 dark:bg-cocoa-900 dark:text-cocoa-200 dark:hover:border-cocoa-500 dark:hover:text-white"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a
-                  href={`mailto:${PROFILE.email}`}
+                  href={`mailto:${profile.email}`}
                   aria-label="Send email"
                   className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cream-200 bg-white text-cocoa-700 transition-colors hover:border-cocoa-400 hover:text-cocoa-900 dark:border-cocoa-800 dark:bg-cocoa-900 dark:text-cocoa-200 dark:hover:border-cocoa-500 dark:hover:text-white"
                 >
@@ -122,7 +131,7 @@ export function Hero() {
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-cream-100 dark:bg-cocoa-800">
                   <img
                     src={portraitSrc}
-                    alt={`${PROFILE.fullName} portrait`}
+                    alt={`${profile.fullName} portrait`}
                     className="h-full w-full object-cover object-top"
                     loading="eager"
                   />
@@ -130,11 +139,11 @@ export function Hero() {
                   <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-2 text-white">
                     <div>
                       <p className="font-display text-sm font-bold leading-tight">
-                        {PROFILE.nickname} ({PROFILE.firstName})
+                        {profile.nickname} ({profile.firstName})
                       </p>
                       <p className="mt-0.5 inline-flex items-center gap-1 text-xs text-cream-100">
                         <MapPin className="h-3.5 w-3.5 text-cocoa-300" />
-                        <span>{PROFILE.location}</span>
+                        <span>{profile.location}</span>
                       </p>
                     </div>
                     <span className="rounded-lg border border-white/20 bg-cocoa-950/40 px-2.5 py-1 font-mono text-[11px] font-medium backdrop-blur-md">
