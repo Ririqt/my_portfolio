@@ -235,14 +235,21 @@ export function AdminPortal({
     setAuthError('');
     setAuthLoading(true);
     try {
-      let token = csrfToken;
-      if (!apiAvailable || !token) {
-        const auth = await checkAuthSession();
-        setApiAvailable(true);
-        setMode('php');
-        token = auth.csrfToken;
-        setCsrfToken(token);
+      // Always synchronize with the browser's current settled PHP session cookie before login
+      const freshSession = await checkAuthSession();
+      setApiAvailable(true);
+      setMode('php');
+      const token = freshSession.csrfToken;
+      setCsrfToken(token);
+
+      if (freshSession.authenticated && freshSession.user) {
+        setUser(freshSession.user);
+        setAuthenticated(true);
+        await loadAllCmsData('php');
+        showToast('ok', `Welcome back, ${freshSession.user.name}!`);
+        return;
       }
+
       const res = await loginAdmin(email, password, token);
       setCsrfToken(res.csrfToken);
       setUser(res.user);

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/bootstrap.php';
-bootstrap_api();
+bootstrap_api(false);
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
     json_response(['error' => 'Method not allowed.'], 405);

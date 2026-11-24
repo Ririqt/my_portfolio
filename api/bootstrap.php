@@ -9,7 +9,7 @@ function is_https_request(): bool
         || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
 }
 
-function bootstrap_api(): void
+function bootstrap_api(bool $startSession = true): void
 {
     // Security headers
     header('Content-Type: application/json; charset=utf-8');
@@ -31,6 +31,10 @@ function bootstrap_api(): void
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
         http_response_code(204);
         exit;
+    }
+
+    if (!$startSession) {
+        return;
     }
 
     if (session_status() !== PHP_SESSION_ACTIVE) {
