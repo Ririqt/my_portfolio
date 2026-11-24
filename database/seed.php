@@ -16,9 +16,9 @@ if (PHP_SAPI !== 'cli') {
 
 require_once __DIR__ . '/../api/config.php';
 
-$adminEmail = getenv('ADMIN_EMAIL') ?: 'mcrei1018@gmail.com';
-$adminName = getenv('ADMIN_NAME') ?: 'Mharc Reinald Rigos';
-$password = $argv[1] ?? (getenv('ADMIN_INIT_PASSWORD') ?: '');
+$adminEmail = env_value('ADMIN_EMAIL', 'mcrei1018@gmail.com');
+$adminName = env_value('ADMIN_NAME', 'Mharc Reinald Rigos');
+$password = $argv[1] ?? env_value('ADMIN_INIT_PASSWORD', '');
 
 if (strlen($password) < 8) {
     fwrite(STDERR, "Error: Provide an initial admin password (at least 8 characters).\n");

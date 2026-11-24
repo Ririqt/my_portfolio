@@ -115,6 +115,7 @@ export function AdminPortal({
   onPortfolioChanged,
 }: AdminPortalProps) {
   const [checking, setChecking] = useState(true);
+  const [retryingConnection, setRetryingConnection] = useState(false);
   const [apiAvailable, setApiAvailable] = useState(false);
   const [mode, setMode] = useState<BackendMode>('preview');
   const [authenticated, setAuthenticated] = useState(false);
@@ -206,11 +207,43 @@ export function AdminPortal({
     };
   }, [loadAllCmsData]);
 
+  async function handleRetryConnection() {
+    setRetryingConnection(true);
+    setAuthError('');
+    try {
+      const auth = await checkAuthSession();
+      setApiAvailable(true);
+      setMode('php');
+      setCsrfToken(auth.csrfToken);
+      if (auth.authenticated && auth.user) {
+        setAuthenticated(true);
+        setUser(auth.user);
+        await loadAllCmsData('php');
+      }
+    } catch {
+      setApiAvailable(false);
+      setMode('preview');
+      setAuthError(
+        'PHP + MySQL API is still unreachable on /api. Make sure MySQL is running and PHP is listening on 127.0.0.1:8000.',
+      );
+    } finally {
+      setRetryingConnection(false);
+    }
+  }
+
   async function handleLogin(email: string, password: string) {
     setAuthError('');
     setAuthLoading(true);
     try {
-      const res = await loginAdmin(email, password, csrfToken);
+      let token = csrfToken;
+      if (!apiAvailable || !token) {
+        const auth = await checkAuthSession();
+        setApiAvailable(true);
+        setMode('php');
+        token = auth.csrfToken;
+        setCsrfToken(token);
+      }
+      const res = await loginAdmin(email, password, token);
       setCsrfToken(res.csrfToken);
       setUser(res.user);
       setAuthenticated(true);
@@ -218,7 +251,13 @@ export function AdminPortal({
       await loadAllCmsData('php');
       showToast('ok', `Welcome back, ${res.user?.name ?? 'Admin'}!`);
     } catch (err) {
-      setAuthError(err instanceof Error ? err.message : 'Unable to sign in.');
+      if (!apiAvailable) {
+        setAuthError(
+          'PHP + MySQL server is offline. Start PHP on 127.0.0.1:8000 first, or click "Local Preview Mode" below.',
+        );
+      } else {
+        setAuthError(err instanceof Error ? err.message : 'Unable to sign in.');
+      }
     } finally {
       setAuthLoading(false);
     }
@@ -574,6 +613,8 @@ export function AdminPortal({
         onBackToPortfolio={onBackToPortfolio}
         onLogin={handleLogin}
         onEnterPreview={handleEnterPreview}
+        onRetryConnection={handleRetryConnection}
+        retryingConnection={retryingConnection}
         error={authError}
         loading={authLoading}
         mode={mode}

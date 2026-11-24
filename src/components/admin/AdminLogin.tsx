@@ -7,6 +7,7 @@ import {
   FlaskConical,
   Lock,
   Moon,
+  RefreshCw,
   ShieldCheck,
   Sun,
 } from 'lucide-react';
@@ -19,6 +20,8 @@ interface AdminLoginProps {
   onBackToPortfolio: () => void;
   onLogin: (email: string, password: string) => Promise<void>;
   onEnterPreview: () => void;
+  onRetryConnection: () => Promise<void>;
+  retryingConnection: boolean;
   error: string;
   loading: boolean;
   mode: BackendMode;
@@ -31,6 +34,8 @@ export function AdminLogin({
   onBackToPortfolio,
   onLogin,
   onEnterPreview,
+  onRetryConnection,
+  retryingConnection,
   error,
   loading,
 }: AdminLoginProps) {
@@ -111,7 +116,7 @@ export function AdminLogin({
                 autoComplete="username"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={!apiAvailable || loading}
+                disabled={loading}
                 className="mt-1.5 block w-full rounded-xl border border-cream-300 bg-cream-50 px-4 py-2.5 text-sm text-cocoa-950 outline-none transition-colors focus:border-cocoa-600 focus:bg-white disabled:opacity-60 dark:border-cocoa-700 dark:bg-cocoa-950 dark:text-white dark:focus:border-cocoa-400"
               />
             </div>
@@ -132,7 +137,7 @@ export function AdminLogin({
                   placeholder="Enter owner password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  disabled={!apiAvailable || loading}
+                  disabled={loading}
                   className="block w-full rounded-xl border border-cream-300 bg-cream-50 py-2.5 pl-4 pr-11 text-sm text-cocoa-950 outline-none transition-colors focus:border-cocoa-600 focus:bg-white disabled:opacity-60 dark:border-cocoa-700 dark:bg-cocoa-950 dark:text-white dark:focus:border-cocoa-400"
                 />
                 <button
@@ -157,7 +162,7 @@ export function AdminLogin({
 
             <button
               type="submit"
-              disabled={!apiAvailable || loading}
+              disabled={loading}
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cocoa-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-cocoa-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-cocoa-500 dark:hover:bg-cocoa-400"
             >
               <Lock className="h-4 w-4" />
@@ -174,21 +179,31 @@ export function AdminLogin({
                     PHP + MySQL server is not running right now
                   </p>
                   <p className="mt-1">
-                    Import <code className="font-mono">database/schema.sql</code>, run{' '}
-                    <code className="font-mono">php database/seed.php</code>, and start Apache/PHP
-                    for live MySQL persistence—or explore the full Admin CMS right now in browser
+                    Start MySQL in XAMPP and run <code className="font-mono">php -S 127.0.0.1:8000</code>{' '}
+                    in the project folder, then click Retry—or test the full Admin UI in Local
                     Preview Mode.
                   </p>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={onEnterPreview}
-                className="mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-cocoa-300 bg-white px-4 py-2 text-xs font-semibold text-cocoa-900 transition-colors hover:bg-cocoa-100 dark:border-cocoa-600 dark:bg-cocoa-900 dark:text-cream-100 dark:hover:bg-cocoa-800"
-              >
-                <FlaskConical className="h-3.5 w-3.5" />
-                <span>Open Local Preview Mode</span>
-              </button>
+              <div className="mt-3.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={onRetryConnection}
+                  disabled={retryingConnection}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-cocoa-300 bg-white px-3 py-2 text-xs font-semibold text-cocoa-900 transition-colors hover:bg-cocoa-100 disabled:opacity-60 dark:border-cocoa-600 dark:bg-cocoa-900 dark:text-cream-100 dark:hover:bg-cocoa-800"
+                >
+                  <RefreshCw className={`h-3.5 w-3.5 ${retryingConnection ? 'animate-spin' : ''}`} />
+                  <span>{retryingConnection ? 'Checking...' : 'Retry PHP Connection'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={onEnterPreview}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-cocoa-800 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-cocoa-700 dark:bg-cocoa-600 dark:hover:bg-cocoa-500"
+                >
+                  <FlaskConical className="h-3.5 w-3.5" />
+                  <span>Local Preview Mode</span>
+                </button>
+              </div>
             </div>
           )}
 

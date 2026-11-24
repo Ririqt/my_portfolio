@@ -7,7 +7,7 @@ declare(strict_types=1);
  */
 function load_env_file(string $path): void
 {
-    if (!is_readable($path)) {
+    if (!is_file($path)) {
         return;
     }
 
@@ -16,7 +16,10 @@ function load_env_file(string $path): void
         return;
     }
 
-    foreach ($lines as $line) {
+    foreach ($lines as $index => $line) {
+        if ($index === 0) {
+            $line = preg_replace('/^\xEF\xBB\xBF/', '', $line) ?? $line;
+        }
         $trimmed = trim($line);
         if ($trimmed === '' || str_starts_with($trimmed, '#')) {
             continue;
@@ -33,9 +36,9 @@ function load_env_file(string $path): void
         ) {
             $val = substr($val, 1, -1);
         }
-        if ($key !== '' && getenv($key) === false) {
-            putenv("{$key}={$val}");
+        if ($key !== '' && !array_key_exists($key, $_ENV) && getenv($key) === false) {
             $_ENV[$key] = $val;
+            putenv("{$key}={$val}");
         }
     }
 }
@@ -44,6 +47,9 @@ load_env_file(__DIR__ . '/.env');
 
 function env_value(string $key, string $default = ''): string
 {
+    if (array_key_exists($key, $_ENV) && $_ENV[$key] !== '') {
+        return (string) $_ENV[$key];
+    }
     $val = getenv($key);
     return ($val === false || $val === '') ? $default : $val;
 }
