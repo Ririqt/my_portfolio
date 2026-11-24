@@ -1,0 +1,6 @@
+# Block direct HTTP access to environment and helper files
+<FilesMatch "^(\.env|\.env\.example|config\.php|bootstrap\.php)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes
