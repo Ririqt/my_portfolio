@@ -127,7 +127,13 @@ export function Hero({ profile }: HeroProps) {
                 aria-hidden="true"
                 className="absolute -inset-3 rounded-[2rem] bg-gradient-to-tr from-cocoa-500/20 via-cocoa-300/15 to-transparent blur-xl dark:from-cocoa-500/25"
               />
-              <div className="relative overflow-hidden rounded-[1.75rem] border border-cream-200 bg-white p-2.5 shadow-xl shadow-cocoa-950/8 dark:border-cocoa-800 dark:bg-cocoa-900">
+              <a
+                href="https://www.facebook.com/ririism3/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${profile.fullName} Facebook profile`}
+                className="relative block overflow-hidden rounded-[1.75rem] border border-cream-200 bg-white p-2.5 shadow-xl shadow-cocoa-950/8 dark:border-cocoa-800 dark:bg-cocoa-900"
+              >
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-cream-100 dark:bg-cocoa-800">
                   <img
                     src={portraitSrc}
@@ -151,7 +157,7 @@ export function Hero({ profile }: HeroProps) {
                     </span>
                   </div>
                 </div>
-              </div>
+              </a>
 
               <div className="animate-subtle-float absolute -right-2 -top-4 hidden rounded-2xl border border-cream-200 bg-white/95 px-3.5 py-2.5 shadow-lg shadow-cocoa-950/8 backdrop-blur-md sm:block dark:border-cocoa-700 dark:bg-cocoa-900/95">
                 <p className="font-mono text-[11px] font-semibold text-cocoa-600 dark:text-cocoa-300">

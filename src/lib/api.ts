@@ -83,6 +83,49 @@ export interface PreviewStoreData extends PortfolioSnapshot {
 }
 
 const PREVIEW_STORAGE_KEY = 'rei-portfolio-cms-preview-v1';
+const PORTFOLIO_SYNC_CHANNEL = 'rei-portfolio-sync';
+export const PORTFOLIO_SYNC_STORAGE_KEY = 'rei-portfolio-updated-at';
+
+export function notifyPortfolioUpdated(): void {
+  try {
+    localStorage.setItem(PORTFOLIO_SYNC_STORAGE_KEY, String(Date.now()));
+  } catch {
+    // Ignore storage restrictions
+  }
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      const channel = new BroadcastChannel(PORTFOLIO_SYNC_CHANNEL);
+      channel.postMessage({ type: 'portfolio-updated', at: Date.now() });
+      channel.close();
+    }
+  } catch {
+    // Ignore unsupported BroadcastChannel environments
+  }
+}
+
+export function subscribePortfolioUpdates(onUpdate: () => void): () => void {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === PORTFOLIO_SYNC_STORAGE_KEY) {
+      onUpdate();
+    }
+  };
+  window.addEventListener('storage', onStorage);
+
+  let channel: BroadcastChannel | null = null;
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      channel = new BroadcastChannel(PORTFOLIO_SYNC_CHANNEL);
+      channel.onmessage = () => onUpdate();
+    }
+  } catch {
+    channel = null;
+  }
+
+  return () => {
+    window.removeEventListener('storage', onStorage);
+    channel?.close();
+  };
+}
 
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) || '/api';
 
@@ -231,6 +274,7 @@ async function apiFetch<T>(
   try {
     const response = await fetch(`${API_BASE}${path}`, {
       credentials: 'include',
+      cache: 'no-store',
       signal: controller.signal,
       headers: mergedHeaders,
       ...rest,
@@ -262,7 +306,7 @@ export async function fetchPublicPortfolio(): Promise<{
       profile: Partial<PortfolioProfileData> | null;
       skills: DynamicSkill[];
       projects: DynamicProject[];
-    }>('/portfolio.php', { method: 'GET', timeoutMs: 2500 });
+    }>('/portfolio.php', { method: 'GET', timeoutMs: 8000 });
 
     const defaults = getDefaultPortfolioSnapshot();
     if (!data.seeded || !data.profile) {
@@ -284,8 +328,8 @@ export async function fetchPublicPortfolio(): Promise<{
               ? data.profile.aboutParagraphs
               : defaults.profile.aboutParagraphs,
         },
-        skills: data.skills.length > 0 ? data.skills : defaults.skills,
-        projects: data.projects.length > 0 ? data.projects : defaults.projects,
+        skills: data.skills,
+        projects: data.projects,
       },
     };
   } catch {

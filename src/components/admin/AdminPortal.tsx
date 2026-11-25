@@ -33,12 +33,11 @@ import {
   deleteSkillApi,
   fetchAdminInquiries,
   fetchAdminLogs,
-  fetchAdminProjects,
-  fetchAdminSkills,
   fetchPublicPortfolio,
   loadPreviewStore,
   loginAdmin,
   logoutAdmin,
+  notifyPortfolioUpdated,
   resetPreviewStore,
   resolveAssetUrl,
   savePreviewStore,
@@ -54,6 +53,7 @@ import {
   type DynamicSkill,
   type InquiryItem,
   type PortfolioProfileData,
+  type PortfolioSnapshot,
 } from '../../lib/api';
 import { AdminLogin } from './AdminLogin';
 
@@ -63,7 +63,7 @@ interface AdminPortalProps {
   isDark: boolean;
   onToggleTheme: () => void;
   onBackToPortfolio: () => void;
-  onPortfolioChanged: () => void;
+  onPortfolioChanged: (snapshot?: PortfolioSnapshot) => void;
 }
 
 const EMPTY_SKILL_FORM: Omit<DynamicSkill, 'id'> = {
@@ -153,22 +153,18 @@ export function AdminPortal({
     }, 3500);
   }
 
-  const loadAllCmsData = useCallback(async (currentMode: BackendMode) => {
+  const loadAllCmsData = useCallback(async (currentMode: BackendMode): Promise<PortfolioSnapshot> => {
     if (currentMode === 'php') {
-      const [pub, adminSkills, adminProjects, inqRes, logsRes] = await Promise.all([
-        fetchPublicPortfolio(),
-        fetchAdminSkills(),
-        fetchAdminProjects(),
-        fetchAdminInquiries(1, 25),
-        fetchAdminLogs(1, 30),
-      ]);
+      const pub = await fetchPublicPortfolio();
+      const inqRes = await fetchAdminInquiries(1, 25);
+      const logsRes = await fetchAdminLogs(1, 30);
       setProfile(pub.snapshot.profile);
-      setSkills(adminSkills);
-      setProjects(adminProjects);
+      setSkills(pub.snapshot.skills);
+      setProjects(pub.snapshot.projects);
       setInquiries(inqRes.inquiries);
       setUnreadCount(inqRes.unread);
       setLogs(logsRes.logs);
-      return;
+      return pub.snapshot;
     }
 
     const preview = loadPreviewStore();
@@ -178,6 +174,11 @@ export function AdminPortal({
     setInquiries(preview.inquiries);
     setUnreadCount(preview.inquiries.filter((i) => !i.isRead).length);
     setLogs(preview.logs);
+    return {
+      profile: preview.profile,
+      skills: preview.skills,
+      projects: preview.projects,
+    };
   }, []);
 
   useEffect(() => {
@@ -308,18 +309,20 @@ export function AdminPortal({
     if (!profile) return;
     setSaving(true);
     try {
+      let updatedSnapshot: PortfolioSnapshot;
       if (mode === 'php') {
         await saveProfileApi(profile, csrfToken);
-        await loadAllCmsData('php');
+        updatedSnapshot = await loadAllCmsData('php');
       } else {
         const store = loadPreviewStore();
         store.profile = profile;
         appendPreviewLog(store, 'Updated profile & about details');
         savePreviewStore(store);
-        await loadAllCmsData('preview');
+        updatedSnapshot = await loadAllCmsData('preview');
       }
-      onPortfolioChanged();
-      showToast('ok', 'Profile saved and published to portfolio.');
+      onPortfolioChanged(updatedSnapshot);
+      notifyPortfolioUpdated();
+      showToast('ok', 'Profile saved and synced to your main portfolio.');
     } catch (err) {
       showToast('err', err instanceof Error ? err.message : 'Failed to save profile.');
     } finally {
@@ -359,6 +362,7 @@ export function AdminPortal({
     if (!skillForm.name.trim()) return;
     setSaving(true);
     try {
+      let updatedSnapshot: PortfolioSnapshot;
       if (mode === 'php') {
         if (editingSkillId !== null) {
           await updateSkillApi(editingSkillId, skillForm, csrfToken);
@@ -367,7 +371,7 @@ export function AdminPortal({
           await createSkillApi(skillForm, csrfToken);
           showToast('ok', `Added skill "${skillForm.name}".`);
         }
-        await loadAllCmsData('php');
+        updatedSnapshot = await loadAllCmsData('php');
       } else {
         const store = loadPreviewStore();
         if (editingSkillId !== null) {
@@ -383,11 +387,12 @@ export function AdminPortal({
           showToast('ok', `Added skill "${skillForm.name}".`);
         }
         savePreviewStore(store);
-        await loadAllCmsData('preview');
+        updatedSnapshot = await loadAllCmsData('preview');
       }
       setEditingSkillId(null);
       setSkillForm(EMPTY_SKILL_FORM);
-      onPortfolioChanged();
+      onPortfolioChanged(updatedSnapshot);
+      notifyPortfolioUpdated();
     } catch (err) {
       showToast('err', err instanceof Error ? err.message : 'Could not save skill.');
     } finally {
@@ -398,21 +403,23 @@ export function AdminPortal({
   async function handleDeleteSkill(skill: DynamicSkill) {
     if (!window.confirm(`Delete skill "${skill.name}"?`)) return;
     try {
+      let updatedSnapshot: PortfolioSnapshot;
       if (mode === 'php') {
         await deleteSkillApi(skill.id, csrfToken);
-        await loadAllCmsData('php');
+        updatedSnapshot = await loadAllCmsData('php');
       } else {
         const store = loadPreviewStore();
         store.skills = store.skills.filter((s) => s.id !== skill.id);
         appendPreviewLog(store, `Deleted skill: ${skill.name}`);
         savePreviewStore(store);
-        await loadAllCmsData('preview');
+        updatedSnapshot = await loadAllCmsData('preview');
       }
       if (editingSkillId === skill.id) {
         setEditingSkillId(null);
         setSkillForm(EMPTY_SKILL_FORM);
       }
-      onPortfolioChanged();
+      onPortfolioChanged(updatedSnapshot);
+      notifyPortfolioUpdated();
       showToast('ok', `Deleted skill "${skill.name}".`);
     } catch (err) {
       showToast('err', err instanceof Error ? err.message : 'Failed to delete skill.');
@@ -449,6 +456,7 @@ export function AdminPortal({
     };
 
     try {
+      let updatedSnapshot: PortfolioSnapshot;
       if (mode === 'php') {
         if (editingProjectId !== null) {
           await updateProjectApi(editingProjectId, payload, csrfToken);
@@ -457,7 +465,7 @@ export function AdminPortal({
           await createProjectApi(payload, csrfToken);
           showToast('ok', `Created project "${payload.title}".`);
         }
-        await loadAllCmsData('php');
+        updatedSnapshot = await loadAllCmsData('php');
       } else {
         const store = loadPreviewStore();
         if (editingProjectId !== null) {
@@ -477,11 +485,12 @@ export function AdminPortal({
           showToast('ok', `Created project "${payload.title}".`);
         }
         savePreviewStore(store);
-        await loadAllCmsData('preview');
+        updatedSnapshot = await loadAllCmsData('preview');
       }
       setEditingProjectId(null);
       setProjectForm(EMPTY_PROJECT_FORM);
-      onPortfolioChanged();
+      onPortfolioChanged(updatedSnapshot);
+      notifyPortfolioUpdated();
     } catch (err) {
       showToast('err', err instanceof Error ? err.message : 'Could not save project.');
     } finally {
@@ -513,21 +522,23 @@ export function AdminPortal({
     const id = project.dbId ?? Number(project.id);
     if (!window.confirm(`Delete project "${project.title}"?`)) return;
     try {
+      let updatedSnapshot: PortfolioSnapshot;
       if (mode === 'php') {
         await deleteProjectApi(id, csrfToken);
-        await loadAllCmsData('php');
+        updatedSnapshot = await loadAllCmsData('php');
       } else {
         const store = loadPreviewStore();
         store.projects = store.projects.filter((p) => (p.dbId ?? Number(p.id)) !== id);
         appendPreviewLog(store, `Deleted project: ${project.title}`);
         savePreviewStore(store);
-        await loadAllCmsData('preview');
+        updatedSnapshot = await loadAllCmsData('preview');
       }
       if (editingProjectId === id) {
         setEditingProjectId(null);
         setProjectForm(EMPTY_PROJECT_FORM);
       }
-      onPortfolioChanged();
+      onPortfolioChanged(updatedSnapshot);
+      notifyPortfolioUpdated();
       showToast('ok', `Deleted project "${project.title}".`);
     } catch (err) {
       showToast('err', err instanceof Error ? err.message : 'Could not delete project.');
@@ -598,8 +609,9 @@ export function AdminPortal({
   async function handleResetPreview() {
     if (!window.confirm('Reset local preview edits back to portfolio defaults?')) return;
     resetPreviewStore();
-    await loadAllCmsData('preview');
-    onPortfolioChanged();
+    const updatedSnapshot = await loadAllCmsData('preview');
+    onPortfolioChanged(updatedSnapshot);
+    notifyPortfolioUpdated();
     showToast('ok', 'Local preview data reset to defaults.');
   }
 
@@ -989,7 +1001,7 @@ export function AdminPortal({
             <div className="mt-5 space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-cocoa-700 dark:text-cocoa-200">
-                  Hero Intro Summary
+                  Hero Description (Top Banner)
                 </label>
                 <textarea
                   rows={2}
@@ -1002,7 +1014,7 @@ export function AdminPortal({
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-cocoa-700 dark:text-cocoa-200">
-                    About Paragraph 1
+                    About Me — Paragraph 1 (Section 01)
                   </label>
                   <textarea
                     rows={4}
@@ -1018,7 +1030,7 @@ export function AdminPortal({
                 </div>
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-cocoa-700 dark:text-cocoa-200">
-                    About Paragraph 2
+                    About Me — Paragraph 2 (Section 01)
                   </label>
                   <textarea
                     rows={4}

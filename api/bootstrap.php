@@ -11,8 +11,10 @@ function is_https_request(): bool
 
 function bootstrap_api(bool $startSession = true): void
 {
-    // Security headers
+    // Security & no-cache headers so dynamic CMS edits appear immediately
     header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Pragma: no-cache');
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: DENY');
     header('Referrer-Policy: strict-origin-when-cross-origin');
