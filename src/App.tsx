@@ -12,6 +12,7 @@ import {
   fetchPublicPortfolio,
   getDefaultPortfolioSnapshot,
   groupSkillsByCategory,
+  subscribePortfolioUpdates,
   type BackendMode,
   type PortfolioSnapshot,
 } from './lib/api';
@@ -42,22 +43,53 @@ export function App() {
     }
   }, [isDark]);
 
+  const refreshPortfolio = useCallback(async () => {
+    const { mode, snapshot } = await fetchPublicPortfolio();
+    setBackendMode((prevMode) => {
+      if (prevMode === 'php' && mode === 'preview') {
+        // Keep existing live MySQL data if a transient reload hiccupped
+        return prevMode;
+      }
+      setPortfolio(snapshot);
+      return mode;
+    });
+  }, []);
+
   useEffect(() => {
     const onHashChange = () => {
-      setInAdmin(isAdminRoute());
+      const nextAdmin = isAdminRoute();
+      setInAdmin(nextAdmin);
+      if (!nextAdmin) {
+        void refreshPortfolio();
+      }
     };
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
-
-  const refreshPortfolio = useCallback(async () => {
-    const { mode, snapshot } = await fetchPublicPortfolio();
-    setBackendMode(mode);
-    setPortfolio(snapshot);
-  }, []);
+  }, [refreshPortfolio]);
 
   useEffect(() => {
     void refreshPortfolio();
+  }, [refreshPortfolio]);
+
+  useEffect(() => {
+    const unsubscribe = subscribePortfolioUpdates(() => {
+      void refreshPortfolio();
+    });
+
+    const onVisibilityOrFocus = () => {
+      if (!isAdminRoute() && document.visibilityState === 'visible') {
+        void refreshPortfolio();
+      }
+    };
+
+    window.addEventListener('focus', onVisibilityOrFocus);
+    document.addEventListener('visibilitychange', onVisibilityOrFocus);
+
+    return () => {
+      unsubscribe();
+      window.removeEventListener('focus', onVisibilityOrFocus);
+      document.removeEventListener('visibilitychange', onVisibilityOrFocus);
+    };
   }, [refreshPortfolio]);
 
   function openAdmin() {
@@ -79,8 +111,12 @@ export function App() {
         isDark={isDark}
         onToggleTheme={() => setIsDark((prev) => !prev)}
         onBackToPortfolio={backToPortfolio}
-        onPortfolioChanged={() => {
-          void refreshPortfolio();
+        onPortfolioChanged={(nextSnapshot) => {
+          if (nextSnapshot) {
+            setPortfolio(nextSnapshot);
+          } else {
+            void refreshPortfolio();
+          }
         }}
       />
     );
